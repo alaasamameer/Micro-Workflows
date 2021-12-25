@@ -1,0 +1,64 @@
+<classpath>
+  <classpathentry kind="output" path="target/eclipse/classes"/>
+  <classpathentry excluding="**/.svn/|**/CVS/" kind="src" path="src"/>
+  <classpathentry excluding="**/.svn/|**/CVS/|images/" kind="src" path="lib">
+    <attributes>
+      <attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="module-mwf/lib"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/avro-1.8.2.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/common-config-3.3.1.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/common-utils-3.3.1.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/commons-compress-1.8.1.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/jackson-annotations-2.8.0.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/jackson-core-2.8.4.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/jackson-core-asl-1.9.13.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/jackson-databind-2.8.4.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/jackson-mapper-asl-1.9.13.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/jline-0.9.94.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/json-20140107.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/kafka-avro-serializer-3.3.1.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/kafka-clients-0.11.0.1.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/kafka-schema-registry-client-3.3.1.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/log4j-1.2.17.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/lz4-1.3.0.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/netty-3.10.5.Final.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/paranamer-2.7.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/slf4j-api-1.7.7.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/slf4j-log4j12-1.7.21.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/snappy-java-1.1.1.3.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/xz-1.5.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/zkclient-0.10.jar"/>
+  <classpathentry exported="true" kind="lib" path="lib/jar/zookeeper-3.4.10.jar"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/kepler"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/outreach"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/r"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/loader"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/display-redirect"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/actors"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/directors"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/opendap"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/dataturbine"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/dataone"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/ecogrid"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/authentication-gui"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/gui"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/module-manager-gui"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/authentication"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/repository"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/job"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/io"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/ssh"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/data-handling"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/sms"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/component-library"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/util"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/event-state"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/core"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/common"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/module-manager"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/configuration-manager"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/kepler-tasks"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/ptolemy"/>
+</classpath>
