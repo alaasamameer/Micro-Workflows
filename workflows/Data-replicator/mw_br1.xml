@@ -1,0 +1,92 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="mw_br1" class="org.kepler.moml.CompositeClassEntity">
+    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:85909:65:1">
+    </property>
+    <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.moml.CompositeClassEntity">
+        <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
+        </property>
+    </property>
+    <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="11.0.devel">
+    </property>
+    <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org/ns/:87092:148:28:urn:lsid:kepler-project.org/ns/:87092:221:11:urn:lsid:kepler-project.org/ns/:87092:246:13:urn:lsid:kepler-project.org/ns/:87092:299:4:urn:lsid:kepler-project.org/ns/:87092:309:1:urn:lsid:kepler-project.org/ns/:86900:131:25:urn:lsid:kepler-project.org/ns/:86900:133:4:urn:lsid:kepler-project.org/ns/:86900:149:34:urn:lsid:kepler-project.org/ns/:86900:234:16:urn:lsid:kepler-project.org/ns/:86900:291:11:urn:lsid:kepler-project.org/ns/:86900:303:2:urn:lsid:kepler-project.org/ns/:86900:317:27:urn:lsid:kepler-project.org/ns/:86900:350:59:urn:lsid:kepler-project.org/ns/:86900:365:56:urn:lsid:kepler-project.org/ns/:86900:389:2:urn:lsid:kepler-project.org/ns/:86900:397:73:urn:lsid:kepler-project.org/ns/:86900:407:12:urn:lsid:kepler-project.org/ns/:86900:423:1:urn:lsid:kepler-project.org/ns/:85909:12:2:urn:lsid:kepler-project.org/ns/:85909:13:19:urn:lsid:kepler-project.org/ns/:85909:15:11:urn:lsid:kepler-project.org/ns/:85909:20:8:urn:lsid:kepler-project.org/ns/:85909:27:13:urn:lsid:kepler-project.org/ns/:85909:31:8:urn:lsid:kepler-project.org/ns/:85909:35:12:urn:lsid:kepler-project.org/ns/:85909:44:10">
+    </property>
+    <property name="PN Director" class="ptolemy.domains.pn.kernel.PNDirector">
+        <property name="localClock" class="ptolemy.actor.LocalClock">
+            <property name="globalTimeResolution" class="ptolemy.actor.parameters.SharedParameter" value="1.0E-10">
+            </property>
+            <property name="clockRate" class="ptolemy.data.expr.Parameter" value="1.0">
+            </property>
+        </property>
+        <property name="initialQueueCapacity" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+        <property name="maximumQueueCapacity" class="ptolemy.data.expr.Parameter" value="65536">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Mudit Goel, Edward A. Lee, Xiaowen Xin</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;PN Directors are natural candidates for managing workflows that require parallel processing on distributed computing systems. PN workflows are powerful because they have few restrictions. On the other hand, they can be very inefficient.&lt;/p&gt;&#10;&#10;&lt;p&gt;The Process Network (PN) Director is similar to the SDF Director in that it does not have a notion of time. However, unlike the SDF Director, the PN Director does not statically calculate firing schedules. Instead, a PN workflow is driven by data availability: tokens are created on output ports whenever input tokens are available and the outputs can be calculated. Output tokens are passed to connected actors, where they are held in a buffer until that next actor collects all required inputs and can fire. The PN Director finishes executing a workflow only when there are no new data token sources anywhere in the workflow. &lt;/p&gt;&#10;&#10;&lt;p&gt;The same execution process that gives the PN Director its flexibility can also lead to some unexpected results: workflows may refuse to automatically terminate because tokens are always generated and available to downstream actors, for example. If one actor fires at a much higher rate than another, a downstream actor's memory buffer may overflow, causing workflow execution to fail.&lt;/p&gt;&#10;&#10; &lt;p&gt;There are at least three ways for a PN model to terminate itself:&#10; &lt;ol&gt;&#10; &lt;li&gt;Have the model starve itself.  Typically, a boolean switch is used.&#10; See the PN OrderedMerge demo at&#10;  &lt;code&gt;ptolemy/domains/pn/demo/OrderedMerge/OrderedMerge.xml&lt;/code&gt;&lt;/li&gt;&#10;&#10; &lt;li&gt;Have the model call the Stop actor.  See the PN RemoveNilTokens demo at&#10;  &lt;code&gt;ptolemy/domains/pn/demo/RemoveNilTokens/RemoveNilTokens.xml&lt;/code&gt;&lt;/li&gt;&#10;&#10; &lt;li&gt;Set the &lt;i&gt;firingCountLimit&lt;/i&gt; actor&#10; parameter to the number of iterations desired.  Actors such as Ramp&#10; extend LimitedFiringSource and have the &lt;i&gt;firingCountLimit&lt;/i&gt; parameter.&lt;/li&gt;&#10; &lt;/ol&gt;&lt;/p&gt;&#10;</configure></property>
+<property name="prop:initialQueueCapacity" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The initial size of the queues for each communication channel. The value is an integer that defaults to 1. This is an advanced parameter that can usually be left at its  default value.</configure></property>
+<property name="prop:maximumQueueCapacity" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The maximum size of the queues for each communication channel. The value is an integer that defaults to 65536. To specify unbounded queues, set the value to 0. This is an advanced parameter that can usually be left at its  default value.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:director:2:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.domains.pn.kernel.PNDirector">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:directorclass:2:2">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Director">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Director">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[110.0, -130.0]">
+        </property>
+    </property>
+    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={126, 31, 935, 621}, maximized=false}">
+    </property>
+    <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[621, 494]">
+    </property>
+    <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.0000000000000002">
+    </property>
+    <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{264.49999999999983, 94.99999999999991}">
+    </property>
+    <entity name="KafkaAvroProducerBrSingle" class="org.kafkaavro.KafkaAvroProducerBrSingle">
+        <property name="Kafka Address and Port " class="ptolemy.actor.parameters.PortParameter" value="172.17.0.1:9092">
+        </property>
+        <property name="Schema Registry Address and Port " class="ptolemy.actor.parameters.PortParameter" value="http://172.17.0.1:8081">
+        </property>
+        <property name="Topic To Subscribe " class="ptolemy.actor.parameters.PortParameter" value="sto103">
+        </property>
+        <property name="Group Id To Subscribe " class="ptolemy.actor.parameters.PortParameter" value="gg">
+        </property>
+        <property name="Schema :" class="ptolemy.actor.parameters.PortParameter" value="{   &quot;type&quot;: &quot;record&quot;,   &quot;name&quot;: &quot;Debs2012_DetectStateChange&quot;,   &quot;namespace&quot;: &quot;com.debs2012&quot;,   &quot;doc&quot;: &quot;Avro Schema for Debs2012 DetectStateChange KStream&quot;,   &quot;fields&quot;: [     {       &quot;name&quot;: &quot;ts&quot;,       &quot;type&quot;: &quot;long&quot;,       &quot;doc&quot;: &quot;EPOCH millis Timestamp &quot;,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;index&quot;,       &quot;type&quot;: &quot;long&quot;,       &quot;doc&quot;: &quot;message index&quot;     },     {       &quot;name&quot;: &quot;pp07&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;pp08&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;pp09&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;pp12&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;pp15&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;pp21&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;pp33&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;pp36&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;s07_edge&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;s07_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;s08_edge&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;s08_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;s09_edge&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;s09_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;s12_edge&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;s12_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;s15_edge&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;s15_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;s21_edge&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;s21_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;s33_edge&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;s33_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;s36_edge&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;int&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;s36_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;msg1_index&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;msg1_org_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;msg1_rcv_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;msg2_index&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null     },     {       &quot;name&quot;: &quot;msg2_org_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;msg2_rcv_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     },     {       &quot;name&quot;: &quot;k_send_ts&quot;,       &quot;type&quot;: [         &quot;null&quot;,         &quot;long&quot;       ],       &quot;default&quot;: null,       &quot;logicalType&quot;: &quot;timestamp-millis&quot;     }   ],   &quot;version&quot;: &quot;1&quot; }">
+        </property>
+        <property name="Timeout To Poll :" class="ptolemy.actor.parameters.PortParameter" value="5">
+        </property>
+        <property name="Parameters To Read " class="ptolemy.actor.parameters.PortParameter" value="ts index pp07 pp08 pp09 pp12 pp15 pp21 pp33 pp36 s07_edge s07_ts s08_edge s08_ts s09_edge s09_ts s12_edge s12_ts s15_edge s15_ts s21_edge s21_ts s33_edge s33_ts s36_edge s36_ts msg1_index msg1_org_ts msg1_rcv_ts msg2_index msg2_org_ts msg2_rcv_ts k_send_ts">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[250.0, 0.0]">
+        </property>
+    </entity>
+    <entity name="KafkaAvroConsumerBr" class="org.kafkaavro.KafkaAvroConsumerBr">
+        <property name="Kafka Address and Port " class="ptolemy.actor.parameters.PortParameter" value="172.17.0.1:9092">
+        </property>
+        <property name="Schema Registry Address and Port " class="ptolemy.actor.parameters.PortParameter" value="http://172.17.0.1:8081">
+        </property>
+        <property name="Topic To Subscribe " class="ptolemy.actor.parameters.PortParameter" value="sto102">
+        </property>
+        <property name="Group Id To Subscribe " class="ptolemy.actor.parameters.PortParameter" value="gg17">
+        </property>
+        <property name="Parameters To Read " class="ptolemy.actor.parameters.PortParameter" value="ts index pp07 pp08 pp09 pp12 pp15 pp21 pp33 pp36 s07_edge s07_ts s08_edge s08_ts s09_edge s09_ts s12_edge s12_ts s15_edge s15_ts s21_edge s21_ts s33_edge s33_ts s36_edge s36_ts msg1_index msg1_org_ts msg1_rcv_ts msg2_index msg2_org_ts msg2_rcv_ts k_send_ts">
+        </property>
+        <property name="Timeout " class="ptolemy.actor.parameters.PortParameter" value="100">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[80.0, -40.0]">
+        </property>
+    </entity>
+    <relation name="relation" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <link port="KafkaAvroProducerBrSingle.input" relation="relation"/>
+    <link port="KafkaAvroConsumerBr.OutRecFirst" relation="relation"/>
+</entity>

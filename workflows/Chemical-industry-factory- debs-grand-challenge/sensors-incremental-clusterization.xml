@@ -1,0 +1,608 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="sensors-incremental-clusterization" class="org.kepler.moml.CompositeClassEntity">
+    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:85909:15:2">
+    </property>
+    <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.moml.CompositeClassEntity">
+        <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
+        </property>
+    </property>
+    <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="11.0.devel">
+    </property>
+    <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org/ns/:87092:148:28:urn:lsid:kepler-project.org/ns/:87092:221:11:urn:lsid:kepler-project.org/ns/:87092:246:13:urn:lsid:kepler-project.org/ns/:87092:299:4:urn:lsid:kepler-project.org/ns/:87092:309:1:urn:lsid:kepler-project.org/ns/:86900:131:25:urn:lsid:kepler-project.org/ns/:86900:133:4:urn:lsid:kepler-project.org/ns/:86900:149:34:urn:lsid:kepler-project.org/ns/:86900:234:16:urn:lsid:kepler-project.org/ns/:86900:291:11:urn:lsid:kepler-project.org/ns/:86900:303:2:urn:lsid:kepler-project.org/ns/:86900:317:27:urn:lsid:kepler-project.org/ns/:86900:350:59:urn:lsid:kepler-project.org/ns/:86900:365:56:urn:lsid:kepler-project.org/ns/:86900:389:2:urn:lsid:kepler-project.org/ns/:86900:397:73:urn:lsid:kepler-project.org/ns/:86900:407:1:urn:lsid:kepler-project.org/ns/:85909:22:66:urn:lsid:kepler-project.org/ns/:85909:25:1:urn:lsid:kepler-project.org/ns/:85909:28:15">
+    </property>
+    <property name="PN Director" class="ptolemy.domains.pn.kernel.PNDirector">
+        <property name="localClock" class="ptolemy.actor.LocalClock">
+            <property name="globalTimeResolution" class="ptolemy.actor.parameters.SharedParameter" value="1.0E-10">
+            </property>
+            <property name="clockRate" class="ptolemy.data.expr.Parameter" value="1.0">
+            </property>
+        </property>
+        <property name="initialQueueCapacity" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+        <property name="maximumQueueCapacity" class="ptolemy.data.expr.Parameter" value="65536">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Mudit Goel, Edward A. Lee, Xiaowen Xin</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;PN Directors are natural candidates for managing workflows that require parallel processing on distributed computing systems. PN workflows are powerful because they have few restrictions. On the other hand, they can be very inefficient.&lt;/p&gt;&#10;&#10;&lt;p&gt;The Process Network (PN) Director is similar to the SDF Director in that it does not have a notion of time. However, unlike the SDF Director, the PN Director does not statically calculate firing schedules. Instead, a PN workflow is driven by data availability: tokens are created on output ports whenever input tokens are available and the outputs can be calculated. Output tokens are passed to connected actors, where they are held in a buffer until that next actor collects all required inputs and can fire. The PN Director finishes executing a workflow only when there are no new data token sources anywhere in the workflow. &lt;/p&gt;&#10;&#10;&lt;p&gt;The same execution process that gives the PN Director its flexibility can also lead to some unexpected results: workflows may refuse to automatically terminate because tokens are always generated and available to downstream actors, for example. If one actor fires at a much higher rate than another, a downstream actor's memory buffer may overflow, causing workflow execution to fail.&lt;/p&gt;&#10;&#10; &lt;p&gt;There are at least three ways for a PN model to terminate itself:&#10; &lt;ol&gt;&#10; &lt;li&gt;Have the model starve itself.  Typically, a boolean switch is used.&#10; See the PN OrderedMerge demo at&#10;  &lt;code&gt;ptolemy/domains/pn/demo/OrderedMerge/OrderedMerge.xml&lt;/code&gt;&lt;/li&gt;&#10;&#10; &lt;li&gt;Have the model call the Stop actor.  See the PN RemoveNilTokens demo at&#10;  &lt;code&gt;ptolemy/domains/pn/demo/RemoveNilTokens/RemoveNilTokens.xml&lt;/code&gt;&lt;/li&gt;&#10;&#10; &lt;li&gt;Set the &lt;i&gt;firingCountLimit&lt;/i&gt; actor&#10; parameter to the number of iterations desired.  Actors such as Ramp&#10; extend LimitedFiringSource and have the &lt;i&gt;firingCountLimit&lt;/i&gt; parameter.&lt;/li&gt;&#10; &lt;/ol&gt;&lt;/p&gt;&#10;</configure></property>
+<property name="prop:initialQueueCapacity" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The initial size of the queues for each communication channel. The value is an integer that defaults to 1. This is an advanced parameter that can usually be left at its  default value.</configure></property>
+<property name="prop:maximumQueueCapacity" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The maximum size of the queues for each communication channel. The value is an integer that defaults to 65536. To specify unbounded queues, set the value to 0. This is an advanced parameter that can usually be left at its  default value.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:director:2:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.domains.pn.kernel.PNDirector">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:directorclass:2:2">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Director">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Director">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[25.0, 0.0]">
+        </property>
+    </property>
+    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={168, 31, 962, 621}, maximized=false}">
+    </property>
+    <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[648, 494]">
+    </property>
+    <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="0.8000000000000005">
+    </property>
+    <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{359.9999999999998, 128.75000000000009}">
+    </property>
+    <entity name="KafkaConsumer" class="org.kafkaavro.KafkaV4HashmapConsumer">
+        <property name="Kafka Address and Port " class="ptolemy.actor.parameters.PortParameter" value="172.17.0.1:9092">
+        </property>
+        <property name="Schema Registry Address and Port " class="ptolemy.actor.parameters.PortParameter" value="http://172.17.0.1:8081">
+        </property>
+        <property name="Topic To Subscribe " class="ptolemy.actor.parameters.PortParameter" value="k_StateChange">
+        </property>
+        <property name="Group Id To Subscribe " class="ptolemy.actor.parameters.PortParameter" value="kepler2">
+        </property>
+        <property name="Parameters To Read " class="ptolemy.actor.parameters.PortParameter" value="s07_edge s08_edge s09_edge s12_edge s15_edge s21_edge s33_edge s36_edge s07_ts s08_ts s09_ts s12_ts s15_ts s21_ts s33_ts s36_ts">
+        </property>
+        <property name="Timeout " class="ptolemy.actor.parameters.PortParameter" value="1000">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[45.0, 80.0]">
+        </property>
+    </entity>
+    <entity name="CorrelateStateChange" class="org.debs2012.site.q1.CorrelateStateChangeV2">
+        <property name="Topic" class="ptolemy.actor.parameters.PortParameter" value="k_StateChange">
+        </property>
+        <property name="xx Edges to compare" class="ptolemy.actor.parameters.PortParameter" value="s07_edge s08_edge s09_edge s12_edge">
+        </property>
+        <property name="xx Timestamp" class="ptolemy.actor.parameters.PortParameter" value="s07_ts s08_ts s09_ts s12_ts">
+        </property>
+        <property name="yy Edges to compare" class="ptolemy.actor.parameters.PortParameter" value="s15_edge s21_edge s33_edge s36_edge">
+        </property>
+        <property name="yy Timestamp" class="ptolemy.actor.parameters.PortParameter" value="s15_ts s21_ts s33_ts s36_ts">
+        </property>
+        <property name="Output Dt" class="ptolemy.actor.parameters.PortParameter" value="s0715_dt s0821_dt s0933_dt s1236_dt">
+        </property>
+        <property name="Output timestamps" class="ptolemy.actor.parameters.PortParameter" value="s0715_ts s0821_ts s0933_ts s1236_ts">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[200.0, 100.0]">
+        </property>
+    </entity>
+    <entity name="s0933_1" class="org.kafkaavro.Op7to9_ToPlot">
+        <property name="s_ts " class="ptolemy.actor.parameters.PortParameter" value="s0933_ts_1">
+        </property>
+        <property name="s_dt " class="ptolemy.actor.parameters.PortParameter" value="s0933_dt_1">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[405.0, -15.0]">
+        </property>
+        <port name="outArrTs" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+        <port name="outArrTt" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="s0933_0" class="org.kafkaavro.Op7to9_ToPlot">
+        <property name="s_ts " class="ptolemy.actor.parameters.PortParameter" value="s0933_ts_0">
+        </property>
+        <property name="s_dt " class="ptolemy.actor.parameters.PortParameter" value="s0933_dt_0">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[405.0, 45.0]">
+        </property>
+        <port name="outArrTs" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+        <port name="outArrTt" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="s0933 Plotter" class="ptolemy.actor.lib.gui.XYPlotter">
+        <property name="fillOnWrapup" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="automaticRescale" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="legend" class="ptolemy.kernel.util.StringAttribute" value="s0933_dt_1 s0933_ts_1, s0933_dt_0 s0933_ts_0">
+        </property>
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={100, 235, 405, 246}, maximized=false}">
+        </property>
+        <property name="_plotSize" class="ptolemy.actor.gui.SizeAttribute" value="[399, 193]">
+        </property>
+        <property name="startingDataset" class="ptolemy.data.expr.Parameter" value="0">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Jie Liu</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The XYPlotter actor plots (x,y) points and displays the graph. The actor reads x and y double tokens via its two input multiports. Each time the actor iterates, it reads one token from each input channel.  &lt;/p&gt;&#10;&#10;&lt;p&gt;X and Y tokens received on the first channel of the input port&#10; are plotted together, as are the tokens received on the second channels, etc. The two input port must have the same width (i.e., the same number of input channels).&lt;/p&gt;</configure></property>
+<property name="port:inputY" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts doubles representing y-values. The port must have the same width (i.e., number of input channels) as the inputX port.</configure></property>
+<property name="port:inputX" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts one or more doubles representing x-values. The port must have the same width (i.e., number of input channels) as the inputY port.</configure></property>
+<property name="prop:fillOnWrapup" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether to rescale the plot so that all data is visible. By default, the actor scales the plot to fill the display area.</configure></property>
+<property name="prop:startingDataset" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The starting dataset number to which data is plotted. The value must be a non-negative integer. The default is 0.</configure></property>
+<property name="prop:legend" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Annotations that will be displayed with the plot graph. Specify a comma-separated list of values that correspond to the input data sets (e.g., rainfall, temperature, elevation).</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:85909:21:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.gui.XYPlotter">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:887:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Plotter">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GraphicalOutput">
+        </property>
+        <property name="semanticType22" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:3:1#ScatterPlot">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[560.0, 15.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:11:1:urn:lsid:kepler-project.org/ns/:86900:363:15">
+        </property>
+        <property name="" class="ptolemy.vergil.basic.DocAttribute">
+            <property name="description" class="ptolemy.kernel.util.StringAttribute" value="&lt;p&gt;The XYPlotter actor plots (x,y) points and displays the graph. The actor reads x and y double tokens via its two input multiports. Each time the actor iterates, it reads one token from each input channel.  &lt;/p&gt;&#10;&#10;&lt;p&gt;X and Y tokens received on the first channel of the input port&#10; are plotted together, as are the tokens received on the second channels, etc. The two input port must have the same width (i.e., the same number of input channels).&lt;/p&gt;">
+            </property>
+            <property name="author" class="ptolemy.kernel.util.StringAttribute" value="Jie Liu">
+            </property>
+            <property name="version" class="ptolemy.kernel.util.StringAttribute" value="null">
+            </property>
+            <property name="fillOnWrapup (parameter)" class="ptolemy.kernel.util.StringAttribute" value="Specify whether to rescale the plot so that all data is visible. By default, the actor scales the plot to fill the display area.">
+            </property>
+            <property name="legend (parameter)" class="ptolemy.kernel.util.StringAttribute" value="Annotations that will be displayed with the plot graph. Specify a comma-separated list of values that correspond to the input data sets (e.g., rainfall, temperature, elevation).">
+            </property>
+            <property name="startingDataset (parameter)" class="ptolemy.kernel.util.StringAttribute" value="The starting dataset number to which data is plotted. The value must be a non-negative integer. The default is 0.">
+            </property>
+            <property name="inputX (port)" class="ptolemy.kernel.util.StringAttribute" value="A multiport that accepts one or more doubles representing x-values. The port must have the same width (i.e., number of input channels) as the inputY port.">
+            </property>
+            <property name="inputY (port)" class="ptolemy.kernel.util.StringAttribute" value="A multiport that accepts doubles representing y-values. The port must have the same width (i.e., number of input channels) as the inputX port.">
+            </property>
+        </property>
+        <configure>
+<?plotml <!DOCTYPE plot PUBLIC "-//UC Berkeley//DTD PlotML 1//EN"
+"http://ptolemy.eecs.berkeley.edu/xml/dtd/PlotML_1.dtd">
+<plot>
+<title>s0933 Plotter</title>
+<xLabel></xLabel>
+<yLabel></yLabel>
+<xRange min="1.573288837547E12" max="1.573431652111E12"/>
+<yRange min="-394212.0" max="426267.0"/>
+<default lineStyles="yes" marks="various"/>
+</plot>?>
+        </configure>
+    </entity>
+    <entity name="s0715_1" class="org.kafkaavro.Op7to9_ToPlot">
+        <property name="s_ts " class="ptolemy.actor.parameters.PortParameter" value="s0715_ts_1">
+        </property>
+        <property name="s_dt " class="ptolemy.actor.parameters.PortParameter" value="s0715_dt_1">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[520.0, 80.0]">
+        </property>
+        <port name="outArrTs" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+        <port name="outArrTt" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="s0821_1" class="org.kafkaavro.Op7to9_ToPlot">
+        <property name="s_ts " class="ptolemy.actor.parameters.PortParameter" value="s0821_ts_1">
+        </property>
+        <property name="s_dt " class="ptolemy.actor.parameters.PortParameter" value="s0821_dt_1">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[405.0, 175.0]">
+        </property>
+        <port name="outArrTs" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+        <port name="outArrTt" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="s0715_0" class="org.kafkaavro.Op7to9_ToPlot">
+        <property name="s_ts " class="ptolemy.actor.parameters.PortParameter" value="s0715_ts_0">
+        </property>
+        <property name="s_dt " class="ptolemy.actor.parameters.PortParameter" value="s0715_dt_0">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[520.0, 140.0]">
+        </property>
+        <port name="outArrTs" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+        <port name="outArrTt" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="s0715plotter" class="ptolemy.actor.lib.gui.XYPlotter">
+        <property name="fillOnWrapup" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="automaticRescale" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="legend" class="ptolemy.kernel.util.StringAttribute" value="s0715_dt_1 s0715_ts_1, s0715_dt_0 s0715_ts_0">
+        </property>
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={0, 31, 1007, 502}, maximized=false}">
+        </property>
+        <property name="_plotSize" class="ptolemy.actor.gui.SizeAttribute" value="[1001, 449]">
+        </property>
+        <property name="startingDataset" class="ptolemy.data.expr.Parameter" value="0">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Jie Liu</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The XYPlotter actor plots (x,y) points and displays the graph. The actor reads x and y double tokens via its two input multiports. Each time the actor iterates, it reads one token from each input channel.  &lt;/p&gt;&#10;&#10;&lt;p&gt;X and Y tokens received on the first channel of the input port&#10; are plotted together, as are the tokens received on the second channels, etc. The two input port must have the same width (i.e., the same number of input channels).&lt;/p&gt;</configure></property>
+<property name="port:inputY" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts doubles representing y-values. The port must have the same width (i.e., number of input channels) as the inputX port.</configure></property>
+<property name="port:inputX" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts one or more doubles representing x-values. The port must have the same width (i.e., number of input channels) as the inputY port.</configure></property>
+<property name="prop:fillOnWrapup" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether to rescale the plot so that all data is visible. By default, the actor scales the plot to fill the display area.</configure></property>
+<property name="prop:legend" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Annotations that will be displayed with the plot graph. Specify a comma-separated list of values that correspond to the input data sets (e.g., rainfall, temperature, elevation).</configure></property>
+<property name="prop:startingDataset" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The starting dataset number to which data is plotted. The value must be a non-negative integer. The default is 0.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:85909:23:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.gui.XYPlotter">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:887:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Plotter">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GraphicalOutput">
+        </property>
+        <property name="semanticType22" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:3:1#ScatterPlot">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[645.0, 115.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:11:1:urn:lsid:kepler-project.org/ns/:86900:363:16">
+        </property>
+        <property name="" class="ptolemy.vergil.basic.DocAttribute">
+            <property name="description" class="ptolemy.kernel.util.StringAttribute" value="&lt;p&gt;The XYPlotter actor plots (x,y) points and displays the graph. The actor reads x and y double tokens via its two input multiports. Each time the actor iterates, it reads one token from each input channel.  &lt;/p&gt;&#10;&#10;&lt;p&gt;X and Y tokens received on the first channel of the input port&#10; are plotted together, as are the tokens received on the second channels, etc. The two input port must have the same width (i.e., the same number of input channels).&lt;/p&gt;">
+            </property>
+            <property name="author" class="ptolemy.kernel.util.StringAttribute" value="Jie Liu">
+            </property>
+            <property name="version" class="ptolemy.kernel.util.StringAttribute" value="null">
+            </property>
+            <property name="fillOnWrapup (parameter)" class="ptolemy.kernel.util.StringAttribute" value="Specify whether to rescale the plot so that all data is visible. By default, the actor scales the plot to fill the display area.">
+            </property>
+            <property name="legend (parameter)" class="ptolemy.kernel.util.StringAttribute" value="Annotations that will be displayed with the plot graph. Specify a comma-separated list of values that correspond to the input data sets (e.g., rainfall, temperature, elevation).">
+            </property>
+            <property name="startingDataset (parameter)" class="ptolemy.kernel.util.StringAttribute" value="The starting dataset number to which data is plotted. The value must be a non-negative integer. The default is 0.">
+            </property>
+            <property name="inputX (port)" class="ptolemy.kernel.util.StringAttribute" value="A multiport that accepts one or more doubles representing x-values. The port must have the same width (i.e., number of input channels) as the inputY port.">
+            </property>
+            <property name="inputY (port)" class="ptolemy.kernel.util.StringAttribute" value="A multiport that accepts doubles representing y-values. The port must have the same width (i.e., number of input channels) as the inputX port.">
+            </property>
+        </property>
+        <configure>
+<?plotml <!DOCTYPE plot PUBLIC "-//UC Berkeley//DTD PlotML 1//EN"
+"http://ptolemy.eecs.berkeley.edu/xml/dtd/PlotML_1.dtd">
+<plot>
+<title>s0715 Plotter</title>
+<xLabel></xLabel>
+<yLabel></yLabel>
+<xRange min="1.573288869388E12" max="1.57342905496E12"/>
+<yRange min="-5961936.0" max="2.005723E7"/>
+<default lineStyles="yes" marks="various" stems="yes"/>
+</plot>?>
+        </configure>
+    </entity>
+    <entity name="s0821_0" class="org.kafkaavro.Op7to9_ToPlot">
+        <property name="s_ts " class="ptolemy.actor.parameters.PortParameter" value="s0821_ts_0">
+        </property>
+        <property name="s_dt " class="ptolemy.actor.parameters.PortParameter" value="s0821_dt_0">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{405.0, 235.0}">
+        </property>
+        <port name="outArrTs" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+        <port name="outArrTt" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="s0821 Plotter" class="ptolemy.actor.lib.gui.XYPlotter">
+        <property name="fillOnWrapup" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="automaticRescale" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="legend" class="ptolemy.kernel.util.StringAttribute" value="s0821_dt_1 s0821_ts_1, s0821_dt_0 s0821_ts_0">
+        </property>
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={631, 398, 371, 198}, maximized=false}">
+        </property>
+        <property name="_plotSize" class="ptolemy.actor.gui.SizeAttribute" value="[365, 145]">
+        </property>
+        <property name="startingDataset" class="ptolemy.data.expr.Parameter" value="0">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Jie Liu</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The XYPlotter actor plots (x,y) points and displays the graph. The actor reads x and y double tokens via its two input multiports. Each time the actor iterates, it reads one token from each input channel.  &lt;/p&gt;&#10;&#10;&lt;p&gt;X and Y tokens received on the first channel of the input port&#10; are plotted together, as are the tokens received on the second channels, etc. The two input port must have the same width (i.e., the same number of input channels).&lt;/p&gt;</configure></property>
+<property name="port:inputY" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts doubles representing y-values. The port must have the same width (i.e., number of input channels) as the inputX port.</configure></property>
+<property name="port:inputX" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts one or more doubles representing x-values. The port must have the same width (i.e., number of input channels) as the inputY port.</configure></property>
+<property name="prop:fillOnWrapup" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether to rescale the plot so that all data is visible. By default, the actor scales the plot to fill the display area.</configure></property>
+<property name="prop:startingDataset" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The starting dataset number to which data is plotted. The value must be a non-negative integer. The default is 0.</configure></property>
+<property name="prop:legend" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Annotations that will be displayed with the plot graph. Specify a comma-separated list of values that correspond to the input data sets (e.g., rainfall, temperature, elevation).</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:85909:24:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.gui.XYPlotter">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:887:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Plotter">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GraphicalOutput">
+        </property>
+        <property name="semanticType22" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:3:1#ScatterPlot">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[555.0, 200.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:11:1:urn:lsid:kepler-project.org/ns/:86900:363:17">
+        </property>
+        <property name="" class="ptolemy.vergil.basic.DocAttribute">
+            <property name="description" class="ptolemy.kernel.util.StringAttribute" value="&lt;p&gt;The XYPlotter actor plots (x,y) points and displays the graph. The actor reads x and y double tokens via its two input multiports. Each time the actor iterates, it reads one token from each input channel.  &lt;/p&gt;&#10;&#10;&lt;p&gt;X and Y tokens received on the first channel of the input port&#10; are plotted together, as are the tokens received on the second channels, etc. The two input port must have the same width (i.e., the same number of input channels).&lt;/p&gt;">
+            </property>
+            <property name="author" class="ptolemy.kernel.util.StringAttribute" value="Jie Liu">
+            </property>
+            <property name="version" class="ptolemy.kernel.util.StringAttribute" value="null">
+            </property>
+            <property name="fillOnWrapup (parameter)" class="ptolemy.kernel.util.StringAttribute" value="Specify whether to rescale the plot so that all data is visible. By default, the actor scales the plot to fill the display area.">
+            </property>
+            <property name="legend (parameter)" class="ptolemy.kernel.util.StringAttribute" value="Annotations that will be displayed with the plot graph. Specify a comma-separated list of values that correspond to the input data sets (e.g., rainfall, temperature, elevation).">
+            </property>
+            <property name="startingDataset (parameter)" class="ptolemy.kernel.util.StringAttribute" value="The starting dataset number to which data is plotted. The value must be a non-negative integer. The default is 0.">
+            </property>
+            <property name="inputX (port)" class="ptolemy.kernel.util.StringAttribute" value="A multiport that accepts one or more doubles representing x-values. The port must have the same width (i.e., number of input channels) as the inputY port.">
+            </property>
+            <property name="inputY (port)" class="ptolemy.kernel.util.StringAttribute" value="A multiport that accepts doubles representing y-values. The port must have the same width (i.e., number of input channels) as the inputX port.">
+            </property>
+        </property>
+        <configure>
+<?plotml <!DOCTYPE plot PUBLIC "-//UC Berkeley//DTD PlotML 1//EN"
+"http://ptolemy.eecs.berkeley.edu/xml/dtd/PlotML_1.dtd">
+<plot>
+<title>s0821 Plotter</title>
+<xLabel></xLabel>
+<yLabel></yLabel>
+<xRange min="1.573288928989E12" max="1.573433712339E12"/>
+<yRange min="8085.0" max="3724647.0"/>
+<default lineStyles="yes" marks="various"/>
+</plot>?>
+        </configure>
+    </entity>
+    <entity name="s1236_1" class="org.kafkaavro.Op7to9_ToPlot">
+        <property name="s_ts " class="ptolemy.actor.parameters.PortParameter" value="s1236_ts_1">
+        </property>
+        <property name="s_dt " class="ptolemy.actor.parameters.PortParameter" value="s1236_dt_1">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[515.0, 275.0]">
+        </property>
+        <port name="outArrTs" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+        <port name="outArrTt" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="s1236_0" class="org.kafkaavro.Op7to9_ToPlot">
+        <property name="s_ts " class="ptolemy.actor.parameters.PortParameter" value="s1236_ts_0">
+        </property>
+        <property name="s_dt " class="ptolemy.actor.parameters.PortParameter" value="s1236_dt_0">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[515.0, 335.0]">
+        </property>
+        <port name="outArrTs" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+        <port name="outArrTt" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="double">
+            </property>
+        </port>
+    </entity>
+    <entity name="s1236 Plotter" class="ptolemy.actor.lib.gui.XYPlotter">
+        <property name="fillOnWrapup" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="automaticRescale" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="legend" class="ptolemy.kernel.util.StringAttribute" value="s1236_dt_1 s1236_ts_1, s1236_dt_0 s1236_ts_0">
+        </property>
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={37, 54, 547, 291}, maximized=false}">
+        </property>
+        <property name="_plotSize" class="ptolemy.actor.gui.SizeAttribute" value="[541, 238]">
+        </property>
+        <property name="startingDataset" class="ptolemy.data.expr.Parameter" value="0">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Jie Liu</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The XYPlotter actor plots (x,y) points and displays the graph. The actor reads x and y double tokens via its two input multiports. Each time the actor iterates, it reads one token from each input channel.  &lt;/p&gt;&#10;&#10;&lt;p&gt;X and Y tokens received on the first channel of the input port&#10; are plotted together, as are the tokens received on the second channels, etc. The two input port must have the same width (i.e., the same number of input channels).&lt;/p&gt;</configure></property>
+<property name="port:inputY" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts doubles representing y-values. The port must have the same width (i.e., number of input channels) as the inputX port.</configure></property>
+<property name="port:inputX" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts one or more doubles representing x-values. The port must have the same width (i.e., number of input channels) as the inputY port.</configure></property>
+<property name="prop:fillOnWrapup" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether to rescale the plot so that all data is visible. By default, the actor scales the plot to fill the display area.</configure></property>
+<property name="prop:legend" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Annotations that will be displayed with the plot graph. Specify a comma-separated list of values that correspond to the input data sets (e.g., rainfall, temperature, elevation).</configure></property>
+<property name="prop:startingDataset" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The starting dataset number to which data is plotted. The value must be a non-negative integer. The default is 0.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:85909:24:3">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.gui.XYPlotter">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:887:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Plotter">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GraphicalOutput">
+        </property>
+        <property name="semanticType22" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:3:1#ScatterPlot">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[640.0, 300.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:11:1:urn:lsid:kepler-project.org/ns/:86900:363:17">
+        </property>
+        <property name="" class="ptolemy.vergil.basic.DocAttribute">
+            <property name="description" class="ptolemy.kernel.util.StringAttribute" value="&lt;p&gt;The XYPlotter actor plots (x,y) points and displays the graph. The actor reads x and y double tokens via its two input multiports. Each time the actor iterates, it reads one token from each input channel.  &lt;/p&gt;&#10;&#10;&lt;p&gt;X and Y tokens received on the first channel of the input port&#10; are plotted together, as are the tokens received on the second channels, etc. The two input port must have the same width (i.e., the same number of input channels).&lt;/p&gt;">
+            </property>
+            <property name="author" class="ptolemy.kernel.util.StringAttribute" value="Jie Liu">
+            </property>
+            <property name="version" class="ptolemy.kernel.util.StringAttribute" value="null">
+            </property>
+            <property name="fillOnWrapup (parameter)" class="ptolemy.kernel.util.StringAttribute" value="Specify whether to rescale the plot so that all data is visible. By default, the actor scales the plot to fill the display area.">
+            </property>
+            <property name="legend (parameter)" class="ptolemy.kernel.util.StringAttribute" value="Annotations that will be displayed with the plot graph. Specify a comma-separated list of values that correspond to the input data sets (e.g., rainfall, temperature, elevation).">
+            </property>
+            <property name="startingDataset (parameter)" class="ptolemy.kernel.util.StringAttribute" value="The starting dataset number to which data is plotted. The value must be a non-negative integer. The default is 0.">
+            </property>
+            <property name="inputX (port)" class="ptolemy.kernel.util.StringAttribute" value="A multiport that accepts one or more doubles representing x-values. The port must have the same width (i.e., number of input channels) as the inputY port.">
+            </property>
+            <property name="inputY (port)" class="ptolemy.kernel.util.StringAttribute" value="A multiport that accepts doubles representing y-values. The port must have the same width (i.e., number of input channels) as the inputX port.">
+            </property>
+        </property>
+        <configure>
+<?plotml <!DOCTYPE plot PUBLIC "-//UC Berkeley//DTD PlotML 1//EN"
+"http://ptolemy.eecs.berkeley.edu/xml/dtd/PlotML_1.dtd">
+<plot>
+<title>s1236 Plotter</title>
+<xLabel></xLabel>
+<yLabel></yLabel>
+<xRange min="1.7976931348623157E308" max="-1.7976931348623157E308"/>
+<yRange min="1.7976931348623157E308" max="-1.7976931348623157E308"/>
+<default lineStyles="yes" marks="bigdots"/>
+</plot>?>
+        </configure>
+    </entity>
+    <entity name="KafkaProducer" class="org.kafkaavro.KafkaAvroProducer">
+        <property name="Kafka Address and Port " class="ptolemy.actor.parameters.PortParameter" value="172.17.0.1:9092">
+        </property>
+        <property name="Schema Registry Address and Port " class="ptolemy.actor.parameters.PortParameter" value="http://172.17.0.1:8081">
+        </property>
+        <property name="Topic To Subscribe " class="ptolemy.actor.parameters.PortParameter" value="K_CorrelateStateChange">
+        </property>
+        <property name="Schema :" class="ptolemy.actor.parameters.PortParameter" value="{ 	&quot;type&quot;: &quot;record&quot;, 	&quot;namespace&quot;: &quot;com.debs2012&quot;, 	&quot;name&quot;: &quot;Debs2012_CorrelateStateChange&quot;, 	&quot;version&quot;: &quot;1&quot;,       	&quot;doc&quot;: &quot;Avro Schema for Debs2012 CorrelateStateChange&quot;, 	&quot;fields&quot;: [ 	 { &quot;name&quot;: &quot;s0715_dt_1&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0715_ts_1&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;logicalType&quot;: &quot;timestamp-millis&quot;, &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0715_dt_0&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0715_ts_0&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;logicalType&quot;: &quot;timestamp-millis&quot;, &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0821_dt_1&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0821_ts_1&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;logicalType&quot;: &quot;timestamp-millis&quot;, &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0821_dt_0&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0821_ts_0&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;logicalType&quot;: &quot;timestamp-millis&quot;, &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0933_dt_1&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0933_ts_1&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;logicalType&quot;: &quot;timestamp-millis&quot;, &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0933_dt_0&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s0933_ts_0&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;logicalType&quot;: &quot;timestamp-millis&quot;, &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s1236_dt_1&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s1236_ts_1&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;logicalType&quot;: &quot;timestamp-millis&quot;, &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s1236_dt_0&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;default&quot;: null }, 	 { &quot;name&quot;: &quot;s1236_ts_0&quot;, &quot;type&quot;: [&quot;null&quot;, &quot;long&quot;], &quot;logicalType&quot;: &quot;timestamp-millis&quot;, &quot;default&quot;: null },          { &quot;name&quot;: &quot;k_send_ts&quot;, &quot;type&quot;: &quot;long&quot;, &quot;logicalType&quot;: &quot;timestamp-millis&quot; }  	] }">
+        </property>
+        <property name="Parameters To Read " class="ptolemy.actor.parameters.PortParameter" value="s0715_dt_1 s0715_ts_1 s0715_dt_0 s0715_ts_0 s0821_dt_1 s0821_ts_1 s0821_dt_0 s0821_ts_0 s0933_dt_1 s0933_ts_1 s0933_dt_0 s0933_ts_0 s1236_dt_1 s1236_ts_1 s1236_dt_0 s1236_ts_0">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[520.0, -95.0]">
+        </property>
+    </entity>
+    <relation name="relation3" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="[355.0, 120.0]">
+        </vertex>
+    </relation>
+    <relation name="relation4" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation6" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation5" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation7" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation8" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation9" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation10" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation11" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation12" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation13" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation14" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation15" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation16" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation17" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation18" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <link port="KafkaConsumer.OutRecFirst" relation="relation"/>
+    <link port="CorrelateStateChange.input" relation="relation"/>
+    <link port="CorrelateStateChange.OutRec" relation="relation3"/>
+    <link port="s0933_1.Firstinput" relation="relation3"/>
+    <link port="s0933_1.outArrTs" relation="relation4"/>
+    <link port="s0933_1.outArrTt" relation="relation5"/>
+    <link port="s0933_0.Firstinput" relation="relation3"/>
+    <link port="s0933_0.outArrTs" relation="relation6"/>
+    <link port="s0933_0.outArrTt" relation="relation7"/>
+    <link port="s0933 Plotter.inputX" relation="relation4"/>
+    <link port="s0933 Plotter.inputX" relation="relation6"/>
+    <link port="s0933 Plotter.inputY" relation="relation5"/>
+    <link port="s0933 Plotter.inputY" relation="relation7"/>
+    <link port="s0715_1.Firstinput" relation="relation3"/>
+    <link port="s0715_1.outArrTs" relation="relation8"/>
+    <link port="s0715_1.outArrTt" relation="relation10"/>
+    <link port="s0821_1.Firstinput" relation="relation3"/>
+    <link port="s0821_1.outArrTs" relation="relation12"/>
+    <link port="s0821_1.outArrTt" relation="relation14"/>
+    <link port="s0715_0.Firstinput" relation="relation3"/>
+    <link port="s0715_0.outArrTs" relation="relation9"/>
+    <link port="s0715_0.outArrTt" relation="relation11"/>
+    <link port="s0715plotter.inputX" relation="relation8"/>
+    <link port="s0715plotter.inputX" relation="relation9"/>
+    <link port="s0715plotter.inputY" relation="relation10"/>
+    <link port="s0715plotter.inputY" relation="relation11"/>
+    <link port="s0821_0.Firstinput" relation="relation3"/>
+    <link port="s0821_0.outArrTs" relation="relation13"/>
+    <link port="s0821_0.outArrTt" relation="relation15"/>
+    <link port="s0821 Plotter.inputX" relation="relation12"/>
+    <link port="s0821 Plotter.inputX" relation="relation13"/>
+    <link port="s0821 Plotter.inputY" relation="relation14"/>
+    <link port="s0821 Plotter.inputY" relation="relation15"/>
+    <link port="s1236_1.Firstinput" relation="relation3"/>
+    <link port="s1236_1.outArrTs" relation="relation17"/>
+    <link port="s1236_1.outArrTt" relation="relation2"/>
+    <link port="s1236_0.Firstinput" relation="relation3"/>
+    <link port="s1236_0.outArrTs" relation="relation18"/>
+    <link port="s1236_0.outArrTt" relation="relation16"/>
+    <link port="s1236 Plotter.inputX" relation="relation17"/>
+    <link port="s1236 Plotter.inputX" relation="relation18"/>
+    <link port="s1236 Plotter.inputY" relation="relation2"/>
+    <link port="s1236 Plotter.inputY" relation="relation16"/>
+    <link port="KafkaProducer.input" relation="relation3"/>
+</entity>
