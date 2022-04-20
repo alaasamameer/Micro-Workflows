@@ -1,0 +1,208 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="JavaFactorialPN" class="ptolemy.actor.TypedCompositeActor">
+    <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="10.0.devel">
+    </property>
+    <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org/ns/:47259:244:22">
+    </property>
+    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:53145:284:18">
+    </property>
+    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={411, 181, 932, 714}, maximized=false}">
+    </property>
+    <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[600, 534]">
+    </property>
+    <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.25">
+    </property>
+    <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{290.0, 257.0}">
+    </property>
+    <property name="Annotation" class="ptolemy.vergil.kernel.attributes.TextAttribute">
+        <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+        </property>
+        <property name="_hideAllParameters" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="14">
+        </property>
+        <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+        </property>
+        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="SansSerif">
+        </property>
+        <property name="bold" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="italic" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="anchor" class="ptolemy.data.expr.StringParameter" value="northwest">
+        </property>
+        <property name="text" class="ptolemy.kernel.util.StringAttribute" value="Use Java to compute the factorial. Double-click on&#10;the Java actor to see the code.&#10;&#10;NOTE: The JDK is required to run this workflow.&#10;&#10;Daniel Crawl, SDSC, Aug 2014">
+            <property name="_style" class="ptolemy.actor.gui.style.TextStyle">
+                <property name="height" class="ptolemy.data.expr.Parameter" value="15">
+                </property>
+                <property name="width" class="ptolemy.data.expr.Parameter" value="40">
+                </property>
+            </property>
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Use the Annotation attribute to annotate a workflow. Double-click the attribute to customize the content, font size, color, and basic formatting (bold and italics).</configure></property>
+<property name="prop:fontFamily" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The font face. Select a font from the drop-down menu. The default is &quot;SansSerif&quot;.</configure></property>
+<property name="prop:italic" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Select to indicate that the type should be italics. By default, type will not be italicized.</configure></property>
+<property name="prop:bold" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Select to indicate that the type should be bold. By default, type will not be bold.</configure></property>
+<property name="prop:textColor" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The font color. Specify a string representing an array of four elements: red, green, blue, and alpha, where alpha is transparency. The default is an opaque black, {0.0, 0.0, 0.0, 1.0}</configure></property>
+<property name="prop:textSize" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The font size. Select an integer from the drop-down menu or specify a new size by typing it directly into the value field.  The default is 14.</configure></property>
+<property name="prop:text" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The text of the annotation.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:53145:282:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.vergil.kernel.attributes.TextAttribute">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1199:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#DocumentationActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#WorkflowDocumentation">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[120.0, 290.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:436:1:urn:lsid:kepler-project.org/ns/:34169:69:2:urn:lsid:kepler-project.org/ns/:32911:863:1:urn:lsid:kepler-project.org/ns/:50420:1394:1">
+        </property>
+    </property>
+    <property name="PN Director" class="ptolemy.domains.pn.kernel.PNDirector">
+        <property name="localClock" class="ptolemy.actor.LocalClock">
+            <property name="globalTimeResolution" class="ptolemy.actor.parameters.SharedParameter" value="1.0E-10">
+            </property>
+            <property name="clockRate" class="ptolemy.data.expr.Parameter" value="1.0">
+            </property>
+        </property>
+        <property name="initialQueueCapacity" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+        <property name="maximumQueueCapacity" class="ptolemy.data.expr.Parameter" value="65536">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Mudit Goel, Edward A. Lee, Xiaowen Xin</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;PN Directors are natural candidates for managing workflows that require parallel processing on distributed computing systems. PN workflows are powerful because they have few restrictions. On the other hand, they can be very inefficient.&lt;/p&gt;&#10;&#10;&lt;p&gt;The Process Network (PN) Director is similar to the SDF Director in that it does not have a notion of time. However, unlike the SDF Director, the PN Director does not statically calculate firing schedules. Instead, a PN workflow is driven by data availability: tokens are created on output ports whenever input tokens are available and the outputs can be calculated. Output tokens are passed to connected actors, where they are held in a buffer until that next actor collects all required inputs and can fire. The PN Director finishes executing a workflow only when there are no new data token sources anywhere in the workflow. &lt;/p&gt;&#10;&#10;&lt;p&gt;The same execution process that gives the PN Director its flexibility can also lead to some unexpected results: workflows may refuse to automatically terminate because tokens are always generated and available to downstream actors, for example. If one actor fires at a much higher rate than another, a downstream actor's memory buffer may overflow, causing workflow execution to fail.&lt;/p&gt;&#10;&#10; &lt;p&gt;There are at least three ways for a PN model to terminate itself:&#10; &lt;ol&gt;&#10; &lt;li&gt;Have the model starve itself.  Typically, a boolean switch is used.&#10; See the PN OrderedMerge demo at&#10;  &lt;code&gt;ptolemy/domains/pn/demo/OrderedMerge/OrderedMerge.xml&lt;/code&gt;&lt;/li&gt;&#10;&#10; &lt;li&gt;Have the model call the Stop actor.  See the PN RemoveNilTokens demo at&#10;  &lt;code&gt;ptolemy/domains/pn/demo/RemoveNilTokens/RemoveNilTokens.xml&lt;/code&gt;&lt;/li&gt;&#10;&#10; &lt;li&gt;Set the &lt;i&gt;firingCountLimit&lt;/i&gt; actor&#10; parameter to the number of iterations desired.  Actors such as Ramp&#10; extend LimitedFiringSource and have the &lt;i&gt;firingCountLimit&lt;/i&gt; parameter.&lt;/li&gt;&#10; &lt;/ol&gt;&lt;/p&gt;&#10;</configure></property>
+<property name="prop:initialQueueCapacity" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The initial size of the queues for each communication channel. The value is an integer that defaults to 1. This is an advanced parameter that can usually be left at its  default value.</configure></property>
+<property name="prop:maximumQueueCapacity" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The maximum size of the queues for each communication channel. The value is an integer that defaults to 65536. To specify unbounded queues, set the value to 0. This is an advanced parameter that can usually be left at its  default value.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:director:2:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.domains.pn.kernel.PNDirector">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:directorclass:2:2">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Director">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Director">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[125.0, 100.0]">
+        </property>
+    </property>
+    <entity name="Java" class="org.kepler.scriptengine.Java">
+        <property name="script" class="ptolemy.kernel.util.StringAttribute" value="import ptolemy.actor.*;&#10;import ptolemy.data.*;&#10;import ptolemy.kernel.util.IllegalActionException;&#10;&#10;import org.kepler.scriptengine.Java;&#10;&#10;public class Actor {&#10;  public void fire() throws IllegalActionException {&#10;&#10;    int val = ((IntToken)in.get(0)).intValue();&#10;    &#10;    if(val &lt; 0) {&#10;        actor.error(&quot;Input must be non-negative.&quot;);&#10;    }&#10;&#10;    int total = 1;&#10;    while(val &gt; 1) {&#10;      total *= val;&#10;      val--;&#10;    } &#10;  &#10;    out.broadcast(new IntToken(total));&#10;  }&#10;&#10;  public Java actor;&#10;  public TypedIOPort in;&#10;  public TypedIOPort out;&#10;}&#10;">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[240.0, 190.0]">
+        </property>
+        <port name="in" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+        </port>
+        <port name="out" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+        </port>
+    </entity>
+    <entity name="Ramp" class="ptolemy.actor.lib.Ramp">
+        <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
+        </property>
+        <property name="init" class="ptolemy.actor.parameters.PortParameter" value="0">
+        </property>
+        <property name="step" class="ptolemy.actor.parameters.PortParameter" value="1">
+        </property>
+        <property name="firingCountLimit" class="ptolemy.data.expr.Parameter" value="10">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Yuhong Xiong, Edward A. Lee</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Ramp actor is the equivalent of the &quot;for loop&quot; in many traditional computer languages. Its parameters include an intial value, the amount the value is incremented each time the actor fires (the 'step'), and the upper limit of the value (the firingCountLimit). The actor outputs an integer each time it is fired. &lt;/p&gt;&#10;&#10;&lt;p&gt;The actor's output can be used as a counter (increasing or decreasing), or as a parameter used in an incremented workflow. For example, the output of a Ramp actor can be input to an Expression actor to create file names that are unique for each iteration (e.g., 'file1', 'file2', etc.) The Ramp actor is also particularly useful with PN directed workflows where there is no way to set the number of iterations as a Director parameter. &lt;/p&gt;&#10;&#10;&lt;p&gt;The first time the actor fires, it outputs the value of its init parameter. The increment value, specified with either the step port or parameter, will only be added on the following iteration. To add an increment to the first iteration, use the Accumulator actor.&lt;/p&gt;&#10;&#10;&lt;p&gt;The actor accepts values of any type that support addition.&lt;/p&gt;</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the incremented value.</configure></property>
+<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that has no declared type (in other words, the port can accept any data type: double, int, array, etc.) If the port is connected, the actor will not fire until the trigger port receives an input token. Connecting the port is optional, but useful when scheduling the actor to perform at a certain time.</configure></property>
+<property name="port:step" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts the amount by which the output is incremented on each iteration. The port accepts a value of any type that supports addition. The value is an integer and defaults to 1.</configure></property>
+<property name="prop:firingCountLimit" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The number of iterations that transpire before the actor indicates that it is finished. If firingCountLimit is set to zero, the actor has no limit imposed.</configure></property>
+<property name="prop:step" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The amount by which the output is incremented on each iteration. The port accepts a value of any type that supports addition. The default is the integer 1.</configure></property>
+<property name="prop:init" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The value produced by the Ramp on its first iteration. The default value is the integer 0.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47259:245:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Ramp">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:881:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#IterativeMathOperationActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#IterativeOperation">
+        </property>
+        <property name="semanticType22" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#WorkflowInput">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[125.0, 190.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:5:1">
+        </property>
+        <port name="trigger" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+        <port name="init" class="ptolemy.actor.parameters.ParameterPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
+            </property>
+        </port>
+        <port name="step" class="ptolemy.actor.parameters.ParameterPort">
+            <property name="input"/>
+            <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="Test" class="ptolemy.actor.lib.Test">
+        <property name="correctValues" class="ptolemy.data.expr.Parameter" value="{1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880}">
+        </property>
+        <property name="tolerance" class="ptolemy.data.expr.Parameter" value="1.0E-9">
+        </property>
+        <property name="requireAllCorrectValues" class="ptolemy.actor.parameters.SharedParameter" value="true">
+        </property>
+        <property name="trainingMode" class="ptolemy.actor.parameters.SharedParameter" value="false">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee, Christopher Hylands, Jim Armstrong</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Test actor reads an input value of any type and compares it to a corresponding value in a specified array of values. If the two values match, the actor fires successfully. If the two values do not match, the actor generates an error. The actor outputs a Boolean token: false if the actor's iteration count is less than or equal to the length of the comparison array; true if the iteration count is greater than the length of the array. The Boolean output can be fed to a Stop actor to stop the workflow upon successfully matching test data.&lt;/p&gt;&#10;&#10;&lt;p&gt;Unlike the NonstrictTest actor, the Test actor supports a multiport input. The actor also differs from NonstrictTest in that it requires that all inputs be present. &lt;/p&gt;&#10;&#10;&lt;p&gt;The comparison value is specified with the correctValues parameter. The parameter accepts an array of values, the type of which must match the type of the input (the default array is {true}). The actor cycles through the array values, comparing each consecutive input to the next token in the correctValues array. After each of the values in the correctValues parameter has been matched, any subsequent iteration always succeeds. This behavior allows the actor to be used as a &quot;power-up&quot; test for a model; the actor will check the first few iterations against some known results. &lt;/p&gt;&#10;&#10;&lt;p&gt;The input is a multiport. If more than one input channel exists, then each element of correctValues must itself be an array, with length matching the number of channels. &lt;/p&gt;&#10;&#10;&lt;p&gt;Suppose for example that the input consists of one channel, and the first three inputs should be 1, 2, and 3. Then set correctValues to &#10;&#10; {1, 2, 3}&lt;/p&gt;&#10;&#10;&lt;p&gt;Suppose instead that the input consists of two channels, and the correct values in the first iteration are 1 on the first channel and 2 on the second. Then on the second iteration, the correct values are 3 on the first channel and 4 on the second. Then set correctValues to &#10;&#10; {{1, 2}, {3, 4}}&#10;&#10;Note: With this setting, no tests are performed after the first two iterations of this actor. &lt;/p&gt;&#10;&#10;&lt;p&gt;The input values are checked when the actor fires. If an input value is missing or differs from what it should be, then the actor generates an error. To check the input value after the actor fires, then use the NonstrictTest actor. &lt;/p&gt;&#10;&#10;&lt;p&gt;If the input is a double or complex token, then the comparison &quot;passes&quot; if the value is close to what it should be (i.e., within the specified tolerance). Tolerance is specified with the tolerance parameter, and defaults to 10-9.&lt;/p&gt;</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts tokens of any type.</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Boolean output that is false as long as there is data to compare against the input; the value becomes true on the first firing after such data has been exhausted.</configure></property>
+<property name="prop:correctValues" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array specifying what the input should be. If more than one input channel exists, then each element of the array must itself be an array, with length matching the number of channels. The default is a one-by-one array containing a Boolean true.</configure></property>
+<property name="prop:tolerance" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A double token specifying how closely the input must match the value from the correctValues array. The default is 10-9.</configure></property>
+<property name="prop:trainingMode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Select the trainingMode parameter to collect the input values and place them in the correctValues array. The trainingMode parameter is a shared parameter, meaning that changing it for any one instance of the actor in the model will change all instances.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:53145:286:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Test">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:985:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#UnitTestControlActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#UnitTestControl">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[350.0, 190.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:116:1">
+        </property>
+    </entity>
+    <relation name="relation" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <link port="Java.in" relation="relation"/>
+    <link port="Java.out" relation="relation2"/>
+    <link port="Ramp.output" relation="relation"/>
+    <link port="Test.input" relation="relation2"/>
+</entity>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="exp/|org/sdm/spa/MessageBasedWebService.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="tests"/>
+	<classpathentry kind="src" path="src/exp"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="**/CVS/|**/adm/|**/codeDoc/|build/|config/|doc/coding/templates/|doc/doclets/|ptolemy/actor/TypedCompositeActorWithCoSimulation.java|ptolemy/actor/gt/|ptolemy/actor/gui/TableauFrame.java|ptolemy/actor/lib/ArrayLevelCrossing.java|ptolemy/actor/lib/URLDirectoryReader.java|ptolemy/actor/lib/database|ptolemy/actor/lib/jai/|ptolemy/actor/lib/jmf/|ptolemy/actor/lib/joystick/|ptolemy/actor/lib/vhdl/|ptolemy/actor/lib/x10/|ptolemy/actor/ptalon/|ptolemy/apps/|ptolemy/backtrack/|ptolemy/backtrack/ast/|ptolemy/backtrack/test/|ptolemy/backtrack/util/|ptolemy/caltrop/|ptolemy/codegen/|ptolemy/copernicus/|ptolemy/copernicus/c/test/|ptolemy/copernicus/c/test/cm/|ptolemy/copernicus/jhdl/|ptolemy/copernicus/kernel/fragment/|ptolemy/data/properties/|ptolemy/distributed/|ptolemy/domains/ct/demo/Saber/|ptolemy/domains/gr/|ptolemy/domains/gr/lib/experimental/|ptolemy/domains/gr/lib/quicktime/|ptolemy/domains/pdf/|ptolemy/plot/servlet/|ptolemy/vergil/actor/ActorController.java|ptolemy/vergil/basic/BasicGraphController.java|ptolemy/vergil/basic/BasicGraphFrame.java|ptolemy/vergil/gt/|ptolemy/vergil/icon/XMLIcon.java|ptolemy/vergil/kernel/AttributeController.java|ptolemy/vergil/kernel/RenameDialogAction.java|vendors/" kind="src" path="ptII"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,6 @@
+core
+common
+module-manager
+configuration-manager
+kepler-tasks
+ptolemy

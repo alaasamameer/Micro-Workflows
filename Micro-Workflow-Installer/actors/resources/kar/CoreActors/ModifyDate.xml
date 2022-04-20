@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="ModifyDate" class="ptolemy.actor.TypedAtomicActor">
+<property name="entityId"  value="urn:lsid:kepler-project.org:actor:761:1" class="org.kepler.moml.NamedObjId"/>
+<property name="class" value="ptolemy.actor.lib.ModifyDate" class="ptolemy.kernel.util.StringAttribute">
+  <property name="id" value="null" class="ptolemy.kernel.util.StringAttribute"/>
+</property>
+<property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Time">
+</property>
+
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Patricia Derler</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>$Id: ModifyDate.java 69607 2014-07-30 17:07:26Z cxh $</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;Modify date by adding or subtracting a value to one of the date fields.</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Output for the new date token.</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Input for date tokens.</configure></property>
+<property name="port:value" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Input for value in a given unit to be added or subtracted from date  token received by input.</configure></property>
+<property name="prop:operation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Parameter for operation. The operation is a choice of the string  values &quot;+&quot; and &quot;-&quot; and defaults to &quot;+&quot;.</configure></property>
+<property name="prop:unit" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Unit of value to be added or subtracted. This can be either part of  the date, i.e. year, month, day, ... and it defaults to second.</configure></property>
+</property></entity>

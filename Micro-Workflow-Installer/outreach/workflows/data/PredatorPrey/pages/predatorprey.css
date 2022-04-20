@@ -1,0 +1,198 @@
+/* Styling that is independent of theme - e.g. same for Berkeley, CMU, ... 
+   Based in part on "Implementing Responsive Design" by Tim Kadlec */
+
+/* Styling for standard elements */
+html {
+	/* Specify root element size as a percentage due to IE problem with ems. */
+	font-size: 100%; /* Typically 16px */
+}
+
+body {
+	/* Specify body font size as a percentage due to IE problem with ems. */
+	font-size: 100%; /* Typically 16px */
+}
+
+footer {
+	width: 100%;
+}
+
+h1 {
+	/* Remaining fonts specified relative to containing element's font size */
+	font-family: sans-serif;
+	font-size: 1.5em; /* 24px / 16px */
+	padding-left: 2%;
+}
+
+li {
+	padding-left: 2%;
+	padding-right: 2%;
+	display: inline-block;
+}
+
+nav {
+	width: 100%;
+}
+
+/* Custom styling */
+
+/* Axis styling  
+   Based on http://alignedleft.com/tutorials/d3/axes/
+*/ 
+
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+
+.legendLabel, .axis text {
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+.axisLabel {
+	font-family: sans-serif;
+    font-size: 16px;
+}
+
+#info {
+	float: left;
+	width: 30%;
+	padding-top: 1%;
+}
+
+#graph {
+	float: left;
+	width: 65%;
+	padding-top: 1%;
+	padding-left: 2%;
+	margin: 1%;
+}
+
+/* Grey out page while loading.  See:
+   http://stackoverflow.com/questions/1964839/jquery-please-wait-loading-animation
+*/
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal {
+    display:    block;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                50% 50% 
+                no-repeat;
+    text-align: center;
+    color: #5e7aa9;
+    
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
+
+#progressBar {
+	width: 32%;
+	height: 4%;
+	margin-left: auto;	
+	margin-right: auto;
+}
+
+#progressBar .ui-progressbar-value {
+	background: #5e7aa9;
+}
+
+
+/* Berkeley colors - Mobile styling */
+
+/* Need the [data-role="header"] to make this selector more specific than 
+   the selectors used in the default jQuery css styling (which we use some of).
+   Selectors are applied least-specific to most-specific 
+   */
+
+
+/* From Themeroller: http://themeroller.jquerymobile.com/ */
+/* Bar: Toolbars, dividers, slider track */
+.ui-bar-z,
+.ui-page-theme-z .ui-bar-inherit,
+html .ui-bar-z .ui-bar-inherit,
+html .ui-body-z .ui-bar-inherit,
+html body .ui-group-theme-z .ui-bar-inherit {
+	/* Colors from UCB style guidelines  http://www.berkeley.edu/webstyle/ */ 
+	background: #2a2f60 /*{z-bar-background-color}*/;
+	border-color: #667396 /*{z-bar-border}*/;
+	color: #ffffff /*{z-bar-color}*/;
+	text-shadow: 0 /*{z-bar-shadow-x}*/ 1px /*{z-bar-shadow-y}*/ 0 /*{z-bar-shadow-radius}*/ #000000 /*{z-bar-shadow-color}*/;
+	font-weight: bold;
+}
+.ui-bar-z {
+	border-width: 1px;
+	border-style: solid;
+}
+
+*[data-role="content"] {
+	background: #ffffff;
+}
+
+
+/* Button up */
+.ui-page-theme-z .ui-btn,
+html .ui-bar-z .ui-btn,
+html .ui-body-z .ui-btn,
+html body .ui-group-theme-z .ui-btn,
+html head + body .ui-btn.ui-btn-z,
+/* Button visited */
+.ui-page-theme-z .ui-btn:visited,
+html .ui-bar-z .ui-btn:visited,
+html .ui-body-z .ui-btn:visited,
+html body .ui-group-theme-z .ui-btn:visited,
+html head + body .ui-btn.ui-btn-z:visited {
+	background: #2a2f60 /*{a-bup-background-color}*/;
+	border-color: #aaaaaa /*{a-bup-border}*/;
+	color: #ffffff /*{a-bup-color}*/;
+	text-shadow: 0 /*{a-bup-shadow-x}*/ 1px /*{a-bup-shadow-y}*/ 0 /*{a-bup-shadow-radius}*/ #000000 /*{a-bup-shadow-color}*/;
+}
+/* Button hover */
+.ui-page-theme-z .ui-btn:hover,
+html .ui-bar-z .ui-btn:hover,
+html .ui-body-z .ui-btn:hover,
+html body .ui-group-theme-z .ui-btn:hover,
+html head + body .ui-btn.ui-btn-z:hover {
+	background: #667396 /*{a-bhover-background-color}*/;
+	border-color: #dddddd /*{a-bhover-border}*/;
+	color: #ffffff /*{a-bhover-color}*/;
+	text-shadow: 0 /*{a-bhover-shadow-x}*/ 1px /*{a-bhover-shadow-y}*/ 0 /*{a-bhover-shadow-radius}*/ #000000 /*{a-bhover-shadow-color}*/;
+}
+/* Button down */
+.ui-page-theme-z .ui-btn:active,
+html .ui-bar-z .ui-btn:active,
+html .ui-body-z .ui-btn:active,
+html body .ui-group-theme-z .ui-btn:active,
+html head + body .ui-btn.ui-btn-z:active {
+	background: #667396/*{a-bdown-background-color}*/;
+	border-color: #dddddd /*{a-bdown-border}*/;
+	color: #ffffff /*{a-bdown-color}*/;
+	text-shadow: 0 /*{a-bdown-shadow-x}*/ 1px /*{a-bdown-shadow-y}*/ 0 /*{a-bdown-shadow-radius}*/ #000000 /*{a-bdown-shadow-color}*/;
+}
+
+
+
+

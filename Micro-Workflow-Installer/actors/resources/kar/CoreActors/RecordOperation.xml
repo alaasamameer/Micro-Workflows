@@ -1,0 +1,23 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="RecordOperation" class="ptolemy.actor.TypedAtomicActor">
+    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:760:1">
+    </property>
+    <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.actor.RecordOperation">
+        <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
+        </property>
+    </property>
+    <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#DataStructureOperation">
+    </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Philippe Huynh, Daniel Crawl</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>$Id$</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;An actor that modifies the contents of record tokens. The token to&#10; be modified is read in the &lt;i&gt;input&lt;/i&gt; port. The &lt;i&gt;path&lt;/i&gt; parameter&#10; specifies the path within the input record token to modify. The format&#10; of the path starts with &lt;code&gt;root&lt;/code&gt; and contains the name of each&#10; nested label within the record token. For example, if the input record&#10; is &lt;code&gt;{a={b={c=1}}}&lt;/code&gt;, the path to the &lt;code&gt;c&lt;/code&gt; field is&#10; is &lt;code&gt;root.a.b.c&lt;/code&gt;. The &lt;i&gt;value&lt;/i&gt; input specifies a token&#10; to add or replace at the specified path in the input token.&#10; &lt;p&gt; This actor supports the following operations:&#10; &lt;ul&gt;&#10; &lt;li&gt;add&lt;p&gt;The token in &lt;i&gt;value&lt;/i&gt; is added to the input token at the&#10; path described by &lt;i&gt;path&lt;/i&gt;.&#10; &lt;/li&gt;&#10; &lt;li&gt;extract&lt;p&gt;The part of the input token described by the &lt;i&gt;path&lt;/i&gt; is&#10; output.&#10; &lt;/li&gt;&#10; &lt;li&gt;remove&lt;p&gt;The part of input token described by the &lt;i&gt;path&lt;/i&gt;&#10; is removed.&lt;/p&gt;&#10; &lt;/li&gt;&#10; &lt;li&gt;replace&lt;p&gt;The part of the input token described by the &lt;i&gt;path&lt;/i&gt;&#10; is replaced with the contents read from &lt;i&gt;value&lt;/i&gt;.&lt;/p&gt;&#10; &lt;/li&gt;&#10; &lt;/ul&gt;</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The resulting record token.</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The record token to operate on.</configure></property>
+<property name="port:value" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The value to add or replace in the input.</configure></property>
+<property name="prop:operation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The operation to perform: add, extract, remove, or replace. &lt;b&gt;NOTE:&lt;/b&gt; Do not change while the workflow is executing.</configure></property>
+<property name="prop:path" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to operate on.</configure></property>
+</property></entity>

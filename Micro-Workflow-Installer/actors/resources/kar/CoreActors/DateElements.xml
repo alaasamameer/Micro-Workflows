@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="DateElements" class="ptolemy.actor.TypedAtomicActor">
+<property name="entityId"  value="urn:lsid:kepler-project.org:actor:762:1" class="org.kepler.moml.NamedObjId"/>
+<property name="class" value="ptolemy.actor.lib.DateElements" class="ptolemy.kernel.util.StringAttribute">
+  <property name="id" value="null" class="ptolemy.kernel.util.StringAttribute"/>
+</property>
+<property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Time">
+</property>
+
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Patricia Derler</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>$Id: DateElements.java 72874 2015-07-26 21:01:52Z cxh $</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;Output elements of date (year, month, day, hour, etc.) from date.</configure></property>
+<property name="port:second" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Second of date received on input.</configure></property>
+<property name="port:microsecond" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Microsecond of date received on input.</configure></property>
+<property name="port:minute" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Minute of date received on input.</configure></property>
+<property name="port:hour" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Hour of date received on input.</configure></property>
+<property name="port:timeInMillis" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Time in UTC milliseconds since epoch.</configure></property>
+<property name="port:month" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Month of date received on input.</configure></property>
+<property name="port:timeZoneOffset" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Time zone offset of date received on input.</configure></property>
+<property name="port:year" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Year of date received on input.</configure></property>
+<property name="port:day" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Day of the month of date received on input.</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Input for date token.</configure></property>
+<property name="port:nanosecond" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Nanosecond of date received on input.</configure></property>
+<property name="port:millisecond" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Millisecond of date received on input.</configure></property>
+</property></entity>

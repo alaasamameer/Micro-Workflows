@@ -1,0 +1,1983 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="urn:lsid:localhost:onto:3:1#"
+     xml:base="urn:lsid:localhost:onto:3:1"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="urn:lsid:localhost:onto:3:1">
+        <rdfs:label rdf:datatype="&xsd;string">Disciplines</rdfs:label>
+        <owl:versionInfo rdf:datatype="&xsd;string">classified</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- #AnalysisOfCovariance -->
+
+    <owl:Class rdf:about="#AnalysisOfCovariance">
+        <rdfs:label rdf:datatype="&xsd;string">Analysis Of Covariance</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #AnalysisOfVariance -->
+
+    <owl:Class rdf:about="#AnalysisOfVariance">
+        <rdfs:label rdf:datatype="&xsd;string">Analysis Of Variance</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #AnalyticalEcology -->
+
+    <owl:Class rdf:about="#AnalyticalEcology">
+        <rdfs:label rdf:datatype="&xsd;string">Analytical Ecology</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Ecology"/>
+    </owl:Class>
+    
+
+
+    <!-- #Astrophysics -->
+
+    <owl:Class rdf:about="#Astrophysics">
+        <rdfs:label rdf:datatype="&xsd;string">Astrophysics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Physics"/>
+    </owl:Class>
+    
+
+
+    <!-- #BarChart -->
+
+    <owl:Class rdf:about="#BarChart">
+        <rdfs:label rdf:datatype="&xsd;string">Bar Chart</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#GraphicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #BinomialDistribution -->
+
+    <owl:Class rdf:about="#BinomialDistribution">
+        <rdfs:label rdf:datatype="&xsd;string">Binomial Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#StatisticalDistribution"/>
+        <owl:disjointWith rdf:resource="#GeometricDistribution"/>
+        <owl:disjointWith rdf:resource="#NegativeBinomialDistribution"/>
+        <owl:disjointWith rdf:resource="#NormalDistribution"/>
+        <owl:disjointWith rdf:resource="#PoissonDistribution"/>
+        <owl:disjointWith rdf:resource="#UniformDistribution"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKepler -->
+
+    <owl:Class rdf:about="#BioKepler">
+        <rdfs:label rdf:datatype="&xsd;string">BioKepler</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Biology"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKepler16SrRNA -->
+
+    <owl:Class rdf:about="#BioKepler16SrRNA">
+        <rdfs:label rdf:datatype="&xsd;string">16S rRNA</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerAlignment -->
+
+    <owl:Class rdf:about="#BioKeplerAlignment">
+        <rdfs:label rdf:datatype="&xsd;string">Sequence Alignment</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerAssembly -->
+
+    <owl:Class rdf:about="#BioKeplerAssembly">
+        <rdfs:label rdf:datatype="&xsd;string"> Assembly</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerClusterAnalysis -->
+
+    <owl:Class rdf:about="#BioKeplerClusterAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Cluster Analysis </rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerGUIInterface -->
+
+    <owl:Class rdf:about="#BioKeplerGUIInterface">
+        <rdfs:label rdf:datatype="&xsd;string">Visualization</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerGeneticAndPopulationAnalysis -->
+
+    <owl:Class rdf:about="#BioKeplerGeneticAndPopulationAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Genetic and Population Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerGenomeAnalysis -->
+
+    <owl:Class rdf:about="#BioKeplerGenomeAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Genome Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerIntegratedBioinformaticsEnvironment -->
+
+    <owl:Class rdf:about="#BioKeplerIntegratedBioinformaticsEnvironment">
+        <rdfs:label rdf:datatype="&xsd;string">Integrated Bioinformatics Environment</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerMetagenomicsMetatranscriptomics -->
+
+    <owl:Class rdf:about="#BioKeplerMetagenomicsMetatranscriptomics">
+        <rdfs:label rdf:datatype="&xsd;string">Metagenomics and Metatranscriptomics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerMicroarray -->
+
+    <owl:Class rdf:about="#BioKeplerMicroarray">
+        <rdfs:label rdf:datatype="&xsd;string">Microarray</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerMiscellaneous -->
+
+    <owl:Class rdf:about="#BioKeplerMiscellaneous">
+        <rdfs:label rdf:datatype="&xsd;string">Miscellaneous</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerMultipleAlignment -->
+
+    <owl:Class rdf:about="#BioKeplerMultipleAlignment">
+        <rdfs:label rdf:datatype="&xsd;string">Multiple Alignment</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerNGSSequenceProcessing -->
+
+    <owl:Class rdf:about="#BioKeplerNGSSequenceProcessing">
+        <rdfs:label rdf:datatype="&xsd;string">Next Generation Sequence Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerOntologies -->
+
+    <owl:Class rdf:about="#BioKeplerOntologies">
+        <rdfs:label rdf:datatype="&xsd;string">Ontologies</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerPhylogenetics -->
+
+    <owl:Class rdf:about="#BioKeplerPhylogenetics">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogenetics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerProteomics -->
+
+    <owl:Class rdf:about="#BioKeplerProteomics">
+        <rdfs:label rdf:datatype="&xsd;string">Proteomics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerRNAseq -->
+
+    <owl:Class rdf:about="#BioKeplerRNAseq">
+        <rdfs:label rdf:datatype="&xsd;string">RNA-seq</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerSequenceAnalysis -->
+
+    <owl:Class rdf:about="#BioKeplerSequenceAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Sequence Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerStructuralBioinformatics -->
+
+    <owl:Class rdf:about="#BioKeplerStructuralBioinformatics">
+        <rdfs:label rdf:datatype="&xsd;string">Structural Bioinformatics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioKeplerSystemBiology -->
+
+    <owl:Class rdf:about="#BioKeplerSystemBiology">
+        <rdfs:label rdf:datatype="&xsd;string">System Biology</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioKepler"/>
+    </owl:Class>
+    
+
+
+    <!-- #BioLinux -->
+
+    <owl:Class rdf:about="#BioLinux">
+        <rdfs:label rdf:datatype="&xsd;string">BioLinux</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Biology"/>
+    </owl:Class>
+    
+
+
+    <!-- #Biology -->
+
+    <owl:Class rdf:about="#Biology">
+        <rdfs:label rdf:datatype="&xsd;string">Biology</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAcd -->
+
+    <owl:Class rdf:about="#BiologyAcd">
+        <rdfs:label rdf:datatype="&xsd;string">Acd</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignment -->
+
+    <owl:Class rdf:about="#BiologyAlignment">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignmentConsensus -->
+
+    <owl:Class rdf:about="#BiologyAlignmentConsensus">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment Consensus</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyAlignment"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignmentDifferences -->
+
+    <owl:Class rdf:about="#BiologyAlignmentDifferences">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment Differences</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyAlignment"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignmentDotPlots -->
+
+    <owl:Class rdf:about="#BiologyAlignmentDotPlots">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment Dot Plots</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyAlignment"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignmentEditing -->
+
+    <owl:Class rdf:about="#BiologyAlignmentEditing">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment Editing</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyAlignment"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignmentGlobal -->
+
+    <owl:Class rdf:about="#BiologyAlignmentGlobal">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment Global</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyAlignment"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignmentGraphical -->
+
+    <owl:Class rdf:about="#BiologyAlignmentGraphical">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment Graphical</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyAlignment"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignmentLocal -->
+
+    <owl:Class rdf:about="#BiologyAlignmentLocal">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment Local</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyAlignment"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignmentMultiple -->
+
+    <owl:Class rdf:about="#BiologyAlignmentMultiple">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment Multiple</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyAlignment"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignmentProfiles -->
+
+    <owl:Class rdf:about="#BiologyAlignmentProfiles">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment Profiles</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyAlignment"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyAlignmentStatistics -->
+
+    <owl:Class rdf:about="#BiologyAlignmentStatistics">
+        <rdfs:label rdf:datatype="&xsd;string">Alignment Statistics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyAlignment"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyClustering -->
+
+    <owl:Class rdf:about="#BiologyClustering">
+        <rdfs:label rdf:datatype="&xsd;string">Clustering</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyClusteringGraph -->
+
+    <owl:Class rdf:about="#BiologyClusteringGraph">
+        <rdfs:label rdf:datatype="&xsd;string">Clustering Graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyClustering"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyClusteringSequences -->
+
+    <owl:Class rdf:about="#BiologyClusteringSequences">
+        <rdfs:label rdf:datatype="&xsd;string">Clustering Sequences</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyClustering"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDatabases -->
+
+    <owl:Class rdf:about="#BiologyDatabases">
+        <rdfs:label rdf:datatype="&xsd;string">Databases</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDatabasesIndexing -->
+
+    <owl:Class rdf:about="#BiologyDatabasesIndexing">
+        <rdfs:label rdf:datatype="&xsd;string">Databases Indexing</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDatabases"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDatabasesPostSearchGraphical -->
+
+    <owl:Class rdf:about="#BiologyDatabasesPostSearchGraphical">
+        <rdfs:label rdf:datatype="&xsd;string">Databases Post Search Graphical</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDatabases"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDatabasesPostSearchProcessing -->
+
+    <owl:Class rdf:about="#BiologyDatabasesPostSearchProcessing">
+        <rdfs:label rdf:datatype="&xsd;string">Databases Post Search Processing</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDatabases"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDatabasesRetrieval -->
+
+    <owl:Class rdf:about="#BiologyDatabasesRetrieval">
+        <rdfs:label rdf:datatype="&xsd;string">Databases Retrieval</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDatabases"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDatabasesSearching -->
+
+    <owl:Class rdf:about="#BiologyDatabasesSearching">
+        <rdfs:label rdf:datatype="&xsd;string">Databases Searching</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDatabases"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDatabasesSubmissionTools -->
+
+    <owl:Class rdf:about="#BiologyDatabasesSubmissionTools">
+        <rdfs:label rdf:datatype="&xsd;string">Databases Submission Tools</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDatabases"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDisplay -->
+
+    <owl:Class rdf:about="#BiologyDisplay">
+        <rdfs:label rdf:datatype="&xsd;string">Display</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDisplayAlignments -->
+
+    <owl:Class rdf:about="#BiologyDisplayAlignments">
+        <rdfs:label rdf:datatype="&xsd;string">Display Alignments</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDisplay"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDisplayAnnotation -->
+
+    <owl:Class rdf:about="#BiologyDisplayAnnotation">
+        <rdfs:label rdf:datatype="&xsd;string">Display Annotation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDisplay"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDisplayDotplots -->
+
+    <owl:Class rdf:about="#BiologyDisplayDotplots">
+        <rdfs:label rdf:datatype="&xsd;string">Display Dotplots</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDisplay"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDisplaySequenceTraces -->
+
+    <owl:Class rdf:about="#BiologyDisplaySequenceTraces">
+        <rdfs:label rdf:datatype="&xsd;string">Display Sequence Traces</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDisplay"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyDisplayStructure -->
+
+    <owl:Class rdf:about="#BiologyDisplayStructure">
+        <rdfs:label rdf:datatype="&xsd;string">Display Structure</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyDisplay"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyEdit -->
+
+    <owl:Class rdf:about="#BiologyEdit">
+        <rdfs:label rdf:datatype="&xsd;string">Edit</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyEnzymeKinetics -->
+
+    <owl:Class rdf:about="#BiologyEnzymeKinetics">
+        <rdfs:label rdf:datatype="&xsd;string">Enzyme Kinetics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyFeatureTables -->
+
+    <owl:Class rdf:about="#BiologyFeatureTables">
+        <rdfs:label rdf:datatype="&xsd;string">Feature Tables</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyHmm -->
+
+    <owl:Class rdf:about="#BiologyHmm">
+        <rdfs:label rdf:datatype="&xsd;string">Hmm</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyInformation -->
+
+    <owl:Class rdf:about="#BiologyInformation">
+        <rdfs:label rdf:datatype="&xsd;string">Information</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyMenus -->
+
+    <owl:Class rdf:about="#BiologyMenus">
+        <rdfs:label rdf:datatype="&xsd;string">Menus</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyMicroarray -->
+
+    <owl:Class rdf:about="#BiologyMicroarray">
+        <rdfs:label rdf:datatype="&xsd;string">Microarray</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyMicroarrayAnalysis -->
+
+    <owl:Class rdf:about="#BiologyMicroarrayAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Microarray Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyMicroarray"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyMicroarrayAnnotation -->
+
+    <owl:Class rdf:about="#BiologyMicroarrayAnnotation">
+        <rdfs:label rdf:datatype="&xsd;string">Microarray Annotation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyMicroarray"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyMicroarrayGraphicalViews -->
+
+    <owl:Class rdf:about="#BiologyMicroarrayGraphicalViews">
+        <rdfs:label rdf:datatype="&xsd;string">Microarray Graphical Views</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyMicroarray"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyMicroarrayPrimers -->
+
+    <owl:Class rdf:about="#BiologyMicroarrayPrimers">
+        <rdfs:label rdf:datatype="&xsd;string">Microarray Primers</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyMicroarray"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleic -->
+
+    <owl:Class rdf:about="#BiologyNucleic">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleic2dStructure -->
+
+    <owl:Class rdf:about="#BiologyNucleic2dStructure">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic 2d Structure</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicAnnotation -->
+
+    <owl:Class rdf:about="#BiologyNucleicAnnotation">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Annotation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicAssembly -->
+
+    <owl:Class rdf:about="#BiologyNucleicAssembly">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Assembly</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicBaseCalling -->
+
+    <owl:Class rdf:about="#BiologyNucleicBaseCalling">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Base Calling</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicCodonUsage -->
+
+    <owl:Class rdf:about="#BiologyNucleicCodonUsage">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Codon Usage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicComposition -->
+
+    <owl:Class rdf:about="#BiologyNucleicComposition">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Composition</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicCpgIslands -->
+
+    <owl:Class rdf:about="#BiologyNucleicCpgIslands">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Cpg Islands</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicEst -->
+
+    <owl:Class rdf:about="#BiologyNucleicEst">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Est</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicGeneFinding -->
+
+    <owl:Class rdf:about="#BiologyNucleicGeneFinding">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Gene Finding</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicGraphical -->
+
+    <owl:Class rdf:about="#BiologyNucleicGraphical">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Graphical</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicMasking -->
+
+    <owl:Class rdf:about="#BiologyNucleicMasking">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Masking</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicMotifs -->
+
+    <owl:Class rdf:about="#BiologyNucleicMotifs">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Motifs</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicMutation -->
+
+    <owl:Class rdf:about="#BiologyNucleicMutation">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicNextgen -->
+
+    <owl:Class rdf:about="#BiologyNucleicNextgen">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Nextgen</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicPrediction -->
+
+    <owl:Class rdf:about="#BiologyNucleicPrediction">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Prediction</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicPredictionORF -->
+
+    <owl:Class rdf:about="#BiologyNucleicPredictionORF">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Prediction ORF</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleicPrediction"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicPredictionRNA -->
+
+    <owl:Class rdf:about="#BiologyNucleicPredictionRNA">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Prediction RNA</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleicPrediction"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicPrimers -->
+
+    <owl:Class rdf:about="#BiologyNucleicPrimers">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Primers</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicProfiles -->
+
+    <owl:Class rdf:about="#BiologyNucleicProfiles">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Profiles</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicRepeats -->
+
+    <owl:Class rdf:about="#BiologyNucleicRepeats">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Repeats</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicRestriction -->
+
+    <owl:Class rdf:about="#BiologyNucleicRestriction">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Restriction</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicTranscription -->
+
+    <owl:Class rdf:about="#BiologyNucleicTranscription">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Transcription</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyNucleicTranslation -->
+
+    <owl:Class rdf:about="#BiologyNucleicTranslation">
+        <rdfs:label rdf:datatype="&xsd;string">Nucleic Translation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyNucleic"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogeny -->
+
+    <owl:Class rdf:about="#BiologyPhylogeny">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyBayesian -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyBayesian">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Bayesian</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyClustering -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyClustering">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Clustering</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyConsensus -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyConsensus">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Consensus</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyContinuousCharacters -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyContinuousCharacters">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Continuous Characters</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyDiscreteCharacters -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyDiscreteCharacters">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Discrete Characters</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyDistanceMatrix -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyDistanceMatrix">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Distance Matrix</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyGeneFrequencies -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyGeneFrequencies">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Gene Frequencies</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyMaximumLikelihood -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyMaximumLikelihood">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Maximum Likelihood</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyMaximumParsimony -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyMaximumParsimony">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Maximum Parsimony</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyMisc -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyMisc">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Misc</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyMolecularSequence -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyMolecularSequence">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Molecular Sequence</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPhylogenyTreeDrawing -->
+
+    <owl:Class rdf:about="#BiologyPhylogenyTreeDrawing">
+        <rdfs:label rdf:datatype="&xsd;string">Phylogeny Tree Drawing</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPhylogeny"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPipelines -->
+
+    <owl:Class rdf:about="#BiologyPipelines">
+        <rdfs:label rdf:datatype="&xsd;string">Pipelines</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPipelinesSequenceAssembly -->
+
+    <owl:Class rdf:about="#BiologyPipelinesSequenceAssembly">
+        <rdfs:label rdf:datatype="&xsd;string">Pipelines Sequence Assembly</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPipelines"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPipelinesSequenceProcessing -->
+
+    <owl:Class rdf:about="#BiologyPipelinesSequenceProcessing">
+        <rdfs:label rdf:datatype="&xsd;string">Pipelines Sequence Processing</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPipelines"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPipelinesSequenceTyping -->
+
+    <owl:Class rdf:about="#BiologyPipelinesSequenceTyping">
+        <rdfs:label rdf:datatype="&xsd;string">Pipelines Sequence Typing</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPipelines"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyPipelinesWorkflows -->
+
+    <owl:Class rdf:about="#BiologyPipelinesWorkflows">
+        <rdfs:label rdf:datatype="&xsd;string">Pipelines Workflows</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyPipelines"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProtein -->
+
+    <owl:Class rdf:about="#BiologyProtein">
+        <rdfs:label rdf:datatype="&xsd;string">Protein</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProtein2dStructure -->
+
+    <owl:Class rdf:about="#BiologyProtein2dStructure">
+        <rdfs:label rdf:datatype="&xsd;string">Protein 2d Structure</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProtein"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProtein3dStructure -->
+
+    <owl:Class rdf:about="#BiologyProtein3dStructure">
+        <rdfs:label rdf:datatype="&xsd;string">Protein 3d Structure</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProtein"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProteinAnnotation -->
+
+    <owl:Class rdf:about="#BiologyProteinAnnotation">
+        <rdfs:label rdf:datatype="&xsd;string">Protein Annotation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProtein"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProteinAnnotationFunction -->
+
+    <owl:Class rdf:about="#BiologyProteinAnnotationFunction">
+        <rdfs:label rdf:datatype="&xsd;string">Protein Annotation Function</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProteinAnnotation"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProteinAnnotationPathway -->
+
+    <owl:Class rdf:about="#BiologyProteinAnnotationPathway">
+        <rdfs:label rdf:datatype="&xsd;string">Protein Annotation Pathway</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProteinAnnotation"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProteinComposition -->
+
+    <owl:Class rdf:about="#BiologyProteinComposition">
+        <rdfs:label rdf:datatype="&xsd;string">Protein Composition</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProtein"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProteinDynamics -->
+
+    <owl:Class rdf:about="#BiologyProteinDynamics">
+        <rdfs:label rdf:datatype="&xsd;string">Protein Dynamics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProtein"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProteinMapping -->
+
+    <owl:Class rdf:about="#BiologyProteinMapping">
+        <rdfs:label rdf:datatype="&xsd;string">Protein Mapping</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProtein"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProteinMasking -->
+
+    <owl:Class rdf:about="#BiologyProteinMasking">
+        <rdfs:label rdf:datatype="&xsd;string">Protein Masking</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProtein"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProteinMotifs -->
+
+    <owl:Class rdf:about="#BiologyProteinMotifs">
+        <rdfs:label rdf:datatype="&xsd;string">Protein Motifs</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProtein"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProteinMutation -->
+
+    <owl:Class rdf:about="#BiologyProteinMutation">
+        <rdfs:label rdf:datatype="&xsd;string">Protein Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProtein"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyProteinProfiles -->
+
+    <owl:Class rdf:about="#BiologyProteinProfiles">
+        <rdfs:label rdf:datatype="&xsd;string">Protein Profiles</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyProtein"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyQualityControl -->
+
+    <owl:Class rdf:about="#BiologyQualityControl">
+        <rdfs:label rdf:datatype="&xsd;string">Quality Control</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyStatistics -->
+
+    <owl:Class rdf:about="#BiologyStatistics">
+        <rdfs:label rdf:datatype="&xsd;string">Statistics</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyStatisticsBiodiversity -->
+
+    <owl:Class rdf:about="#BiologyStatisticsBiodiversity">
+        <rdfs:label rdf:datatype="&xsd;string">Statistics Biodiversity</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyStatistics"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyStatisticsGeneral -->
+
+    <owl:Class rdf:about="#BiologyStatisticsGeneral">
+        <rdfs:label rdf:datatype="&xsd;string">Statistics General</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyStatistics"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyStatisticsMicroarray -->
+
+    <owl:Class rdf:about="#BiologyStatisticsMicroarray">
+        <rdfs:label rdf:datatype="&xsd;string">Statistics Microarray</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyStatistics"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyStatisticsOtherSequence -->
+
+    <owl:Class rdf:about="#BiologyStatisticsOtherSequence">
+        <rdfs:label rdf:datatype="&xsd;string">Statistics Other Sequence</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyStatistics"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyStatisticsQtl -->
+
+    <owl:Class rdf:about="#BiologyStatisticsQtl">
+        <rdfs:label rdf:datatype="&xsd;string">Statistics Qtl</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyStatistics"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyStatisticsSequences -->
+
+    <owl:Class rdf:about="#BiologyStatisticsSequences">
+        <rdfs:label rdf:datatype="&xsd;string">Statistics Sequences</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyStatistics"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyTest -->
+
+    <owl:Class rdf:about="#BiologyTest">
+        <rdfs:label rdf:datatype="&xsd;string">Test</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyUtils -->
+
+    <owl:Class rdf:about="#BiologyUtils">
+        <rdfs:label rdf:datatype="&xsd;string">Utils</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BioLinux"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyUtilsDatabaseCreation -->
+
+    <owl:Class rdf:about="#BiologyUtilsDatabaseCreation">
+        <rdfs:label rdf:datatype="&xsd;string">Utils Database Creation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyUtils"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyUtilsDatabaseIndexing -->
+
+    <owl:Class rdf:about="#BiologyUtilsDatabaseIndexing">
+        <rdfs:label rdf:datatype="&xsd;string">Utils Database Indexing</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyUtils"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyUtilsMisc -->
+
+    <owl:Class rdf:about="#BiologyUtilsMisc">
+        <rdfs:label rdf:datatype="&xsd;string">Utils Misc</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyUtils"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyUtilsResultMerge -->
+
+    <owl:Class rdf:about="#BiologyUtilsResultMerge">
+        <rdfs:label rdf:datatype="&xsd;string">Utils Result Merge</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyUtils"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyUtilsSequenceCleaning -->
+
+    <owl:Class rdf:about="#BiologyUtilsSequenceCleaning">
+        <rdfs:label rdf:datatype="&xsd;string">Utils Sequence Cleaning</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyUtils"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyUtilsSequenceInfo -->
+
+    <owl:Class rdf:about="#BiologyUtilsSequenceInfo">
+        <rdfs:label rdf:datatype="&xsd;string">Utils Sequence Info</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyUtils"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyUtilsSequenceReformatting -->
+
+    <owl:Class rdf:about="#BiologyUtilsSequenceReformatting">
+        <rdfs:label rdf:datatype="&xsd;string">Utils Sequence Reformatting</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyUtils"/>
+    </owl:Class>
+    
+
+
+    <!-- #BiologyUtilsSoftwareDevelopment -->
+
+    <owl:Class rdf:about="#BiologyUtilsSoftwareDevelopment">
+        <rdfs:label rdf:datatype="&xsd;string">Utils Software Development</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BiologyUtils"/>
+    </owl:Class>
+    
+
+
+    <!-- #BivariateAnalysis -->
+
+    <owl:Class rdf:about="#BivariateAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Bivariate Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Statistics"/>
+        <owl:disjointWith rdf:resource="#GraphicalAnalysis"/>
+        <owl:disjointWith rdf:resource="#MultivariateAnalysis"/>
+        <owl:disjointWith rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #BoxAndWhiskerPlot -->
+
+    <owl:Class rdf:about="#BoxAndWhiskerPlot">
+        <rdfs:label rdf:datatype="&xsd;string">Box And Whisker Plot</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#GraphicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #CanonicalAnalysis -->
+
+    <owl:Class rdf:about="#CanonicalAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Canonical Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MultipleCorrelationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #CanonicalAnalysisOfDiscriminance -->
+
+    <owl:Class rdf:about="#CanonicalAnalysisOfDiscriminance">
+        <rdfs:label rdf:datatype="&xsd;string">Canonical Analysis Of Discriminance</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#DiscriminantAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #CanonicalCorrelationAnalysis -->
+
+    <owl:Class rdf:about="#CanonicalCorrelationAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Canonical Correlation Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#CanonicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #CanonicalCorrespondenceAnalysis -->
+
+    <owl:Class rdf:about="#CanonicalCorrespondenceAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Canonical Correspondence Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#CanonicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #CentralTendency -->
+
+    <owl:Class rdf:about="#CentralTendency">
+        <rdfs:label rdf:datatype="&xsd;string">Central Tendency</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #Chemistry -->
+
+    <owl:Class rdf:about="#Chemistry">
+        <rdfs:label rdf:datatype="&xsd;string">Chemistry</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- #ClusterAnalysis -->
+
+    <owl:Class rdf:about="#ClusterAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Cluster Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MultipleCorrelationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #ComparisonOfMeans -->
+
+    <owl:Class rdf:about="#ComparisonOfMeans">
+        <rdfs:label rdf:datatype="&xsd;string">Comparison Of Means</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #ComparisonOfMultipleMeans -->
+
+    <owl:Class rdf:about="#ComparisonOfMultipleMeans">
+        <rdfs:label rdf:datatype="&xsd;string">Comparison Of Multiple Means</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #ComparisonOfRegression -->
+
+    <owl:Class rdf:about="#ComparisonOfRegression">
+        <rdfs:label rdf:datatype="&xsd;string">Comparison Of Regression</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #ComparisonOfVariances -->
+
+    <owl:Class rdf:about="#ComparisonOfVariances">
+        <rdfs:label rdf:datatype="&xsd;string">Comparison Of Variances</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #ComputerScience -->
+
+    <owl:Class rdf:about="#ComputerScience">
+        <rdfs:label rdf:datatype="&xsd;string">Computer Science</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- #CorrelationAnalysis -->
+
+    <owl:Class rdf:about="#CorrelationAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Correlation Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #CrosstabulationAnalysis -->
+
+    <owl:Class rdf:about="#CrosstabulationAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Crosstabulation Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #DataTransformation -->
+
+    <owl:Class rdf:about="#DataTransformation">
+        <rdfs:label rdf:datatype="&xsd;string">Data Transformation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #DiscriminantAnalysis -->
+
+    <owl:Class rdf:about="#DiscriminantAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Discriminant Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MultipleCorrelationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #Dispersion -->
+
+    <owl:Class rdf:about="#Dispersion">
+        <rdfs:label rdf:datatype="&xsd;string">Dispersion</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #Distribution -->
+
+    <owl:Class rdf:about="#Distribution">
+        <rdfs:label rdf:datatype="&xsd;string">Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #DotPlot -->
+
+    <owl:Class rdf:about="#DotPlot">
+        <rdfs:label rdf:datatype="&xsd;string">Dot Plot</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#GraphicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #Ecology -->
+
+    <owl:Class rdf:about="#Ecology">
+        <rdfs:label rdf:datatype="&xsd;string">Ecology</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- #ElectricalEngineering -->
+
+    <owl:Class rdf:about="#ElectricalEngineering">
+        <rdfs:label rdf:datatype="&xsd;string">Electrical Engineering</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Engineering"/>
+    </owl:Class>
+    
+
+
+    <!-- #Engineering -->
+
+    <owl:Class rdf:about="#Engineering">
+        <rdfs:label rdf:datatype="&xsd;string">Engineering</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- #FactorAnalysis -->
+
+    <owl:Class rdf:about="#FactorAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Factor Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#OrdinationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #FourierTemporalAnalysis -->
+
+    <owl:Class rdf:about="#FourierTemporalAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Fourier Temporal Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#TemporalAnalysis"/>
+        <owl:disjointWith rdf:resource="#LinearTemporalAnalysis"/>
+        <owl:disjointWith rdf:resource="#LowPassFilterTemporalAnalysis"/>
+        <owl:disjointWith rdf:resource="#NonlinearTemporalAnalysis"/>
+        <owl:disjointWith rdf:resource="#WaveletTemporalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #Geology -->
+
+    <owl:Class rdf:about="#Geology">
+        <rdfs:label rdf:datatype="&xsd;string">Geology</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- #GeometricDistribution -->
+
+    <owl:Class rdf:about="#GeometricDistribution">
+        <rdfs:label rdf:datatype="&xsd;string">Geometric Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#StatisticalDistribution"/>
+        <owl:disjointWith rdf:resource="#NegativeBinomialDistribution"/>
+        <owl:disjointWith rdf:resource="#NormalDistribution"/>
+        <owl:disjointWith rdf:resource="#PoissonDistribution"/>
+        <owl:disjointWith rdf:resource="#UniformDistribution"/>
+    </owl:Class>
+    
+
+
+    <!-- #GraphicalAnalysis -->
+
+    <owl:Class rdf:about="#GraphicalAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Graphical Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Statistics"/>
+        <owl:disjointWith rdf:resource="#MultivariateAnalysis"/>
+        <owl:disjointWith rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #Histogram -->
+
+    <owl:Class rdf:about="#Histogram">
+        <rdfs:label rdf:datatype="&xsd;string">Histogram</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#GraphicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #KendallCorrelation -->
+
+    <owl:Class rdf:about="#KendallCorrelation">
+        <rdfs:label rdf:datatype="&xsd;string">Kendall Correlation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#CorrelationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #LinearTemporalAnalysis -->
+
+    <owl:Class rdf:about="#LinearTemporalAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Linear Temporal Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#TemporalAnalysis"/>
+        <owl:disjointWith rdf:resource="#LowPassFilterTemporalAnalysis"/>
+        <owl:disjointWith rdf:resource="#NonlinearTemporalAnalysis"/>
+        <owl:disjointWith rdf:resource="#WaveletTemporalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #LowPassFilterTemporalAnalysis -->
+
+    <owl:Class rdf:about="#LowPassFilterTemporalAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Low Pass Filter Temporal Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#TemporalAnalysis"/>
+        <owl:disjointWith rdf:resource="#NonlinearTemporalAnalysis"/>
+        <owl:disjointWith rdf:resource="#WaveletTemporalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #MachineLearning -->
+
+    <owl:Class rdf:about="#MachineLearning">
+        <rdfs:label rdf:datatype="&xsd;string">Machine Learning</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- #MachineLearningClassificationAndRegression -->
+
+    <owl:Class rdf:about="#MachineLearningClassificationAndRegression">
+        <rdfs:label rdf:datatype="&xsd;string">Classification and Regression</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MachineLearning"/>
+    </owl:Class>
+    
+
+
+    <!-- #MachineLearningClustering -->
+
+    <owl:Class rdf:about="#MachineLearningClustering">
+        <rdfs:label rdf:datatype="&xsd;string">Clustering</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MachineLearning"/>
+    </owl:Class>
+    
+
+
+    <owl:Class rdf:about="#MachineLearningDataPreparation">
+        <rdfs:label rdf:datatype="&xsd;string">Data Preparation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MachineLearning"/>
+    </owl:Class>
+    
+
+
+    <!-- #MachineLearningUtilities -->
+
+    <owl:Class rdf:about="#MachineLearningUtilities">
+        <rdfs:label rdf:datatype="&xsd;string">Utilities</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MachineLearning"/>
+    </owl:Class>
+    
+
+
+    <!-- #Meteorology -->
+
+    <owl:Class rdf:about="#Meteorology">
+        <rdfs:label rdf:datatype="&xsd;string">Meteorology</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- #MultipleAnalysisOfVariance -->
+
+    <owl:Class rdf:about="#MultipleAnalysisOfVariance">
+        <rdfs:label rdf:datatype="&xsd;string">Multiple Analysis Of Variance</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MultivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #MultipleCorrelationAnalysis -->
+
+    <owl:Class rdf:about="#MultipleCorrelationAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Multiple Correlation Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MultivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #MultipleRegressionAnalysis -->
+
+    <owl:Class rdf:about="#MultipleRegressionAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Multiple Regression Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MultivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #MultivariateAnalysis -->
+
+    <owl:Class rdf:about="#MultivariateAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Multivariate Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Statistics"/>
+        <owl:disjointWith rdf:resource="#UnivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #MultiwayCrossTabulation -->
+
+    <owl:Class rdf:about="#MultiwayCrossTabulation">
+        <rdfs:label rdf:datatype="&xsd;string">Multiway Cross Tabulation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MultivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #NegativeBinomialDistribution -->
+
+    <owl:Class rdf:about="#NegativeBinomialDistribution">
+        <rdfs:label rdf:datatype="&xsd;string">Negative Binomial Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#StatisticalDistribution"/>
+        <owl:disjointWith rdf:resource="#NormalDistribution"/>
+        <owl:disjointWith rdf:resource="#PoissonDistribution"/>
+        <owl:disjointWith rdf:resource="#UniformDistribution"/>
+    </owl:Class>
+    
+
+
+    <!-- #NonlinearTemporalAnalysis -->
+
+    <owl:Class rdf:about="#NonlinearTemporalAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Nonlinear Temporal Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#TemporalAnalysis"/>
+        <owl:disjointWith rdf:resource="#WaveletTemporalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #NonmetricMultidimensionalScaling -->
+
+    <owl:Class rdf:about="#NonmetricMultidimensionalScaling">
+        <rdfs:label rdf:datatype="&xsd;string">Nonmetric Multidimensional Scaling</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#OrdinationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #NormalDistribution -->
+
+    <owl:Class rdf:about="#NormalDistribution">
+        <rdfs:label rdf:datatype="&xsd;string">Normal Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#StatisticalDistribution"/>
+        <owl:disjointWith rdf:resource="#PoissonDistribution"/>
+        <owl:disjointWith rdf:resource="#UniformDistribution"/>
+    </owl:Class>
+    
+
+
+    <!-- #OrdinationAnalysis -->
+
+    <owl:Class rdf:about="#OrdinationAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Ordination Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#MultipleCorrelationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #ParallelCoordinatePlot -->
+
+    <owl:Class rdf:about="#ParallelCoordinatePlot">
+        <rdfs:label rdf:datatype="&xsd;string">Parallel Coordinate Plot</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#GraphicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #PartialCanonicalAnalysis -->
+
+    <owl:Class rdf:about="#PartialCanonicalAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Partial Canonical Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#CanonicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #PearsonCorrelation -->
+
+    <owl:Class rdf:about="#PearsonCorrelation">
+        <rdfs:label rdf:datatype="&xsd;string">Pearson Correlation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#CorrelationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #Physics -->
+
+    <owl:Class rdf:about="#Physics">
+        <rdfs:label rdf:datatype="&xsd;string">Physics</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- #PieChart -->
+
+    <owl:Class rdf:about="#PieChart">
+        <rdfs:label rdf:datatype="&xsd;string">Pie Chart</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#GraphicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #PoissonDistribution -->
+
+    <owl:Class rdf:about="#PoissonDistribution">
+        <rdfs:label rdf:datatype="&xsd;string">Poisson Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#StatisticalDistribution"/>
+        <owl:disjointWith rdf:resource="#UniformDistribution"/>
+    </owl:Class>
+    
+
+
+    <!-- #PolarOrdination -->
+
+    <owl:Class rdf:about="#PolarOrdination">
+        <rdfs:label rdf:datatype="&xsd;string">Polar Ordination</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#OrdinationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #PrincipalComponentsAnalysis -->
+
+    <owl:Class rdf:about="#PrincipalComponentsAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Principal Components Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#OrdinationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #Rank -->
+
+    <owl:Class rdf:about="#Rank">
+        <rdfs:label rdf:datatype="&xsd;string">Rank</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#DataTransformation"/>
+    </owl:Class>
+    
+
+
+    <!-- #ReciprocalAveraging -->
+
+    <owl:Class rdf:about="#ReciprocalAveraging">
+        <rdfs:label rdf:datatype="&xsd;string">Reciprocal Averaging</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#OrdinationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #RegressionAnalysis -->
+
+    <owl:Class rdf:about="#RegressionAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Regression Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#BivariateAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #Scaling -->
+
+    <owl:Class rdf:about="#Scaling">
+        <rdfs:label rdf:datatype="&xsd;string">Scaling</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#DataTransformation"/>
+    </owl:Class>
+    
+
+
+    <!-- #ScatterPlot -->
+
+    <owl:Class rdf:about="#ScatterPlot">
+        <rdfs:label rdf:datatype="&xsd;string">Scatter Plot</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#GraphicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #SpatialAnalysis -->
+
+    <owl:Class rdf:about="#SpatialAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Spatial Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Statistics"/>
+    </owl:Class>
+    
+
+
+    <!-- #SpearmanCorrelation -->
+
+    <owl:Class rdf:about="#SpearmanCorrelation">
+        <rdfs:label rdf:datatype="&xsd;string">Spearman Correlation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#CorrelationAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #StatisticalDistribution -->
+
+    <owl:Class rdf:about="#StatisticalDistribution">
+        <rdfs:label rdf:datatype="&xsd;string">Sampling Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Statistics"/>
+    </owl:Class>
+    
+
+
+    <!-- #Statistics -->
+
+    <owl:Class rdf:about="#Statistics">
+        <rdfs:label rdf:datatype="&xsd;string">Statistics</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- #StemAndLeafPlot -->
+
+    <owl:Class rdf:about="#StemAndLeafPlot">
+        <rdfs:label rdf:datatype="&xsd;string">Stem And Leaf Plot</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#GraphicalAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #SupervisedClassification -->
+
+    <owl:Class rdf:about="#SupervisedClassification">
+        <rdfs:label rdf:datatype="&xsd;string">Supervised Classification</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#DiscriminantAnalysis"/>
+    </owl:Class>
+    
+
+
+    <!-- #TemporalAnalysis -->
+
+    <owl:Class rdf:about="#TemporalAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Temporal Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Statistics"/>
+    </owl:Class>
+    
+
+
+    <!-- #TheoreticalEcology -->
+
+    <owl:Class rdf:about="#TheoreticalEcology">
+        <rdfs:label rdf:datatype="&xsd;string">Theoretical Ecology</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Ecology"/>
+    </owl:Class>
+    
+
+
+    <!-- #UniformDistribution -->
+
+    <owl:Class rdf:about="#UniformDistribution">
+        <rdfs:label rdf:datatype="&xsd;string">Uniform Distribution</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#StatisticalDistribution"/>
+    </owl:Class>
+    
+
+
+    <!-- #UnivariateAnalysis -->
+
+    <owl:Class rdf:about="#UnivariateAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Univariate Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Statistics"/>
+    </owl:Class>
+    
+
+
+    <!-- #WaveletTemporalAnalysis -->
+
+    <owl:Class rdf:about="#WaveletTemporalAnalysis">
+        <rdfs:label rdf:datatype="&xsd;string">Wavelet Temporal Analysis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#TemporalAnalysis"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+

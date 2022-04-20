@@ -1,0 +1,894 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="TestMetadataParser" class="org.kepler.moml.CompositeClassEntity">
+    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30193:41:8">
+    </property>
+    <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.moml.CompositeClassEntity">
+        <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
+        </property>
+    </property>
+    <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="11.0.devel">
+    </property>
+    <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org/ns/:27996:55:637">
+    </property>
+    <property name="SDF Director" class="ptolemy.domains.sdf.kernel.SDFDirector">
+        <property name="localClock" class="ptolemy.actor.LocalClock">
+            <property name="globalTimeResolution" class="ptolemy.actor.parameters.SharedParameter" value="1.0E-10">
+            </property>
+            <property name="clockRate" class="ptolemy.data.expr.Parameter" value="1.0">
+            </property>
+        </property>
+        <property name="iterations" class="ptolemy.data.expr.Parameter" value="AUTO">
+        </property>
+        <property name="vectorizationFactor" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+        <property name="allowDisconnectedGraphs" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="allowRateChanges" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="constrainBufferSizes" class="ptolemy.data.expr.Parameter" value="true">
+        </property>
+        <property name="period" class="ptolemy.data.expr.Parameter" value="0.0">
+        </property>
+        <property name="synchronizeToRealTime" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="Scheduler" class="ptolemy.domains.sdf.kernel.SDFScheduler">
+            <property name="constrainBufferSizes" class="ptolemy.data.expr.Parameter" value="constrainBufferSizes">
+            </property>
+        </property>
+        <property name="enableResourceScheduling" class="ptolemy.actor.parameters.SharedParameter" value="false">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Steve Neuendorffer</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The SDF Director is often used to oversee fairly simple, sequential workflows in which the director can determine the order of actor invocation from the workflow. Types of workflows that would run well under an SDF Director include processing and reformatting tabular data, converting one data type to another, and reading and plotting a series of data points. A workflow in which an image is read, processed (rotated, scaled, clipped, filtered, etc.), and then displayed, is also an example of a sequential workflow that requires a director simply to ensure that each actor fires in the proper order (i.e., that each actor executes only after it receives its required inputs).&lt;/p&gt;&#10;&#10;&lt;p&gt;The SDF Director is very efficient and will not tax system resources with overhead. However, this efficiency requires that certain conditions be met, namely that the data consumption and production rate of each actor in an SDF workflow be constant and declared. If an actor reads one piece of data and calculates and outputs a single result, it must always read and output a single token of data. This data rate cannot change during workflow execution and, in general, workflows that require dynamic scheduling and/or flow control cannot use this director. Additionally, the SDF Director has no understanding of passing time (at least by default), and actors that depend on a notion of time may not work as expected. For example, a TimedPlotter actor will plot all values at time zero when used in SDF. &lt;/p&gt;&#10;&#10;&lt;p&gt;By default, the SDF Director requires that all actors in its workflow be connected. Otherwise, the director cannot account for concurrency between disconnected workflow parts. Usually, a PN Director should be used for workflows that contain disconnected actors; however, the SDF Director's allowDisconnectedGraphs parameter may also be set to true. The SDF Director will then schedule each disconnected &quot;island&quot; independently. The director cannot infer the sequential relationship between disconnected actors (i.e., nothing forces the director to finish executing all actors on one island before firing actors on another). However, the order of execution within each island should be correct. Usually, disconnected graphs in an SDF model indicate an error.&lt;/p&gt;&#10; &#10;&lt;p&gt;Because SDF Directors schedule actors to fire only after they receive their inputs, workflows that require loops (feeding an actor's output back into its input port for further processing) can cause &quot;deadlock&quot; errors. The deadlock errors occur because the actor depends on its own output value as an initial input. To fix this problem, use a SampleDelay actor to generate and inject an initial input value into the workflow.&lt;/p&gt;&#10;&#10;&lt;p&gt;The SDF Director determines the order in which actors execute and how many times each actor needs to be fired to complete a single iteration of the workflow. This schedule is calculated BEFORE the director begins to iterate the workflow. Because the SDF Director calculates a schedule in advance, it is quite efficient. However, SDF workflows must be static. In other words, the same number of tokens must be consumed/produced at every iteration of the workflow. Workflows that require dynamic control structures, such as a BooleanSwitch actor that sends output on one of two ports depending on the value of a 'control', cannot be used with an SDF Director because the number of tokens on each output can change for each execution.&lt;/p&gt;&#10;&#10;&lt;p&gt;Unless otherwise specified, the SDF Director assumes that each actor consumes and produces exactly one token per channel on each firing. Actors that do not follow the one-token-per-channel firing convention (e.g., Repeat or Ramp) must declare the number of tokens they produce or consume via the appropriate parameters. &lt;/p&gt;&#10;&#10;&lt;p&gt;The number of times a workflow is iterated is controlled by the director's iterations parameter. Since Kepler 2.4, this parameter is set to &quot;AUTO&quot; by default. The director will run the workflow once when it is placed in the top level workflow. When it is placed in a composite actor, the director will keep running the sub-workflow inside of the composite actor until the top level director tells it to stop. In other words, &quot;AUTO&quot; means its value will be &quot;1&quot; when it is placed in the top level workflow, and will be &quot;UNBOUNDED&quot; when it is placed in a composite actor. This default value works for most cases. You can also select &quot;UNBOUNDED&quot; or specify &quot;0&quot; for this parameter, which means the workflow will iterate forever. Concrete numbers can be specified here too for the actual number of times the director should execute the workflow. &lt;/p&gt;&#10;&#10;&lt;p&gt;The amount of data processed by an SDF workflow is a function of both the number of times the workflow iterates and the value of the director's vectorizationFactor parameter. The vectorizationFactor is used to increase the efficiency of a workflow by increasing the number of times actors fire each time the workflow iterates. If the parameter is set to a positive integer (other than 1), the director will fire each actor the specified number of times more than normal. The default is 1, indicating that no vectorization should be performed. Keep in mind that changing the vectorizationFactor parameter changes the meaning of a nested SDF workflow and may cause deadlock in a workflow that uses it. &lt;/p&gt;&#10;&#10;&lt;p&gt;The SDF Director has several advanced parameters that are generally only relevant when an SDF workflow contains composite components. In most cases the period, timeResolution, synchronizeToRealTime, allowRateChanges, timeResolution, and constrainBufferSizes parameters can be left at their default values.&lt;/p&gt;&#10;&#10;&lt;p&gt;For more information about the SDF Director, see the Ptolemy documentation (http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign3-domains/ptIIdesign3-domains.pdf).&lt;/p&gt;&#10;&#10;</configure></property>
+<property name="prop:allowDisconnectedGraphs" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether to allow disconnected actors in the workflow (by default, all actors are required to be connected). If disconnected actors are permitted, the SDF Director will schedule each disconnected 'island' independently. Nothing &quot;forces&quot; the director to finish executing all actors on one island before firing actors on another. However, the order of execution within each island should be correct. Usually, disconnected graphs in an SDF workflow indicate an error.</configure></property>
+<property name="prop:allowRateChanges" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether dynamic rate changes are permitted or not. By default, rate changes are not permitted, and the director will perform a check to disallow such workflows. If the parameter is selected, then workflows that require rate parameters to be modified during execution are valid, and the SDF Director will dynamically compute a new schedule at runtime. This is an advanced parameter that can usually be left at its default value.</configure></property>
+<property name="prop:constrainBufferSizes" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether buffer sizes are fixed. By default, buffers are fixed, and attempts to write to the buffer that cause the buffer to exceed its scheduled size result in an error. This is an advanced parameter that can usually be left at its default value.</configure></property>
+<property name="prop:timeResolution" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The time precision used by this director. All time values are rounded to the nearest multiple of this number. The value is a double that defaults to &quot;1E-10&quot; (which is 10-10). This is an advanced parameter that can usually be left at its default value.</configure></property>
+<property name="prop:iterations" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify the number of times a workflow is iterated. Since Kepler 2.4, this parameter is set to &quot;AUTO&quot; by default. The director will run the workflow once when it is placed in the top level workflow. When it is placed in a composite actor, the director will keep running the sub-workflow inside of the composite actor until the top level director tells it to stop. In other words, &quot;AUTO&quot; means its value will be &quot;1&quot; when it is placed in the top level workflow, and will be &quot;UNBOUNDED&quot; when it is placed in a composite actor. This default value works for most cases. You can also select &quot;UNBOUNDED&quot; or specify &quot;0&quot; for this parameter, which means the workflow will iterate forever. Concrete numbers can be specified here too for the actual number of times the director should execute the workflow. </configure></property>
+<property name="prop:vectorizationFactor" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The vectorizationFactor is used to increase the efficiency of a workflow by increasing the number of times actors fire each time the workflow iterates. If the parameter is set to a positive integer (other than 1), the director will fire each actor the specified number of times more than normal. The default is 1, indicating that no vectorization should be performed. Keep in mind that changing the vectorizationFactor parameter changes the meaning of a nested SDF workflow and may cause deadlock in a workflow that uses it. </configure></property>
+<property name="prop:synchronizeToRealTime" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether the execution should synchronize to real time or not. By default, the director does not synchronize to real time. If synchronize is selected, the director will only process the workflow when elapsed real time matches the product of the period parameter and the iteration count. Note: if the period parameter has a value of 0.0 (the default), then selecting this parameter has no effect. This is an advanced parameter that can usually be left at its default value.</configure></property>
+<property name="prop:period" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The time period of each iteration. The value is a double that defaults to 0.0, which means that the director does not increment workflow time. If the value greater than 0.0, the actor will increment workflow time each time it fires. This is an advanced parameter that can usually be left at its default value. </configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:director:1:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.domains.sdf.kernel.SDFDirector">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:directorclass:1:2">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Director">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Director">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-145.0, -75.0]">
+        </property>
+    </property>
+    <entity name="MetadataParser" class="org.kepler.metadata.MetadataParser">
+        <property name="firingCountLimit" class="ptolemy.data.expr.Parameter" value="NONE">
+        </property>
+        <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>TODO</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Derik Barseghian</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>1</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>TODO</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The output port.  The type of this port is unspecified.  Derived classes may set it.</configure></property>
+<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The trigger port.  The type of this port is undeclared, meaning  that it will resolve to any data type.</configure></property>
+<property name="prop:firingCountLimit" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If a positive integer, then the number of iterations before the  actor indicates to the scheduler that it is finished by returning  false in its postfire() method.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:747:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.metadata.MetadataParser">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#FIXME">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[95.0, 225.0]">
+        </property>
+        <property name="" class="ptolemy.vergil.basic.DocAttribute">
+            <property name="description" class="ptolemy.kernel.util.StringAttribute" value="TODO">
+            </property>
+            <property name="author" class="ptolemy.kernel.util.StringAttribute" value="Derik Barseghian">
+            </property>
+            <property name="version" class="ptolemy.kernel.util.StringAttribute" value="1">
+            </property>
+            <property name="firingCountLimit (parameter)" class="ptolemy.kernel.util.StringAttribute" value="If a positive integer, then the number of iterations before the  actor indicates to the scheduler that it is finished by returning  false in its postfire() method.">
+            </property>
+            <property name="output (port)" class="ptolemy.kernel.util.StringAttribute" value="The output port.  The type of this port is unspecified.  Derived classes may set it.">
+            </property>
+            <property name="trigger (port)" class="ptolemy.kernel.util.StringAttribute" value="The trigger port.  The type of this port is undeclared, meaning  that it will resolve to any data type.">
+            </property>
+        </property>
+        <port name="trigger" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="Metadata Source" class="util.MetadataSource">
+        <property name="XML Metadata" class="ptolemy.kernel.util.StringAttribute" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;eml:eml packageId=&quot;sclark.66.14&quot; system=&quot;knb&quot; xmlns:eml=&quot;eml://ecoinformatics.org/eml-2.1.1&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;eml://ecoinformatics.org/eml-2.1.1 eml.xsd&quot;&gt; &lt;access authSystem=&quot;knb&quot; order=&quot;allowFirst&quot;&gt;&lt;allow&gt;&lt;principal&gt;public&lt;/principal&gt;&#10; &lt;permission&gt;read&lt;/permission&gt;&#10; &lt;/allow&gt;&#10; &lt;allow&gt;&lt;principal&gt;cn=evos,o=NCEAS,dc=ecoinformatics,dc=org&lt;/principal&gt;&#10; &lt;permission&gt;read&lt;/permission&gt;&#10; &lt;/allow&gt;&#10; &lt;/access&gt;&#10; &lt;dataset&gt; &lt;title&gt;Recovery Monitoring and Restoration of Intertidal Oiled Mussel Beds in Prince William Sound, Alaska&lt;/title&gt;&#10; &lt;creator id=&quot;1348183307890&quot;&gt;&lt;individualName&gt;&lt;givenName&gt;Mark&lt;/givenName&gt;&#10; &lt;surName&gt;Carls&lt;/surName&gt;&#10; &lt;/individualName&gt;&#10; &lt;organizationName&gt;NOAA&lt;/organizationName&gt;&#10; &lt;electronicMailAddress&gt;mark.carls@noaa.gov&lt;/electronicMailAddress&gt;&#10; &lt;/creator&gt;&#10; &lt;abstract&gt;&lt;para&gt;Study History: &#10;After the 1989 Exxon Valdez oil spill, many researchers began measuring hydrocarbon concentrations in mussels, sediment, and other matrices in Prince William Sound to assess resource damage. The specific focus of this project was dense aggregations of intertidal mussels (Mytilus trossulus) within the slick trajectory. Oil accumulated in these filter-feeders; total polynuclear aromatic hydrocarbon concentrations were high in 1989 and remained relatively high for several years in mussel beds on unconsolidated sediment. The persistence of oil in these beds in Prince William Sound and along the Gulf of Alaska caused concern, and beginning in 1992 heavily oiled beds were systematically surveyed for oil content in mussel tissue and underlying sediment. Projections from earlier data (through 1995) were that oil would persist for up to three decades, thus funding for study was extended through 1999. This report synthesizes all available natural resource damage assessment data to develop a coherent picture of spatial and temporal oil distributions in mussels and sediment.&#10;&#10;Abstract: &#10;Exxon Valdez oil trapped in intertidal sediment in Prince William Sound degraded slowly, was biologically available for at least a decade, and was toxic for at least 9 years. Habitat condition controlled the biological availability of oil. Exposure duration was short where mussels were only exposed to oil in water (months) and long (6 to 10 years) at locations where oil remained in sediment. Limited evidence suggests some oiling extended outside previously reported slick boundaries; polynuclear aromatic hydrocarbon (PAH) sources were verified with three independent petrogenic composition models. After an initial peak, oil concentrations typically declined in sediment and mussels, although distribution was non-uniform and variability was often high. Oil may persist in some intertidal sediment for &amp;gt;50 years, but declines in mussel tissue suggest it became less available to surface organisms and this community is recovering. Attempts to manually accelerate hydrocarbon loss from mussel beds were equivocal, demonstrating that removal of oil from intertidal sediment is difficult. Exposure to residual oil may explain why some vertebrate populations (pigeon guillemots, Cepphus columba, and sea otters, Enhydra lutris) that forage in the most heavily impacted areas have not yet fully recovered from the spill.&lt;/para&gt;&#10; &lt;/abstract&gt;&#10; &lt;keywordSet&gt;&lt;keyword&gt;exxon valdez&lt;/keyword&gt;&#10; &lt;keyword&gt;prince william sound&lt;/keyword&gt;&#10; &lt;keyword&gt;mussel bed&lt;/keyword&gt;&#10; &lt;keyword&gt;TPAH&lt;/keyword&gt;&#10; &lt;keyword&gt;hydrocarbon&lt;/keyword&gt;&#10; &lt;keyword&gt;bivalve&lt;/keyword&gt;&#10; &lt;keyword&gt;mussel&lt;/keyword&gt;&#10; &lt;keyword&gt;oil spill&lt;/keyword&gt;&#10; &lt;keyword&gt;alaska&lt;/keyword&gt;&#10; &lt;/keywordSet&gt;&#10; &lt;coverage&gt;&lt;geographicCoverage&gt;&lt;geographicDescription&gt;Prince William Sound, Alaska, USA&lt;/geographicDescription&gt;&#10; &lt;boundingCoordinates&gt;&lt;westBoundingCoordinate&gt;-148.5567&lt;/westBoundingCoordinate&gt;&#10; &lt;eastBoundingCoordinate&gt;-145.6608&lt;/eastBoundingCoordinate&gt;&#10; &lt;northBoundingCoordinate&gt;63.13333&lt;/northBoundingCoordinate&gt;&#10; &lt;southBoundingCoordinate&gt;59.345&lt;/southBoundingCoordinate&gt;&#10; &lt;/boundingCoordinates&gt;&#10; &lt;/geographicCoverage&gt;&#10; &lt;temporalCoverage&gt;&lt;rangeOfDates&gt;&lt;beginDate&gt;&lt;calendarDate&gt;1989&lt;/calendarDate&gt;&#10; &lt;/beginDate&gt;&#10; &lt;endDate&gt;&lt;calendarDate&gt;1999&lt;/calendarDate&gt;&#10; &lt;/endDate&gt;&#10; &lt;/rangeOfDates&gt;&#10; &lt;/temporalCoverage&gt;&#10; &lt;taxonomicCoverage&gt;&lt;taxonomicClassification&gt;&lt;taxonRankName&gt;Kingdom&lt;/taxonRankName&gt;&#10; &lt;taxonRankValue&gt;Animalia&lt;/taxonRankValue&gt;&#10; &lt;taxonomicClassification&gt;&lt;taxonRankName&gt;Phylum&lt;/taxonRankName&gt;&#10; &lt;taxonRankValue&gt;Mollusca&lt;/taxonRankValue&gt;&#10; &lt;taxonomicClassification&gt;&lt;taxonRankName&gt;Class&lt;/taxonRankName&gt;&#10; &lt;taxonRankValue&gt;Bivalvia&lt;/taxonRankValue&gt;&#10; &lt;/taxonomicClassification&gt;&#10; &lt;/taxonomicClassification&gt;&#10; &lt;/taxonomicClassification&gt;&#10; &lt;/taxonomicCoverage&gt;&#10; &lt;/coverage&gt;&#10; &lt;contact&gt;&lt;references&gt;1348183307890&lt;/references&gt;&#10; &lt;/contact&gt;&#10; &lt;methods&gt;&lt;methodStep&gt;&lt;description&gt;&lt;section&gt;&lt;title&gt;Intertidal Exxon Valdez oil retention, bioavailability, and toxicity, 1989-2000 in Prince William Sound, Alaska&lt;/title&gt;&#10; &lt;para&gt;Mussel and sediment data collected by many researchers and archived in the Natural Resource Damage Assessment (NRDA) database (Short et al. 1996a) were used to determine the spatial and temporal extent of oiling. Data were limited to intertidal areas and did not include experimental manipulation (e.g., where intentional oiling occurred). Vertical distribution of samples within beach sediment were ignored in these analyses because this information is not recorded in the database, but the vast majority represent surface sediment (at least 91% were 0-2 cm deep). Sample elevation, i.e., meters above mean lower low water (MLLW), was also ignored (except that samples outside the intertidal zone were excluded). Included were 1909 mussel samples and 1505 sediment samples, all analyzed by gas chromatography / mass spectroscopy (Short et al. 1996b). Total PAH (TPAH) is defined as the sum of all 39 PAH routinely analyzed (naphthalene through benzo(a)pyrene; Short et al. 1996b). All PAH were examined for the presence of pyrogenic signatures. For all remaining analyses, PAH concentrations less than method detection limits (MDL) were treated as zero.&lt;/para&gt;&#10; &lt;para&gt;Spatial oil distribution was inspected by mapping color- and size-coded concentrations by year. Each individual observation was mapped so that the range of concentrations was displayed for each individual collection site. Concentrations were grouped into logarithmically increasing classes. For the purposes of this paper, &amp;gt;site= is defined as each uniquely sampled latitude- longitude combination, and captures small-scale features (meters). However, these meter-scale differences were not discernable at mapped scales.&lt;/para&gt;&#10; &lt;para&gt;Temporal changes in TPAH concentrations in mussels and sediment were inspected for all locations where observation began in 1989 and included two or more subsequent samples. Locations represent larger sampling areas than sites(up to a 5 to 10 km radius; Table 1.1). For example, Herring Point data were combined with Herring Bay data and the entire Naked Island group was analyzed as a single unit. Time-series mussel data were analyzed for 29 locations; 20 of these were within or very near the slick trajectory. Time-series sediment data were analyzed for 30 locations; 22 of these were within or very near the slick trajectory. Concentration change within the first 180 d was categorized only when two or more samples were present in this period.&lt;/para&gt;&#10; &lt;para&gt;The source of hydrocarbons in sediments and mussels was inferred using an algorithm that summarizes three independent oil recognition models and two pyrogenic recognition models (Carls, Chapter 4). All models rely on analysis of polynuclear aromatic hydrocarbon (PAH) composition (Bence and Burns 1995; Short and Heintz 1997; Page et al. 2005; Carls in prep.). Each of the oil recognition models had two outputs, a generic recognition of petroleum and specific identification of Alaska North Slope (ANS) crude oil (Exxon Valdez oil); the combined score ranged from 0 to 6. The Bence and Burns (1995) model was most likely to identify oil and the Short and Heintz model (1997) was the most conservative. Results of a pyrogenic index used by Page et al. (2005) and a non-parametric pyrogenic model by Carls (Chapter 4) were partitioned to yield a score of 0 to 6 by progressively increasing threshold values. The Carls (in prep.) pyrogenic model was more likely to identify pyrogenic sources than the ratio analysis technique. Pyrogenic scores were subtracted from petrogenic scores to yield a summary score, ???6 to 6. Scores &amp;lt;0 were defined as pyrogenic; scores &amp;gt;2 were defined as oiled. Score 0 was indeterminate; scores 1 and 2 were considered ambiguous for statistical purposes but were included on petrogenic maps.&lt;/para&gt;&#10; &lt;para&gt;Weathering was determined with the first-order loss-rate model of Short and Heintz (1997). Definitions used here are un-weathered (w = 0), slightly weathered (0 &amp;lt; w # 2), moderately weathered (2 &amp;lt; w # 8), and A highly weathered@ (w &amp;gt; 8).&lt;/para&gt;&#10; &lt;para&gt;To determine change in PAH composition over time, weathering and percent phenanthrenes were regressed against time (linear models). Regression of percent phenanthrenes is an alternative assessment of weathering because percent phenanthrenes increase as the more volatile PAH are lost. To ensure that regressions were meaningful, we adopted the approach suggested by Draper and Smith (1981) that the F-ratio of a regression (Fo) should exceed the usual significance ratio (Fc) by a multiple of at least 4 times.&lt;/para&gt;&#10; &lt;para&gt;The toxic potential of PAH in sediment was estimated by comparing observed concentrations and weathering condition in sediment samples to the lowest concentrations known to cause significant damage to organisms (Table 1.2). Weathering (w) was considered in these calculations because it alters oil composition, thereby increasing toxicity per unit mass (Carls et al. 1999; Heintz et al. 1999). The value of w above which oil becomes too weathered to be toxic is currently unknown. The highest w with known toxicity is at least 4.9 (Heintz et al. 1999); conservatively, samples where w &amp;gt; 4.9 were considered nontoxic. Estimates of the lowest toxic concentrations of Alaska North Slope crude oil on sediment range from 270 ng/g TPAH (Couillard 2002) to 4600 ng/g (Heintz et al. 2002; Table 1.2). The total number of oiled samples (NTotal) was the number of sediment samples from oiled sites where TPAH concentration &amp;gt; 100 ng/g (background concentration). The number of oiled sediments (Noiled) where TPAH $each toxic threshold concentration (Table 1.2) and w # 4.9 were independently determined. Percentages of oiled sediments with toxic potential (100CNoiled/NTotal) are presented as means (&amp;quot;SE) of the four estimates and ranges. Sample collection criteria changed about 1993, resulting in greater emphasis on heavily oiled sites, thus regression analysis was not applied to this data set.&lt;/para&gt;&#10; &lt;/section&gt;&#10; &lt;/description&gt;&#10; &lt;/methodStep&gt;&#10; &lt;methodStep&gt;&lt;description&gt;&lt;section&gt;&lt;title&gt;Retention and loss of intertidal Exxon Valdez oil 1992-1999&lt;/title&gt;&#10; &lt;para&gt;Site selection and description:&lt;/para&gt;&#10; &lt;para&gt;Heavily oiled mussel beds in PWS and the Gulf of Alaska (GOA) were selected for study plus two reference sites with little or no oil contamination as previously described by Carls et al. (2001). In brief, primary criteria for site selection were the presence of moderately to densely packed mussels (288-5000 mussels m-2) on relatively fine sediments (i.e., &amp;lt;1 cm diameter), and detection of crude oil by visual or olfactory means. Although this research describes the geographic extent of significant mussel and sediment contamination, sampling was not random, thus the percentage of significantly contaminated beds from the universe of all beds could not be estimated. Our conclusions were further constrained to description of the most oiled portions of beds, and do not detail within-bed variability as a function of elevation or other factors because sample transects were located medially through the most oiled portions of these beds, parallel to the shoreline. A total of 98 beds were sampled in the original series; observation of the 23 worst-case beds was extended to 1999. Sampling also continued from two reference sites with little or no oil contamination (Fig. 2.1). One of these reference sites, Olsen Bay, is located about 47 km from the reported extent of the Exxon Valdez oil slick (Gundlach et al. 1990). The other reference site, Barnes Cove, is located on Knight Island, within slick extents.&lt;/para&gt;&#10; &lt;para&gt;Sampling Procedures:&lt;/para&gt;&#10; &lt;para&gt;A transect was placed parallel to the waterline through the middle of each mussel bed (as topography allowed) or the obviously oiled portion of the bed using modified methods of Karinen et al. (1993) and Babcock et al. (1996). The length of the transect line, usually 30 m, varied according to bed size and topography and ranged from 10 m at one Disk Island site to 50 m at Foul Bay. Triplicate, pooled subsamples of surface sediment (59 ml minimum) were randomly collected from the upper 2 cm at 8 to 10 spots within 1 m of the transect line in PWS. Collection spoons and glass storage jars were hydrocarbon-free. (Equipment used for hydrocarbon sampling was prewashed with soap and hot water, rinsed, dried, and rinsed with dichloromethane or certified as hydrocarbon-free by the manufacturer.) Triplicate, pooled samples of 20 to 25 mussels were similarly collected; mussel length ranged from 25 to 40 cm. (Sampling procedures differed slightly in the GOA; samples were pooled within three sample zones parallel to the transects. Distances between the transect line and upper and lower zones ranged up to 2 m. These procedural differences were minor and did not require special analysis.) Air blanks were collected for quality control purposes at most sites prior to 1999. All samples were cooled immediately, frozen within 2-4 h, and stored at -20EC until analyzed. Data from beds manually cleaned in 1994 (Babcock et al., 1998; Carls et al. 2004) were included in this analysis.&lt;/para&gt;&#10; &lt;para&gt;Chemical analysis:&lt;/para&gt;&#10; &lt;para&gt;To maximize the number of samples analyzed and minimize processing time, oil in most sediments was only analyzed with an ultraviolet fluorescence fast-screening technique adapted from Krahn et al. (1991; 1993). Sediments were extracted twice with methylene chloride. Extracts were separated with a high-performance liquid chromatograph, and quantified with a fluorescence detector (260 nm excitation, 380 nm emission). Emission output was centered at maximum phenanthrene output. A standard curve based on the amount of phenanthrene in Exxon Valdez oil was used to estimate total petroleum hydrocarbon (THC) concentration. Mean THC concentration is reported in ??g/g wet weight. The method detection limit for THC was 1.7 ??g/g, considerably less than the previously stated limit (50 ??g/g, Carls et. al. 2001).&lt;/para&gt;&#10; &lt;para&gt;All mussels from the GOA were analyzed by gas chromatography/mass spectroscopy, but mussels from PWS were analyzed only when THC concentration in underlying sediments was substantial. A subset (98 of 972) of sediments with elevated THC were also selected for analysis by gas chromatography (Short et al., 1996a) to confirm polynuclear aromatic hydrocarbon (PAH) composition. Experimentally determined method detection limits depended on sample weights, and generally were 1 ng/g in tissue, and &amp;lt; 2 ng/g in sediment. Concentrations of individual PAH below method detection limits were treated as zero. Total PAH (TPAH) concentrations in tissue are reported in ng/g dry weight; wet to dry weight ratios were measured by dehydrating 1 g wet samples for $24 h at 60EC and weighing the remaining mass. The accuracy of the hydrocarbon analyses was about &amp;quot;15% based on comparison with National Institute of Standards and Technology values, and precision expressed as coefficient of variation was usually less than approximately 20%, depending on the PAH. TPAH concentrations were calculated by summing concentrations of individual PAH. Relative PAH concentrations were calculated as the ratio of PAH concentration to TPAH concentration.&lt;/para&gt;&#10; &lt;para&gt;Data analysis:&lt;/para&gt;&#10; &lt;para&gt;The source of oil in bed sediments and mussels was confirmed with a model developed by Short and Heintz (1997) designed to determine if PAH composition was consistent with that of weathered Exxon Valdez oil. The model, which was successfully validated by comparison with thousands of samples from the study area, uses experimentally determined first-order loss- rate constants for 14 PAHs to calculate an index of weathering (w) that summarizes exposure history. Bootstrapped error distributions from experimental and environmental samples provided the basis for testing the null hypothesis that the composition of PAH in a sample was consistent with that of weathered Exxon Valdez oil (Short and Heintz, 1997). Definition used are: unweathered (w = 0), slightly weathered (0 &amp;lt; w # 2), moderately weathered (2 &amp;lt; w # 8), and highly weathered (w &amp;gt; 8) (Carls et al. 2001).&lt;/para&gt;&#10; &lt;para&gt;Background concentrations in sediment and mussels were estimated from non-oiled and slightly oiled reference locations. Background THC concentrations in sediment were estimated from two reference sites that had returned to normal by 1992, Olsen Bay and Barnes Cove (Fig. 2.1). Mean THC was 4.7 ??g/g wet weight (range 0-53 ??g/g) and was &amp;lt; 20 ??g/g in 97% of the samples (n = 31). Thus, we consider the THC background concentration in sediment to be 20 ??g/g wet weight. TPAH concentrations in mussels collected outside the slick trajectory (Natural Resource Damage Assessment database; Short et al. 1996b; Chapter 1) were # 50 ng/g dry weight in 80% of the samples (n = 104); we accepted this as background TPAH in mussels.&lt;/para&gt;&#10; &lt;para&gt;Exponential regression analysis was used to determine if hydrocarbon concentrations had reached background levels by the end of study or to predict when they might. Current regression estimates were compared to previous (1992-1995) estimates (Carls et al. 2001). Regressions were limited to beds with data spanning three or more years to ensure that short-term variation in concentration did not yield spurious predictions. The predictive usefulness of regressions was judged by correlation, probability, and Fo/Fcrit, where Fo = observed F-ratio and Fcrit = F(vm, vr, 1 - ?), where vm = regression degrees of freedom, vr = residual degrees of freedom, and ? = 0.05. The Fo/Fcrit criterion is designed to determine how useful the regression is, as distinct from significant, and is the more conservative measure of importance. Outcomes where Fo/Fcrit $ 4 are considered useful by Draper and Smith (1981); in this paper concentration declines were considered significant only where Fo/Fcrit $ 2 and P # 0.01.&lt;/para&gt;&#10; &lt;para&gt;Hydrocarbon concentrations in sediments and mussels in the last year of study (1999) were considered significantly elevated if the lower 95% confidence band of the regression was &amp;gt;100 ng/g TPAH in mussels (twice the background level) or &amp;gt; 40 ??g/g THC in sediment (twice background) and endpoint concentrations were greater than these values.&lt;/para&gt;&#10; &lt;para&gt;To compare relative TPAH accumulation in mussels, other surface organisms, and clams, we assumed that the contemporary source of TPAH is contaminated sediment and normalized all TPAH concentrations in tissue to those in sediment. These bioaccumulation data were analyzed with one-way analysis of variance. Because the distributions of neither bioaccumulation nor arcsin-transformed bioaccumulation were normal, an empirical F-distribution obtained by randomly permuting the group variable (1000 iterations) was used to estimate the P-value. Reported results are based on the arcsin-transformed variable (Snedecor and Cochran 1980); conclusions were unchanged without transformation.&lt;/para&gt;&#10; &lt;/section&gt;&#10; &lt;/description&gt;&#10; &lt;/methodStep&gt;&#10; &lt;methodStep&gt;&lt;description&gt;&lt;section&gt;&lt;title&gt;Identification of marine hydrocarbon sources: a novel non-parametric approach&lt;/title&gt;&#10; &lt;para&gt;Post-spill PAH data from Prince William Sound, Alaska, were obtained from the Natural Resource Damage Assessment database (9), as analyzed by gas chromatography / mass spectroscopy according to the methods of Short et al. (10). Included were 1907 mussel samples, 1505 sediment samples, 236 water samples, and 290 fish samples, combined across 19 studies. Experimental data included water, sediment, and fish tissue, assembled across 7 studies. Exxon Valdez and ANS oil samples were collected in conjunction with the spill and experimental studies. Analyzed were 39 PAH: naphthalenes (N0 to N4), biphenyl (BPH), acenaphthylene (ACY), acenaphthene (ACE), fluorenes (F0 to F3), dibenzothiophenes (D0 to D3), phenanthrenes (P0 to P4), anthracene (ANT), fluoranthene (FLA), pyrene (PYR), C1- fluoranthenes/pyrenes (C1FLA), benzo(a)anthracene (BaA), chrysenes (C0 to C4), benzo(b)fluoranthene (BbF), benzo(k)fluoranthene (BkF), benzo(e)pyrene (BeP), benzo(a)pyrene (BaP), perylene (PER), indeno(123-cd)pyrene (IDP), dibenzo(a,h)anthracene (DBA), and benzo(ghi)perylene (BZP). Concentrations less than method detection limits (MDL) were treated as zero except where specifically noted. Total PAH (TPAH) is the sum of these PAH.&lt;/para&gt;&#10; &lt;para&gt;The non-specific PSCOREoil model was developed to explore the possibility that samples might contain petroleum hydrocarbons. Possible scores ranged from 0 to 5, determined as follows. For a maximum of 2.5 points, the score was increased by 0.5 for each of five homologous families present in ANS (N, F, D, P, and C) where the TPAH concentration was &amp;gt; 0. An additional 0.5 was added for each family if more than one N, F, or D homolog was present, or if more than two P or C homologs were present. This latter scoring was based on the presence of homologs in weathered Exxon Valdez oil: three N, F, and D homologs were often present, but the proportion of the least substituted homologs was very low. At least three P homologs were well represented in the profile and four C homologs were present. However, detection of chrysenes was often relatively poor because concentrations were usually less than in other homologs, hence the score criterion was for two or more. Determination of successful oil identification by PSCORE and accurate rejection of samples without oil was accomplished empirically with experimental data to determine the score that accomplished both objectives.&lt;/para&gt;&#10; &lt;para&gt;The ANS-specific version of PSCORE relied on the observation that X0 &amp;lt; Xn in ANS, where X represents each of the previously identified homologs (N0 to N4, F0 to F3, D0 to D3, P0 to P4, and C0 to C1). The score was incremented each time the relationship was true, e.g., when N0 &amp;lt; Ni the score was incremented by 1/n, where n = the number of homologs (excluding X0) Division by n allowed equal weighting of each homologous family. Chrysenes were restricted to comparison of C0 and C1 because more substituted chrysenes were not always detected. Scores ranged from 0 to 5 and were compared directly to PAH diagnostic ratio results.&lt;/para&gt;&#10; &lt;para&gt;To relate model results to the OFM and FORLM, an empirically determined value was used to indicate the presence or absence of oil as explained above.&lt;/para&gt;&#10; &lt;para&gt;The non-parametric pyrogenic detection model was based on the observation that X0 &amp;gt;&amp;gt; Xn in PAH from pyrogenic sources. Weighed scores within homologs were assigned as follows: if  X0&amp;gt;10*Xnthens=1/n, if X0&amp;gt;5*Xnthens=0.5/n, if X0&amp;gt;2.5*Xnthens=0.25/n, if X0 &amp;gt; Xn then s = 0.1/n where s = subscore and n = the number of homologs considered in the model (excluding X0). Homologs scored were N1 to N4, F1 to F3, D1 to D3, P1 to P4, and C1. The pyrogenic score was the sum of s.&lt;/para&gt;&#10; &lt;para&gt;The FORLM required the presence of 14 environmentally persistent PAH (N3, N4, F2, F3, D1 to D3, P1 to P4, and C0 to C2) to yield an estimate of w and a probability estimate that ANS (or an alternative source, Constantine Harbor) was (or was not) present. Bootstrapped error distributions from experimental and environmental samples provided the basis for testing the null hypothesis that the composition of PAH in a sample was consistent with that of weathered ANS (7). Two model outputs are presented in this paper, the number (or percentage) of estimable samples (the 14 required PAH were present and interpreted as non-specific detection of petrogenic oil) and the number of source-specific ANS detections.&lt;/para&gt;&#10; &lt;para&gt;The OFM was implemented as suggested by Bence and Burns (6) for Natural Resource Damage Assessment samples. Detection of ANS required the presence of alkylated-N, D2, and C2. Results were classified as provisional diesel or WSF if C2 was absent. Although the model uses C2/P2 and D2/P2 ratios to further distinguish among possible sources, the authors indicated that all crudes and crude-diesel mixtures identified before these latter tests be classified as ANS in Natural Resource Damage Assessment data (6, 9). Non-specific detection of petroleum hydrocarbons was interpreted as petrogenic detection (OFMoil). Specific identification of ANS is described as OFMANS.&lt;/para&gt;&#10; &lt;para&gt;75&lt;/para&gt;&#10; &lt;para&gt;Diagnostic PAH ratios considered for comparison to model results included several that increase when the source is petrogenic and several that increase when the source is pyrogenic. Petrogenic models include C/BaA (11), methyl-P/P (e.g., 12), P/ANT (13), the fossil fuel index [?(N0..N4) + ?(D0..D3) + 0.5 * (P0 + P1) + ?(P2..P4) ) / TPAH] (14), and low molecular weight / high molecular weight PAH [LMW/HMW = (P + ANT + PYR + FLA) / (BaA + C + BbF + BkF + BaP + BeP + PER + IDP + DBA + BZP] (11). Pyrogenic models include the pyrogenic fraction [ACE + ACY + ANT + FLA + PYR + BaA + C0 + BbF + BkF + BeP + BaP + IDP + DBA + BZP) / TPAH] (15), FLA/PYR (13), percent perylene, pyrogenic index [(ACN + ACE + ANT + FLU + PYR + BaA + BbF + BkF + BeP + BaP + PER + IDP + DBA + DBZ) / (?(N0..N4) + ?(F0..F3) + ?(D0..D3) + ?(P0..P4) + ?(C0..C3)] (5), (FLA + PYR) / (P2 + P3) (16), (FLA + PYR) / ?(P1..P4) (17), and ?(C1..C4) / C0 (18).&lt;/para&gt;&#10; &lt;para&gt;Model performance in controlled laboratory samples:&lt;/para&gt;&#10; &lt;para&gt;PAH composition in water, sediment, and fish tissue exposed to ANS and corresponding controls were drawn from experimental studies completed between 1991 and 2001 (Table 4.1). No chemically dispersed oil samples were included in the data set. Pure ANS samples were also analyzed; these were collected from Prince William Sound and from oil stockpiled for study. Water (saltwater or saltwater-freshwater mixtures) was contaminated by passage through oiled- rock columns (e.g., 2, 19) or by direct oil-water mixing (20). Fish tissues were Pacific herring (Clupea pallasi) muscle, ovaries, eggs and larvae, and pink salmon (Oncorhynchus gorbuscha) eggs, alevins, whole fry, fry carcasses (sans head and viscera), and fry viscera. All samples were classified either as oiled or control. Model performance in control samples provided a measure of false positives. Performance in oiled groups indicated how successful each model was in identifying the presence of known oil contamination.&lt;/para&gt;&#10; &lt;para&gt;Model performance in environmental samples:&lt;/para&gt;&#10; &lt;para&gt;PAH composition in water, sediment, fish, and mussels (Mytilus trossulus) from Prince William Sound after the Exxon Valdez oil spill were examined. The working hypothesis was that petroleum was most likely present in environmental samples where TPAH concentrations were high and that very low TPAH concentrations indicated no oil. Pink salmon and Pacific herring accounted for most of the fish (76% and 11%, respectively); other species included black prickleback (Xiphister atropurpureus), coho salmon (O. kisutch), dusky rockfish (Sebastes ciliatus), Pacific cod (Gadus macrocephalus), tidepool sculpin (Oligocottus maculosus), white spotted greenling (Hexagrammos stelleri), pricklebacks, and flatfish. Tissues representative of whole fish were analyzed; not included were gonad, gamete, larvae, and gut content samples.&lt;/para&gt;&#10; &lt;para&gt;The ability of each model to identify oil in environmental samples was evaluated by logistic regression. Percentages of samples where oil or ANS were detected were calculated over discrete, logarithmically increasing TPAH concentration intervals. In each interval and for each model, percentages of samples with oil were calculated by dividing the number of oiled samples detected by the total number of samples in that interval.&lt;/para&gt;&#10; &lt;para&gt;Diagnostic PAH ratios:&lt;/para&gt;&#10; &lt;para&gt;The previously introduced diagnostic ratios were computed for environmental mussel and sediment samples. To provide a model-free summary of trends as a function of TPAH concentration, mean ratios were computed within increasing TPAH concentration groups (0.25 intervals in log space), where TPAH ranged from 0 to about 106 or 107 ng/g dry weight, depending on sample type. Means were smoothed to describe sample trends (4253H; 21).&lt;/para&gt;&#10; &lt;para&gt;Initial analysis demonstrated loss of detail for pyrogenic ratios when data were corrected by MDL, thus results of all pyrogenic ratios and models are based on raw data. (All other results are based on MDL-corrected data.)&lt;/para&gt;&#10; &lt;para&gt;A summary of the independently determined oil model results was developed to analyze and visualize the relationship between diagnostic ratios and degree of oiling. The combined petrogenic score (Se) included non-specific model results (0 to 3) and ANS-specific results (4 to 6). For example, Se = 3 when all non-specific results were significant and no specific results were significant; Se = 5 for any two significant ANS-specific model results, regardless of non- specific results. This combined score was interpreted as ranging from no oil present (0) through oil highly likely (6). Diagnostic ratios and model scores were analyzed with single-factor ANOVA using these groups; ratios and scores were log-transformed to control variance and permutation was used to assign overall probabilities because distributions were not normal. Model PSCOREANS was examined in parallel with petrogenic ratios; grouping was similarly determined except to be independent it did not include model PSCOREANS. Means were compared with pairwise contrasts; the Bonferroni inequality (? divided by the number of comparisons) was applied to ensure the probability of incorrect rejection was no more than 0.05 for all comparisons.&lt;/para&gt;&#10; &lt;para&gt;The weathering index generated by the FORLM provided a systematic way of exploring the relationship between diagnostic ratios (or scores) and weathering. Ratios (and scores) were regressed against w to determine if a relationship existed.&lt;/para&gt;&#10; &lt;para&gt;A combined summary score (ST) that included assessment of two pyrogenic and all petrogenic model outcomes provided an unbiased summary of dominant source characteristics. Two pyrogenic scores, Sy and Sz corresponding to (FLA + PYR) / ?(P1..P4) and the non- parametric pyrogenic model, ranged from 0 to 3. Pyrogenic scores = 1 for values that included no more than 10% of samples also identified as petrogenic (Se &amp;gt; 2), 2 for 5% and 3 for 1% petrogenic inclusion. ST = Se ??? (Sy + Sz) and ranged from -6 to +6. Values &amp;lt;0 were progressively more likely to be pyrogenic; those &amp;gt;0 were interpreted exactly as Se.&lt;/para&gt;&#10; &lt;/section&gt;&#10; &lt;/description&gt;&#10; &lt;/methodStep&gt;&#10; &lt;methodStep&gt;&lt;description&gt;&lt;section&gt;&lt;title&gt;Restoration of Oiled Mussel Beds in Prince William Sound, Alaska&lt;/title&gt;&#10; &lt;para&gt;Site selection:&lt;/para&gt;&#10; &lt;para&gt;Nine oiled mussel beds at five locations in Prince William Sound were selected for cleaning. Hydrocarbons in six of these beds were monitored in years prior to restoration and samples collected near the remaining three beds (within 25 m; Carls et al. 2001) were used to approximate pre-restoration conditions (Fig. 3.1). Primary criteria for selection were high total petroleum hydrocarbon (THC) concentrations (&amp;gt;5000 ??g/g wet weight) in sediments underlying fairly dense mussel beds (1400-2260 mussels m-2). Total polynuclear aromatic hydrocarbon (TPAH) concentrations in mussels in candidate beds ranged from 0.20-8.30 ??g/g dry weight. In April and May 1994, we confirmed the presence of high THC concentrations in sediments (2000-18000 ??g/g) and identified potential nearby replacement sediments. Other selection factors were (1) accessibility, (2) presence of underlying substrate that could be excavated and handled manually, (3) a nearby source of suitable clean sediments, and (4) a suitable area for dispersal of oiled sediments. Bed area ranged from 9 to 62 m2 (Table 3.1). Three additional oiled reference beds (11-24 m2, located near oiled Eleanor Island, Chenega Island, and Disk Island beds) were monitored but not cleaned. The source of oil was confirmed as Exxon Valdez oil in all 12 beds (Short &amp;amp; Heintz, 1997).&lt;/para&gt;&#10; &lt;para&gt;Manual restoration:&lt;/para&gt;&#10; &lt;para&gt;To restore beds, mussels were removed and rinsed with seawater, oily sediment (4-12 cm deep) was replaced with clean sediment (hereafter described as donor sediment), and the mussels were repositioned as evenly as possible in original bed areas. Excavation was completed during a single low tide at most beds (8.9-18.6 m2) except two low tides were required for the three largest beds (27.5-61.9 m2). Mussels were removed with shovels or trowels, transported in 20-L buckets, and spread out on sorbent pads placed intertidally near each bed. Care was taken to avoid severing byssal thread connections to other mussels and substrate. Oiled sediment was removed to mean depths of about 9 cm and dispersed on sorbent pads in the mid- to high intertidal zone at least 25 m from restored beds; 3.3 ?? 104 kg of oiled sediment were replaced. However, oil remained in sediment below excavation depths in all beds. Subsequent high tides flushed oil from the excavated surfaces, dispersed sediments, and mussels and this displaced oil was collected by sorbent booms and pads placed in the lower intertidal zone.&lt;/para&gt;&#10; &lt;para&gt;Mussels and donor sediments were placed in beds during the low tide following excavation. Donor sediments were obtained within 100 m of excavated sediments; THC concentrations in these sediments were always &amp;lt; 200 ??g/g (Fig. 3.2). We hypothesized that clean sediment placed on top of contaminated sediment would substantially reduce exposure of mussels to hydrocarbons. Restored beds were left slightly higher than the uncleaned parts of the bed to allow for settling. Mussels reattached to other mussels and the donor substrate within one high tide cycle.&lt;/para&gt;&#10; &lt;para&gt;Hydrocarbon monitoring:&lt;/para&gt;&#10; &lt;para&gt;Sediment and mussels were sampled for hydrocarbons before and during restoration and through 1999. Surface (0-2 cm) and deep (4-14 cm) sediments were sampled from four random locations within candidate beds in April or May 1994 to quantify THC concentrations, delineate areas that should be cleaned, guide excavation depths, and provide baseline data. Surface and deep sediment and mussels were sampled intermittently after sediment replacement. In general, triplicate pooled sediment samples were randomly collected from 8 to 10 spots throughout sample areas. Triplicate samples of 15-20 mussels were similarly collected, but only one pooled sample was collected where mussel populations were low. Glass storage jars and sediment collection spoons were certified as hydrocarbon-free by the manufacturer or cleaned with dicholoromethane before use. Samples were kept cool, frozen within 2-4 h, and stored at -20EC until analyzed.&lt;/para&gt;&#10; &lt;para&gt;THC concentrations in sediment were determined by an ultraviolet fluorescence fast- screening technique adapted from Krahn, Ylitalo, Joss &amp;amp; Chan (1991) and Krahn et al. (1993). This method is relatively fast and inexpensive compared to analysis by gas chromatography/mass spectroscopy (GC/MS), thus optimizing the number of samples processed. Sediments were extracted twice with dicholoromethane. Extracts were separated with a high-performance liquid chromatograph, and quantified with a fluorescence detector (260 nm excitation, 380 nm emission). Emission output was centered at the maximum phenanthrene output. A standard curve based on the amount of phenanthrene in Exxon Valdez oil was used to estimate THC concentration. Mean THC concentration is reported in ??g/g wet weight. The empirically estimated method detection limits (MDL) for THC was 1.7 ??g/g.&lt;/para&gt;&#10; &lt;para&gt;Hydrocarbon concentrations in all mussels and some sediment samples were determined by GC/MS (Short, Jackson, Larson, &amp;amp; Wade, 1996). A small subset of sediments with elevated THC was selected for GC/MS analysis to confirm polynuclear aromatic hydrocarbon (PAH) composition. Experimentally determined MDLs depended on sample weights, and generally were 1 ng/g in tissue, and &amp;lt; 2 ng/g in sediment. Concentrations of PAH below MDL were treated as zero. Tissue concentrations are reported in ??g/g dry weight; wet to dry weight ratios were measured by dehydrating 1 g wet samples for 24 h at 60EC and weighing the remaining mass. The accuracy of the hydrocarbon analyses was about &amp;quot;15% based on comparison with National Institute of Standards and Technology values, and precision expressed as coefficient of variation was usually less than approximately 20%, depending on the PAH. TPAH concentrations were calculated by summing concentrations of individual PAH. Relative PAH concentrations were calculated as the ratio of PAH to TPAH.&lt;/para&gt;&#10; &lt;para&gt;The previously published relationship between THC and TPAH concentrations in sediment (Carls et al. 2001) is the basis for approximation of TPAH concentration in Fig. 3.2. Previous background concentration estimates in sediment (50 ??g THC /g wet weight) and in mussels (0.09 ??g TPAH / g dry weight) aided data interpretation (Carls et al. 2001).&lt;/para&gt;&#10; &lt;para&gt;Statistical analysis of hydrocarbon data:&lt;/para&gt;&#10; &lt;para&gt;To evaluate the efficacy of restoration activities, hydrocarbon concentrations in sediments and mussels before and after bed restoration were compared two ways. The first method was an analysis of variance (ANOVA) approach that involved only data collected specifically for this study. The second method compared concentrations observed during and after restoration to long-term, site-specific concentration predictions (Carls et al. 2001).&lt;/para&gt;&#10; &lt;para&gt;Pre- and post-restoration hydrocarbon concentrations in sediment and mussels were compared using three-factor ANOVA (site, depth, and day). Concentrations were log- transformed before analysis. For each site, post-restoration hydrocarbon concentrations in sediment were compared to initial concentrations with multiple comparisons. The Bonferroni inequality (? divided by the number of comparisons) was applied to ensure the probability of incorrect rejection was no less than 0.95 for all comparisons. Earliest data included in the analysis were collected in 1994.&lt;/para&gt;&#10; &lt;para&gt;To compare post-restoration sediment and mussel data to previously estimated concentration predictions, hydrocarbon data collected during and after bed restoration were combined with previously collected data (Carls et al. 2001). Pre-restoration data (only) were regressed (exponential model) to predict hydrocarbon concentrations without restoration. Post- restoration data were considered to be significantly different than predicted concentrations if means &amp;quot; SE were outside 95% confidence bands of the regressions. For each bed, the number of means significantly lower than predicted (between the time of restoration through 1995) were counted and divided by the total number of means.&lt;/para&gt;&#10; &lt;para&gt;To determine if oil from surrounding sediment recontaminated surface sediment, each of the following were regressed against excavation area: 1) percent oil remaining in 1999 (of initial 1994 quantities), 2) percent change in oiling between 1995 (minimum observed concentrations) and 1999, and 3) slope (concentration over time) between 1995 and 1999. The hypothesis was that if oil migrated laterally then small beds would be more readily recontaminated than large beds.&lt;/para&gt;&#10; &lt;para&gt;Mussel population:&lt;/para&gt;&#10; &lt;para&gt;Population density was estimated by counting live mussels in two quarters of a 0.25 H 0.25 m quadrat at six randomly chosen locations in each bed. Data collection typically coincided with collection of hydrocarbon samples and extended from 1992 or 1993 to 1999. Post- restoration changes in mussel populations were compared to initial (1994) populations using two-factor ANOVA (site and day).&lt;/para&gt;&#10; &lt;/section&gt;&#10; &lt;/description&gt;&#10; &lt;/methodStep&gt;&#10; &lt;/methods&gt;&#10; &lt;dataTable id=&quot;1348185730615&quot;&gt;&lt;entityName&gt;musselSampleSites_corrected.csv&lt;/entityName&gt;&#10; &lt;entityDescription&gt;Sample sites of mussels with corrected latitude and longitude (Sarah Clark Sept. 2012)&lt;/entityDescription&gt;&#10; &lt;physical id=&quot;1348185439981&quot;&gt;&lt;objectName&gt;musselSampleSites_corrected.csv&lt;/objectName&gt;&#10; &lt;size unit=&quot;byte&quot;&gt;6847&lt;/size&gt;&#10; &lt;dataFormat&gt;&lt;textFormat&gt;&lt;numHeaderLines&gt;1&lt;/numHeaderLines&gt;&#10; &lt;recordDelimiter&gt;#x0A&lt;/recordDelimiter&gt;&#10; &lt;attributeOrientation&gt;column&lt;/attributeOrientation&gt;&#10; &lt;simpleDelimited&gt;&lt;fieldDelimiter&gt;,&lt;/fieldDelimiter&gt;&#10; &lt;/simpleDelimited&gt;&#10; &lt;/textFormat&gt;&#10; &lt;/dataFormat&gt;&#10; &lt;distribution&gt;&lt;online&gt;&lt;url&gt;ecogrid://knb/sclark.68.2&lt;/url&gt;&#10; &lt;/online&gt;&#10; &lt;/distribution&gt;&#10; &lt;/physical&gt;&#10; &lt;attributeList&gt;&lt;attribute id=&quot;1348185730616&quot;&gt;&lt;attributeName&gt;Location&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Place name&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Place name&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348185730617&quot;&gt;&lt;attributeName&gt;Locatabv&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Abbreviation of location&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Abbreviation&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348185730618&quot;&gt;&lt;attributeName&gt;local&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Location code&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Location code&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348185730619&quot;&gt;&lt;attributeName&gt;area&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Area code&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Code&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348185730620&quot;&gt;&lt;attributeName&gt;oCode&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Oil slick code&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;enumeratedDomain&gt;&lt;codeDefinition&gt;&lt;code&gt;0&lt;/code&gt;&#10; &lt;definition&gt;outside oil slick&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;codeDefinition&gt;&lt;code&gt;1&lt;/code&gt;&#10; &lt;definition&gt;inside oil slick&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;/enumeratedDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348185730621&quot;&gt;&lt;attributeName&gt;tSeries_mussels&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Time series availability&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;enumeratedDomain&gt;&lt;codeDefinition&gt;&lt;code&gt;0&lt;/code&gt;&#10; &lt;definition&gt;not sufficient data to inspect time series&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;codeDefinition&gt;&lt;code&gt;1&lt;/code&gt;&#10; &lt;definition&gt;sufficient data to inspect time series&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;/enumeratedDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348185730622&quot;&gt;&lt;attributeName&gt;initial180d_mussels&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Availability of data first 180 days&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;enumeratedDomain&gt;&lt;codeDefinition&gt;&lt;code&gt;0&lt;/code&gt;&#10; &lt;definition&gt;not sufficient data to determine hydrocarbon uptake &amp;amp; loss in first half year&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;codeDefinition&gt;&lt;code&gt;1&lt;/code&gt;&#10; &lt;definition&gt;sufficient data to determine hydrocarbon uptake &amp;amp; loss in first half year&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;/enumeratedDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348185730625&quot;&gt;&lt;attributeName&gt;correctedLat_dd&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Latitude (researched where missing and verified existing data corresponded to the correct area)&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;standardUnit&gt;degree&lt;/standardUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348185730626&quot;&gt;&lt;attributeName&gt;correctedLong_dd&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;longitude (researched where missing and verified existing data corresponded to the correct area)&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;standardUnit&gt;degree&lt;/standardUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;/attributeList&gt;&#10; &lt;numberOfRecords&gt;83&lt;/numberOfRecords&gt;&#10; &lt;/dataTable&gt;&#10; &lt;dataTable id=&quot;1348509733657&quot;&gt;&lt;entityName&gt;musselPAHConcentrations.csv&lt;/entityName&gt;&#10; &lt;physical id=&quot;1348509406450&quot;&gt;&lt;objectName&gt;musselPAHConcentrations.csv&lt;/objectName&gt;&#10; &lt;size unit=&quot;byte&quot;&gt;2861023&lt;/size&gt;&#10; &lt;dataFormat&gt;&lt;textFormat&gt;&lt;numHeaderLines&gt;1&lt;/numHeaderLines&gt;&#10; &lt;recordDelimiter&gt;#x0A&lt;/recordDelimiter&gt;&#10; &lt;attributeOrientation&gt;column&lt;/attributeOrientation&gt;&#10; &lt;simpleDelimited&gt;&lt;fieldDelimiter&gt;,&lt;/fieldDelimiter&gt;&#10; &lt;/simpleDelimited&gt;&#10; &lt;/textFormat&gt;&#10; &lt;/dataFormat&gt;&#10; &lt;distribution&gt;&lt;online&gt;&lt;url&gt;ecogrid://knb/sclark.69.2&lt;/url&gt;&#10; &lt;/online&gt;&#10; &lt;/distribution&gt;&#10; &lt;/physical&gt;&#10; &lt;attributeList&gt;&lt;attribute id=&quot;1348509733658&quot;&gt;&lt;attributeName&gt;SIN&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Sample Identification Number&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Identification Number&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348509733659&quot;&gt;&lt;attributeName&gt;compoundName&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Compound name&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Name&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348509733660&quot;&gt;&lt;attributeName&gt;concentration&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;concentration (ng/g)&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;customUnit&gt;nanogramsPerGram&lt;/customUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;/attributeList&gt;&#10; &lt;numberOfRecords&gt;83908&lt;/numberOfRecords&gt;&#10; &lt;/dataTable&gt;&#10; &lt;dataTable id=&quot;1348509970095&quot;&gt;&lt;entityName&gt;musselHydrocarbonComposition.csv&lt;/entityName&gt;&#10; &lt;physical id=&quot;1348509853103&quot;&gt;&lt;objectName&gt;musselHydrocarbonComposition.csv&lt;/objectName&gt;&#10; &lt;size unit=&quot;byte&quot;&gt;483057&lt;/size&gt;&#10; &lt;dataFormat&gt;&lt;textFormat&gt;&lt;numHeaderLines&gt;1&lt;/numHeaderLines&gt;&#10; &lt;recordDelimiter&gt;#x0A&lt;/recordDelimiter&gt;&#10; &lt;attributeOrientation&gt;column&lt;/attributeOrientation&gt;&#10; &lt;simpleDelimited&gt;&lt;fieldDelimiter&gt;,&lt;/fieldDelimiter&gt;&#10; &lt;/simpleDelimited&gt;&#10; &lt;/textFormat&gt;&#10; &lt;/dataFormat&gt;&#10; &lt;distribution&gt;&lt;online&gt;&lt;url&gt;ecogrid://knb/sclark.70.2&lt;/url&gt;&#10; &lt;/online&gt;&#10; &lt;/distribution&gt;&#10; &lt;/physical&gt;&#10; &lt;attributeList&gt;&lt;attribute id=&quot;1348509970096&quot;&gt;&lt;attributeName&gt;SIN&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Sample Identification Number&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Identification Number&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348509970097&quot;&gt;&lt;attributeName&gt;compoundName&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Compound Name&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Name&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348509970098&quot;&gt;&lt;attributeName&gt;compoundPercentage&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Composition percentage&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;standardUnit&gt;dimensionless&lt;/standardUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;/attributeList&gt;&#10; &lt;numberOfRecords&gt;11442&lt;/numberOfRecords&gt;&#10; &lt;/dataTable&gt;&#10; &lt;dataTable id=&quot;1348510064428&quot;&gt;&lt;entityName&gt;musselAlkaneConcentrations.csv&lt;/entityName&gt;&#10; &lt;physical id=&quot;1348510002618&quot;&gt;&lt;objectName&gt;musselAlkaneConcentrations.csv&lt;/objectName&gt;&#10; &lt;size unit=&quot;byte&quot;&gt;1751982&lt;/size&gt;&#10; &lt;dataFormat&gt;&lt;textFormat&gt;&lt;numHeaderLines&gt;1&lt;/numHeaderLines&gt;&#10; &lt;recordDelimiter&gt;#x0A&lt;/recordDelimiter&gt;&#10; &lt;attributeOrientation&gt;column&lt;/attributeOrientation&gt;&#10; &lt;simpleDelimited&gt;&lt;fieldDelimiter&gt;,&lt;/fieldDelimiter&gt;&#10; &lt;/simpleDelimited&gt;&#10; &lt;/textFormat&gt;&#10; &lt;/dataFormat&gt;&#10; &lt;distribution&gt;&lt;online&gt;&lt;url&gt;ecogrid://knb/sclark.71.1&lt;/url&gt;&#10; &lt;/online&gt;&#10; &lt;/distribution&gt;&#10; &lt;/physical&gt;&#10; &lt;attributeList&gt;&lt;attribute id=&quot;1348510064429&quot;&gt;&lt;attributeName&gt;SIN&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Sample Identification Number&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Identification number&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348510064430&quot;&gt;&lt;attributeName&gt;compoundName&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Compound name&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Name&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1348510064431&quot;&gt;&lt;attributeName&gt;compoundConcentration&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Concentration (ng/g)&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;customUnit&gt;nanogramsPerGram&lt;/customUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;/attributeList&gt;&#10; &lt;numberOfRecords&gt;57210&lt;/numberOfRecords&gt;&#10; &lt;/dataTable&gt;&#10; &lt;dataTable id=&quot;1350954105238&quot;&gt;&lt;entityName&gt;musselSampleIdentificationNumbers.csv&lt;/entityName&gt;&#10; &lt;physical id=&quot;1350953623159&quot;&gt;&lt;objectName&gt;musselSampleIdentificationNumbers.csv&lt;/objectName&gt;&#10; &lt;size unit=&quot;byte&quot;&gt;101588&lt;/size&gt;&#10; &lt;dataFormat&gt;&lt;textFormat&gt;&lt;numHeaderLines&gt;1&lt;/numHeaderLines&gt;&#10; &lt;recordDelimiter&gt;#x0A&lt;/recordDelimiter&gt;&#10; &lt;attributeOrientation&gt;column&lt;/attributeOrientation&gt;&#10; &lt;simpleDelimited&gt;&lt;fieldDelimiter&gt;,&lt;/fieldDelimiter&gt;&#10; &lt;/simpleDelimited&gt;&#10; &lt;/textFormat&gt;&#10; &lt;/dataFormat&gt;&#10; &lt;distribution&gt;&lt;online&gt;&lt;url&gt;ecogrid://knb/sclark.85.1&lt;/url&gt;&#10; &lt;/online&gt;&#10; &lt;/distribution&gt;&#10; &lt;/physical&gt;&#10; &lt;attributeList&gt;&lt;attribute id=&quot;1350954105239&quot;&gt;&lt;attributeName&gt;SIN&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Sample identification number&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Unique ID&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954105240&quot;&gt;&lt;attributeName&gt;local&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Foreign key to musselSampleSites, code for general location&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Foreign key&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954105241&quot;&gt;&lt;attributeName&gt;area&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Foreign key to general location code in musselSampleSites&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Foreign key&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954105242&quot;&gt;&lt;attributeName&gt;oCode&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Foreign key to general location code in musselSampleSites&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;enumeratedDomain&gt;&lt;codeDefinition&gt;&lt;code&gt;0&lt;/code&gt;&#10; &lt;definition&gt;outside slick boundaries&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;codeDefinition&gt;&lt;code&gt;1&lt;/code&gt;&#10; &lt;definition&gt;inside slick boundaries&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;/enumeratedDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954105243&quot;&gt;&lt;attributeName&gt;rise&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Change in TPAH (Barnes Cove is rated INSIDE slick boundaries in this scheme.)&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;enumeratedDomain&gt;&lt;codeDefinition&gt;&lt;code&gt;0&lt;/code&gt;&#10; &lt;definition&gt;no observed rise in TPAH conc. see sheet &amp;quot;summary&amp;quot; for scoring of time series data sets&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;codeDefinition&gt;&lt;code&gt;1&lt;/code&gt;&#10; &lt;definition&gt;observed rise in TPAH conc. ALL data in year of rise (1989 or 1990) were scored 1 if a rise occurred. This avoids opinions about where to draw the initial baseline.&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;codeDefinition&gt;&lt;code&gt;-999&lt;/code&gt;&#10; &lt;definition&gt;not scored for oiled locations&lt;/definition&gt;&#10; &lt;/codeDefinition&gt;&#10; &lt;/enumeratedDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954105244&quot;&gt;&lt;attributeName&gt;dYear&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;decimal year&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;dateTime&gt;&lt;formatString&gt;YY.YYYY&lt;/formatString&gt;&#10; &lt;/dateTime&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954105245&quot;&gt;&lt;attributeName&gt;year&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Year&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;dateTime&gt;&lt;formatString&gt;YY&lt;/formatString&gt;&#10; &lt;/dateTime&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954105246&quot;&gt;&lt;attributeName&gt;day&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;day is sample day (elapsed since Dec 31, 1988)&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;dateTime&gt;&lt;formatString&gt;DD&lt;/formatString&gt;&#10; &lt;/dateTime&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954105247&quot;&gt;&lt;attributeName&gt;LAT&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;sample location latitude&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;standardUnit&gt;degree&lt;/standardUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954105248&quot;&gt;&lt;attributeName&gt;LONG&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Sample location latitude&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;standardUnit&gt;degree&lt;/standardUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;/attributeList&gt;&#10; &lt;numberOfRecords&gt;1907&lt;/numberOfRecords&gt;&#10; &lt;/dataTable&gt;&#10; &lt;dataTable id=&quot;1350954493594&quot;&gt;&lt;entityName&gt;musselTPAHConcentrations.csv&lt;/entityName&gt;&#10; &lt;physical id=&quot;1350954340666&quot;&gt;&lt;objectName&gt;musselTPAHConcentrations.csv&lt;/objectName&gt;&#10; &lt;size unit=&quot;byte&quot;&gt;74654&lt;/size&gt;&#10; &lt;dataFormat&gt;&lt;textFormat&gt;&lt;numHeaderLines&gt;1&lt;/numHeaderLines&gt;&#10; &lt;recordDelimiter&gt;#x0A&lt;/recordDelimiter&gt;&#10; &lt;attributeOrientation&gt;column&lt;/attributeOrientation&gt;&#10; &lt;simpleDelimited&gt;&lt;fieldDelimiter&gt;,&lt;/fieldDelimiter&gt;&#10; &lt;/simpleDelimited&gt;&#10; &lt;/textFormat&gt;&#10; &lt;/dataFormat&gt;&#10; &lt;distribution&gt;&lt;online&gt;&lt;url&gt;ecogrid://knb/sclark.86.1&lt;/url&gt;&#10; &lt;/online&gt;&#10; &lt;/distribution&gt;&#10; &lt;/physical&gt;&#10; &lt;attributeList&gt;&lt;attribute id=&quot;1350954493595&quot;&gt;&lt;attributeName&gt;SIN&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;Sample Identification Number, foreign key&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;nominal&gt;&lt;nonNumericDomain&gt;&lt;textDomain&gt;&lt;definition&gt;Foreign key&lt;/definition&gt;&#10; &lt;/textDomain&gt;&#10; &lt;/nonNumericDomain&gt;&#10; &lt;/nominal&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954493596&quot;&gt;&lt;attributeName&gt;rawTPAH&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;ng/g dry weight.  Raw total PAH includes all compounds, regardless of MDL (method detection limits)&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;customUnit&gt;nanogramsPerGram&lt;/customUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954493597&quot;&gt;&lt;attributeName&gt;TPAH&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;ng/g wet weight per sample&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;customUnit&gt;nanogramsPerGram&lt;/customUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954493598&quot;&gt;&lt;attributeName&gt;WETWT&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;grams of sample&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;standardUnit&gt;gram&lt;/standardUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954493599&quot;&gt;&lt;attributeName&gt;DRYWT&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;grams of sample&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;standardUnit&gt;gram&lt;/standardUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;attribute id=&quot;1350954493600&quot;&gt;&lt;attributeName&gt;TPAH&lt;/attributeName&gt;&#10; &lt;attributeDefinition&gt;concentration, ng/g dry weight per sample&lt;/attributeDefinition&gt;&#10; &lt;measurementScale&gt;&lt;interval&gt;&lt;unit&gt;&lt;customUnit&gt;nanogramsPerGram&lt;/customUnit&gt;&#10; &lt;/unit&gt;&#10; &lt;numericDomain&gt;&lt;numberType&gt;real&lt;/numberType&gt;&#10; &lt;/numericDomain&gt;&#10; &lt;/interval&gt;&#10; &lt;/measurementScale&gt;&#10; &lt;/attribute&gt;&#10; &lt;/attributeList&gt;&#10; &lt;numberOfRecords&gt;1907&lt;/numberOfRecords&gt;&#10; &lt;/dataTable&gt;&#10; &lt;/dataset&gt;&#10; &lt;additionalMetadata&gt;&lt;metadata&gt;&lt;unitList&gt;&lt;unit id=&quot;nanogramsPerGram&quot; multiplierToSI=&quot;0.000000001&quot; name=&quot;nanogramsPerGram&quot; parentSI=&quot;gramsPerGram&quot; unitType=&quot;massPerMass&quot;&gt;&lt;description&gt;nanogramsPerGram&lt;/description&gt;&#10; &lt;/unit&gt;&#10; &lt;/unitList&gt;&#10; &lt;/metadata&gt;&#10; &lt;/additionalMetadata&gt;&#10; &lt;/eml:eml&gt;&#10;">
+            <property name="XML Metadata" class="ptolemy.actor.gui.style.TextStyle">
+                <property name="height" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+                <property name="width" class="ptolemy.data.expr.Parameter" value="30">
+                </property>
+            </property>
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Dan Higgins</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>1.0</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;This actor acts as a simple 'Metadata' source for a datafile. It purpose is to feed metadata to an ecogrid writer for submission to the Ecogrid. Metadata (e.g. EML) is entered as a string along with the name of a datafile that the metadata characterizes. There are 2 optional input ports that can be used to input strings that replace the substings '_PARAM1_' and '_PARAM2' in the metadata. This allows things like package title or id to be dynamically changed in a workflow.&lt;/p&gt;</configure></property>
+<property name="port:parameter1In" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>First parameter passed to input. The string '_PARAM1_' in the metadata will be replaced by this value if there is a token on this port.</configure></property>
+<property name="port:parameter2In" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Second parameter passed to input. The string '_PARAM2_' in the metadata will be replaced by this value if there is a token on this port.</configure></property>
+<property name="port:dataFilenameIn" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts the file name of the datafile described by the metadata.</configure></property>
+<property name="port:metadataOut" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Supplies string metadata to output port</configure></property>
+<property name="port:dataFilenameOut" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that supplies the file name of the datafile described by the metadata.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:57:3">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="util.MetadataSource">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:505:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#FileSystemOutputActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#LocalOutput">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-50.0, 175.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:505:1">
+        </property>
+    </entity>
+    <entity name="String Constant" class="ptolemy.actor.lib.StringConst">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="build-area/build.xml">
+        </property>
+        <property name="firingCountLimit" class="ptolemy.data.expr.Parameter" value="NONE">
+        </property>
+        <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward Lee</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The StringConstant actor outputs a string specified via the actor's value parameter.&lt;/p&gt;&#10;&#10;&lt;p&gt;Specifying strings with the StringConstant actor is convenient, as the actor does not require that strings be surrounded by quotes. The actor is often used to specify file paths, which can be selected using the Browse button available in the actor's parameters.&lt;/p&gt;&#10;&#10;&lt;p&gt;Specified string values can include references to parameters within scope (i.e., parameters defined at the same level of the hierarchy or higher). &lt;/p&gt;&#10;&#10;&lt;p&gt;NOTE: If using a PN Director, the 'firingCountLimit' parameter is often set to a finite integer (e.g. '1') so that the workflow will terminate. &lt;/p&gt;&#10;&#10;</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts a string constant specified by the value parameter.  </configure></property>
+<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that has no declared type (in other words, the port can accept any data type: double, int, array, etc.) If the port is connected, the actor will not fire until the trigger port receives an input token. Connecting the port is optional, but useful when scheduling the actor to perform at a certain time. </configure></property>
+<property name="prop:firingCountLimit" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The limit on the number of times the actor will fire. The default value is 'NONE', meaning there is no limit on the number of time the constant will be provided to the output port. Any integer can be provided as a value for this parameter.</configure></property>
+<property name="prop:value" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The value produced by the actor. Specified strings do not require enclosing quotes. (To include a '$' sign in the string, enter '$$'.)</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:59:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.StringConst">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1052:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#StringFunctionActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Constant">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-200.0, 185.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:204:1">
+        </property>
+        <port name="trigger" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="String Constant2" class="ptolemy.actor.lib.StringConst">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="eml://ecoinformatics.org/eml-2.1.1">
+        </property>
+        <property name="firingCountLimit" class="ptolemy.data.expr.Parameter" value="NONE">
+        </property>
+        <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward Lee</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The StringConstant actor outputs a string specified via the actor's value parameter.&lt;/p&gt;&#10;&#10;&lt;p&gt;Specifying strings with the StringConstant actor is convenient, as the actor does not require that strings be surrounded by quotes. The actor is often used to specify file paths, which can be selected using the Browse button available in the actor's parameters.&lt;/p&gt;&#10;&#10;&lt;p&gt;Specified string values can include references to parameters within scope (i.e., parameters defined at the same level of the hierarchy or higher). &lt;/p&gt;&#10;&#10;&lt;p&gt;NOTE: If using a PN Director, the 'firingCountLimit' parameter is often set to a finite integer (e.g. '1') so that the workflow will terminate. &lt;/p&gt;&#10;&#10;</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts a string constant specified by the value parameter.  </configure></property>
+<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that has no declared type (in other words, the port can accept any data type: double, int, array, etc.) If the port is connected, the actor will not fire until the trigger port receives an input token. Connecting the port is optional, but useful when scheduling the actor to perform at a certain time. </configure></property>
+<property name="prop:firingCountLimit" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The limit on the number of times the actor will fire. The default value is 'NONE', meaning there is no limit on the number of time the constant will be provided to the output port. Any integer can be provided as a value for this parameter.</configure></property>
+<property name="prop:value" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The value produced by the actor. Specified strings do not require enclosing quotes. (To include a '$' sign in the string, enter '$$'.)</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:98:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.StringConst">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1052:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#StringFunctionActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Constant">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="value">
+            </property>
+            <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-195.0, 315.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:204:1">
+        </property>
+        <port name="trigger" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+            </property>
+        </port>
+    </entity>
+    <entity name="Array Element" class="ptolemy.actor.lib.ArrayElement">
+        <property name="index" class="ptolemy.actor.parameters.PortParameter" value="0">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The ArrayElement actor reads an array of elements and &quot;looks up&quot; an element specified by a given index number. The specified element is output.&lt;/p&gt;&#10;&#10;&lt;p&gt;The first element in an array has an index of 0 (the second 1, and so on).&lt;/p&gt;&#10;&#10;&lt;p&gt;The ArrayElement actor is similar to the LookupTable actor in function; however, the two actors specify arrays and index numbers in different ways. The ArrayElement actor receives an array via its input port and an index number via a parameter. The LookupTable actor specifies an array with its table parameter and receives an index number via its input port.&lt;/p&gt;&#10;</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the array element identified by the index number.</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts an array from which a value is &quot;looked up&quot; and output. </configure></property>
+<property name="prop:index" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The index number of an element in the array. The index must be an integer. If the index is out of range (i.e., is greater than or equal to the length of the array), the actor will output nothing. The index can be specified via either the index port or parameter. </configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:22:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.ArrayElement">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:898:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#ArrayActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#DataArrayOperation">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[580.0, -155.0]">
+        </property>
+    </entity>
+    <entity name="RExpression" class="org.ecoinformatics.seek.R.RExpression">
+        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="metadata">
+            <display name="R function or script"/>
+            <property name="R Expression" class="ptolemy.actor.gui.style.TextStyle">
+                <property name="height" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+                <property name="width" class="ptolemy.data.expr.Parameter" value="30">
+                </property>
+            </property>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.TextEditorTableauFactory">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+            </property>
+            <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="80">
+            </property>
+            <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
+            </property>
+        </property>
+        <property name="Rcwd" class="ptolemy.data.expr.StringParameter" value="/Users/tao/.kepler/cache-2.4/modules/r">
+            <display name="R working directory"/>
+        </property>
+        <property name="save_nosave" class="ptolemy.data.expr.StringParameter" value="--no-save">
+            <display name="Save or not"/>
+        </property>
+        <property name="graphicsFormat" class="ptolemy.data.expr.StringParameter" value="png">
+            <display name="Graphics Format"/>
+        </property>
+        <property name="graphicsOutput" class="ptolemy.data.expr.Parameter" value="true">
+            <display name="Graphics Output"/>
+        </property>
+        <property name="displayGraphicsOutput" class="ptolemy.data.expr.Parameter" value="false">
+            <display name="Automatically display graphics"/>
+        </property>
+        <property name="numXPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of X pixels in image"/>
+        </property>
+        <property name="numYPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of Y pixels in image"/>
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Dan Higgins</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The RExpression actor runs an R script or function. Input and output port are created by the user and correspond to R variables used in the specified R script. The actor outputs the result of the evaluated script.&lt;/p&gt;&#10;&#10;&lt;p&gt;The R application must be installed on the local system to use this actor. R is a language and environment for statistical computing and graphics. For more information about R, see http://www.r-project.org/.&lt;/p&gt;&#10;&#10;&lt;p&gt;Kepler contains a number of preconfigured R-actors: Barplot, Boxplot, Scatterplot, Summary, RandomNormal, RandomUniform, Correlation, LinearModel, Regression, RMean, RMedian, RQuantile, and  SummaryStatistics.&lt;/p&gt;</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts a copy of the text output that R generates. As the actor communicates with R to run the R function or script, the output port sends back the response (i.e., the values and statistical outputs).</configure></property>
+<property name="port:graphicsFileName" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the file name of the generated graph of the results.</configure></property>
+<property name="prop:Rcwd" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The 'R' working directory (the home directory by default). </configure></property>
+<property name="prop:displayGraphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Select to display the plot once the actor has generated it.</configure></property>
+<property name="prop:graphicsFormat" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The graphics output format. Certain formats may require libraries be installed on your system.</configure></property>
+<property name="prop:numXPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The width of the output graphic in pixels.</configure></property>
+<property name="prop:numYPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The height of the output graphic in pixels.</configure></property>
+<property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The expression that is evaluated to produce the output.</configure></property>
+<property name="prop:save_nosave" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to save the R workspace when R is closed; set to '--save' to retrieve the workspace later in a workflow in another R-actor.</configure></property>
+<property name="prop:graphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to create a graphics output port. By default, the actor will create a graphics output port.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:167:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.ecoinformatics.seek.R.RExpression">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1126:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#MathOperationActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GeneralPurpose">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[740.0, -170.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:360:2">
+        </property>
+        <port name="metadata" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="general">
+            </property>
+        </port>
+    </entity>
+    <entity name="Array Element2" class="ptolemy.actor.lib.ArrayElement">
+        <property name="index" class="ptolemy.actor.parameters.PortParameter" value="1">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The ArrayElement actor reads an array of elements and &quot;looks up&quot; an element specified by a given index number. The specified element is output.&lt;/p&gt;&#10;&#10;&lt;p&gt;The first element in an array has an index of 0 (the second 1, and so on).&lt;/p&gt;&#10;&#10;&lt;p&gt;The ArrayElement actor is similar to the LookupTable actor in function; however, the two actors specify arrays and index numbers in different ways. The ArrayElement actor receives an array via its input port and an index number via a parameter. The LookupTable actor specifies an array with its table parameter and receives an index number via its input port.&lt;/p&gt;&#10;</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts an array from which a value is &quot;looked up&quot; and output. </configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the array element identified by the index number.</configure></property>
+<property name="prop:index" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The index number of an element in the array. The index must be an integer. If the index is out of range (i.e., is greater than or equal to the length of the array), the actor will output nothing. The index can be specified via either the index port or parameter. </configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:189:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.ArrayElement">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:898:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#ArrayActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#DataArrayOperation">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[585.0, -5.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:22:1">
+        </property>
+    </entity>
+    <entity name="Array Element3" class="ptolemy.actor.lib.ArrayElement">
+        <property name="index" class="ptolemy.actor.parameters.PortParameter" value="2">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The ArrayElement actor reads an array of elements and &quot;looks up&quot; an element specified by a given index number. The specified element is output.&lt;/p&gt;&#10;&#10;&lt;p&gt;The first element in an array has an index of 0 (the second 1, and so on).&lt;/p&gt;&#10;&#10;&lt;p&gt;The ArrayElement actor is similar to the LookupTable actor in function; however, the two actors specify arrays and index numbers in different ways. The ArrayElement actor receives an array via its input port and an index number via a parameter. The LookupTable actor specifies an array with its table parameter and receives an index number via its input port.&lt;/p&gt;&#10;</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts an array from which a value is &quot;looked up&quot; and output. </configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the array element identified by the index number.</configure></property>
+<property name="prop:index" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The index number of an element in the array. The index must be an integer. If the index is out of range (i.e., is greater than or equal to the length of the array), the actor will output nothing. The index can be specified via either the index port or parameter. </configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:190:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.ArrayElement">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:898:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#ArrayActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#DataArrayOperation">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[585.0, 150.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:22:1">
+        </property>
+    </entity>
+    <entity name="Array Element4" class="ptolemy.actor.lib.ArrayElement">
+        <property name="index" class="ptolemy.actor.parameters.PortParameter" value="3">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The ArrayElement actor reads an array of elements and &quot;looks up&quot; an element specified by a given index number. The specified element is output.&lt;/p&gt;&#10;&#10;&lt;p&gt;The first element in an array has an index of 0 (the second 1, and so on).&lt;/p&gt;&#10;&#10;&lt;p&gt;The ArrayElement actor is similar to the LookupTable actor in function; however, the two actors specify arrays and index numbers in different ways. The ArrayElement actor receives an array via its input port and an index number via a parameter. The LookupTable actor specifies an array with its table parameter and receives an index number via its input port.&lt;/p&gt;&#10;</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts an array from which a value is &quot;looked up&quot; and output. </configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the array element identified by the index number.</configure></property>
+<property name="prop:index" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The index number of an element in the array. The index must be an integer. If the index is out of range (i.e., is greater than or equal to the length of the array), the actor will output nothing. The index can be specified via either the index port or parameter. </configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:191:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.ArrayElement">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:898:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#ArrayActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#DataArrayOperation">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[585.0, 310.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:22:1">
+        </property>
+    </entity>
+    <entity name="Array Element5" class="ptolemy.actor.lib.ArrayElement">
+        <property name="index" class="ptolemy.actor.parameters.PortParameter" value="4">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The ArrayElement actor reads an array of elements and &quot;looks up&quot; an element specified by a given index number. The specified element is output.&lt;/p&gt;&#10;&#10;&lt;p&gt;The first element in an array has an index of 0 (the second 1, and so on).&lt;/p&gt;&#10;&#10;&lt;p&gt;The ArrayElement actor is similar to the LookupTable actor in function; however, the two actors specify arrays and index numbers in different ways. The ArrayElement actor receives an array via its input port and an index number via a parameter. The LookupTable actor specifies an array with its table parameter and receives an index number via its input port.&lt;/p&gt;&#10;</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts an array from which a value is &quot;looked up&quot; and output. </configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the array element identified by the index number.</configure></property>
+<property name="prop:index" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The index number of an element in the array. The index must be an integer. If the index is out of range (i.e., is greater than or equal to the length of the array), the actor will output nothing. The index can be specified via either the index port or parameter. </configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:192:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.ArrayElement">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:898:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#ArrayActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#DataArrayOperation">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[595.0, 465.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:22:1">
+        </property>
+    </entity>
+    <entity name="Array Element6" class="ptolemy.actor.lib.ArrayElement">
+        <property name="index" class="ptolemy.actor.parameters.PortParameter" value="5">
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The ArrayElement actor reads an array of elements and &quot;looks up&quot; an element specified by a given index number. The specified element is output.&lt;/p&gt;&#10;&#10;&lt;p&gt;The first element in an array has an index of 0 (the second 1, and so on).&lt;/p&gt;&#10;&#10;&lt;p&gt;The ArrayElement actor is similar to the LookupTable actor in function; however, the two actors specify arrays and index numbers in different ways. The ArrayElement actor receives an array via its input port and an index number via a parameter. The LookupTable actor specifies an array with its table parameter and receives an index number via its input port.&lt;/p&gt;&#10;</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts an array from which a value is &quot;looked up&quot; and output. </configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the array element identified by the index number.</configure></property>
+<property name="prop:index" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The index number of an element in the array. The index must be an integer. If the index is out of range (i.e., is greater than or equal to the length of the array), the actor will output nothing. The index can be specified via either the index port or parameter. </configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:193:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.ArrayElement">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:898:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#ArrayActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#DataArrayOperation">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[595.0, 650.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:22:1">
+        </property>
+    </entity>
+    <entity name="RExpression2" class="org.ecoinformatics.seek.R.RExpression">
+        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="metadata">
+            <display name="R function or script"/>
+            <property name="R Expression" class="ptolemy.actor.gui.style.TextStyle">
+                <property name="height" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+                <property name="width" class="ptolemy.data.expr.Parameter" value="30">
+                </property>
+            </property>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.TextEditorTableauFactory">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+            </property>
+            <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="80">
+            </property>
+            <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
+            </property>
+        </property>
+        <property name="Rcwd" class="ptolemy.data.expr.StringParameter" value="/Users/tao/.kepler/cache-2.4/modules/r">
+            <display name="R working directory"/>
+        </property>
+        <property name="save_nosave" class="ptolemy.data.expr.StringParameter" value="--no-save">
+            <display name="Save or not"/>
+        </property>
+        <property name="graphicsFormat" class="ptolemy.data.expr.StringParameter" value="png">
+            <display name="Graphics Format"/>
+        </property>
+        <property name="graphicsOutput" class="ptolemy.data.expr.Parameter" value="true">
+            <display name="Graphics Output"/>
+        </property>
+        <property name="displayGraphicsOutput" class="ptolemy.data.expr.Parameter" value="false">
+            <display name="Automatically display graphics"/>
+        </property>
+        <property name="numXPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of X pixels in image"/>
+        </property>
+        <property name="numYPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of Y pixels in image"/>
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Dan Higgins</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The RExpression actor runs an R script or function. Input and output port are created by the user and correspond to R variables used in the specified R script. The actor outputs the result of the evaluated script.&lt;/p&gt;&#10;&#10;&lt;p&gt;The R application must be installed on the local system to use this actor. R is a language and environment for statistical computing and graphics. For more information about R, see http://www.r-project.org/.&lt;/p&gt;&#10;&#10;&lt;p&gt;Kepler contains a number of preconfigured R-actors: Barplot, Boxplot, Scatterplot, Summary, RandomNormal, RandomUniform, Correlation, LinearModel, Regression, RMean, RMedian, RQuantile, and  SummaryStatistics.&lt;/p&gt;</configure></property>
+<property name="port:graphicsFileName" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the file name of the generated graph of the results.</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts a copy of the text output that R generates. As the actor communicates with R to run the R function or script, the output port sends back the response (i.e., the values and statistical outputs).</configure></property>
+<property name="prop:Rcwd" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The 'R' working directory (the home directory by default). </configure></property>
+<property name="prop:displayGraphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Select to display the plot once the actor has generated it.</configure></property>
+<property name="prop:graphicsFormat" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The graphics output format. Certain formats may require libraries be installed on your system.</configure></property>
+<property name="prop:numXPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The width of the output graphic in pixels.</configure></property>
+<property name="prop:numYPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The height of the output graphic in pixels.</configure></property>
+<property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The expression that is evaluated to produce the output.</configure></property>
+<property name="prop:graphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to create a graphics output port. By default, the actor will create a graphics output port.</configure></property>
+<property name="prop:save_nosave" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to save the R workspace when R is closed; set to '--save' to retrieve the workspace later in a workflow in another R-actor.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:167:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.ecoinformatics.seek.R.RExpression">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1126:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#MathOperationActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GeneralPurpose">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[750.0, -5.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:360:2">
+        </property>
+        <port name="metadata" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="general">
+            </property>
+        </port>
+    </entity>
+    <entity name="RExpression3" class="org.ecoinformatics.seek.R.RExpression">
+        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="metadata">
+            <display name="R function or script"/>
+            <property name="R Expression" class="ptolemy.actor.gui.style.TextStyle">
+                <property name="height" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+                <property name="width" class="ptolemy.data.expr.Parameter" value="30">
+                </property>
+            </property>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.TextEditorTableauFactory">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+            </property>
+            <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="80">
+            </property>
+            <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
+            </property>
+        </property>
+        <property name="Rcwd" class="ptolemy.data.expr.StringParameter" value="/Users/tao/.kepler/cache-2.4/modules/r">
+            <display name="R working directory"/>
+        </property>
+        <property name="save_nosave" class="ptolemy.data.expr.StringParameter" value="--no-save">
+            <display name="Save or not"/>
+        </property>
+        <property name="graphicsFormat" class="ptolemy.data.expr.StringParameter" value="png">
+            <display name="Graphics Format"/>
+        </property>
+        <property name="graphicsOutput" class="ptolemy.data.expr.Parameter" value="true">
+            <display name="Graphics Output"/>
+        </property>
+        <property name="displayGraphicsOutput" class="ptolemy.data.expr.Parameter" value="false">
+            <display name="Automatically display graphics"/>
+        </property>
+        <property name="numXPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of X pixels in image"/>
+        </property>
+        <property name="numYPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of Y pixels in image"/>
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Dan Higgins</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The RExpression actor runs an R script or function. Input and output port are created by the user and correspond to R variables used in the specified R script. The actor outputs the result of the evaluated script.&lt;/p&gt;&#10;&#10;&lt;p&gt;The R application must be installed on the local system to use this actor. R is a language and environment for statistical computing and graphics. For more information about R, see http://www.r-project.org/.&lt;/p&gt;&#10;&#10;&lt;p&gt;Kepler contains a number of preconfigured R-actors: Barplot, Boxplot, Scatterplot, Summary, RandomNormal, RandomUniform, Correlation, LinearModel, Regression, RMean, RMedian, RQuantile, and  SummaryStatistics.&lt;/p&gt;</configure></property>
+<property name="port:graphicsFileName" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the file name of the generated graph of the results.</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts a copy of the text output that R generates. As the actor communicates with R to run the R function or script, the output port sends back the response (i.e., the values and statistical outputs).</configure></property>
+<property name="prop:Rcwd" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The 'R' working directory (the home directory by default). </configure></property>
+<property name="prop:displayGraphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Select to display the plot once the actor has generated it.</configure></property>
+<property name="prop:graphicsFormat" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The graphics output format. Certain formats may require libraries be installed on your system.</configure></property>
+<property name="prop:numXPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The width of the output graphic in pixels.</configure></property>
+<property name="prop:numYPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The height of the output graphic in pixels.</configure></property>
+<property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The expression that is evaluated to produce the output.</configure></property>
+<property name="prop:graphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to create a graphics output port. By default, the actor will create a graphics output port.</configure></property>
+<property name="prop:save_nosave" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to save the R workspace when R is closed; set to '--save' to retrieve the workspace later in a workflow in another R-actor.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:167:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.ecoinformatics.seek.R.RExpression">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1126:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#MathOperationActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GeneralPurpose">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{750.0, 145.0}">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:360:2">
+        </property>
+        <port name="metadata" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="general">
+            </property>
+        </port>
+    </entity>
+    <entity name="RExpression5" class="org.ecoinformatics.seek.R.RExpression">
+        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="metadata">
+            <display name="R function or script"/>
+            <property name="R Expression" class="ptolemy.actor.gui.style.TextStyle">
+                <property name="height" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+                <property name="width" class="ptolemy.data.expr.Parameter" value="30">
+                </property>
+            </property>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.TextEditorTableauFactory">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+            </property>
+            <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="80">
+            </property>
+            <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
+            </property>
+        </property>
+        <property name="Rcwd" class="ptolemy.data.expr.StringParameter" value="/Users/tao/.kepler/cache-2.4/modules/r">
+            <display name="R working directory"/>
+        </property>
+        <property name="save_nosave" class="ptolemy.data.expr.StringParameter" value="--no-save">
+            <display name="Save or not"/>
+        </property>
+        <property name="graphicsFormat" class="ptolemy.data.expr.StringParameter" value="png">
+            <display name="Graphics Format"/>
+        </property>
+        <property name="graphicsOutput" class="ptolemy.data.expr.Parameter" value="true">
+            <display name="Graphics Output"/>
+        </property>
+        <property name="displayGraphicsOutput" class="ptolemy.data.expr.Parameter" value="false">
+            <display name="Automatically display graphics"/>
+        </property>
+        <property name="numXPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of X pixels in image"/>
+        </property>
+        <property name="numYPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of Y pixels in image"/>
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Dan Higgins</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The RExpression actor runs an R script or function. Input and output port are created by the user and correspond to R variables used in the specified R script. The actor outputs the result of the evaluated script.&lt;/p&gt;&#10;&#10;&lt;p&gt;The R application must be installed on the local system to use this actor. R is a language and environment for statistical computing and graphics. For more information about R, see http://www.r-project.org/.&lt;/p&gt;&#10;&#10;&lt;p&gt;Kepler contains a number of preconfigured R-actors: Barplot, Boxplot, Scatterplot, Summary, RandomNormal, RandomUniform, Correlation, LinearModel, Regression, RMean, RMedian, RQuantile, and  SummaryStatistics.&lt;/p&gt;</configure></property>
+<property name="port:graphicsFileName" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the file name of the generated graph of the results.</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts a copy of the text output that R generates. As the actor communicates with R to run the R function or script, the output port sends back the response (i.e., the values and statistical outputs).</configure></property>
+<property name="prop:Rcwd" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The 'R' working directory (the home directory by default). </configure></property>
+<property name="prop:displayGraphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Select to display the plot once the actor has generated it.</configure></property>
+<property name="prop:graphicsFormat" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The graphics output format. Certain formats may require libraries be installed on your system.</configure></property>
+<property name="prop:numXPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The width of the output graphic in pixels.</configure></property>
+<property name="prop:numYPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The height of the output graphic in pixels.</configure></property>
+<property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The expression that is evaluated to produce the output.</configure></property>
+<property name="prop:graphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to create a graphics output port. By default, the actor will create a graphics output port.</configure></property>
+<property name="prop:save_nosave" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to save the R workspace when R is closed; set to '--save' to retrieve the workspace later in a workflow in another R-actor.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:167:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.ecoinformatics.seek.R.RExpression">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1126:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#MathOperationActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GeneralPurpose">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[760.0, 480.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:360:2">
+        </property>
+        <port name="metadata" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="general">
+            </property>
+        </port>
+    </entity>
+    <entity name="RExpression6" class="org.ecoinformatics.seek.R.RExpression">
+        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="metadata">
+            <display name="R function or script"/>
+            <property name="R Expression" class="ptolemy.actor.gui.style.TextStyle">
+                <property name="height" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+                <property name="width" class="ptolemy.data.expr.Parameter" value="30">
+                </property>
+            </property>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.TextEditorTableauFactory">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+            </property>
+            <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="80">
+            </property>
+            <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
+            </property>
+        </property>
+        <property name="Rcwd" class="ptolemy.data.expr.StringParameter" value="/Users/tao/.kepler/cache-2.4/modules/r">
+            <display name="R working directory"/>
+        </property>
+        <property name="save_nosave" class="ptolemy.data.expr.StringParameter" value="--no-save">
+            <display name="Save or not"/>
+        </property>
+        <property name="graphicsFormat" class="ptolemy.data.expr.StringParameter" value="png">
+            <display name="Graphics Format"/>
+        </property>
+        <property name="graphicsOutput" class="ptolemy.data.expr.Parameter" value="true">
+            <display name="Graphics Output"/>
+        </property>
+        <property name="displayGraphicsOutput" class="ptolemy.data.expr.Parameter" value="false">
+            <display name="Automatically display graphics"/>
+        </property>
+        <property name="numXPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of X pixels in image"/>
+        </property>
+        <property name="numYPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of Y pixels in image"/>
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Dan Higgins</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The RExpression actor runs an R script or function. Input and output port are created by the user and correspond to R variables used in the specified R script. The actor outputs the result of the evaluated script.&lt;/p&gt;&#10;&#10;&lt;p&gt;The R application must be installed on the local system to use this actor. R is a language and environment for statistical computing and graphics. For more information about R, see http://www.r-project.org/.&lt;/p&gt;&#10;&#10;&lt;p&gt;Kepler contains a number of preconfigured R-actors: Barplot, Boxplot, Scatterplot, Summary, RandomNormal, RandomUniform, Correlation, LinearModel, Regression, RMean, RMedian, RQuantile, and  SummaryStatistics.&lt;/p&gt;</configure></property>
+<property name="port:graphicsFileName" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the file name of the generated graph of the results.</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts a copy of the text output that R generates. As the actor communicates with R to run the R function or script, the output port sends back the response (i.e., the values and statistical outputs).</configure></property>
+<property name="prop:Rcwd" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The 'R' working directory (the home directory by default). </configure></property>
+<property name="prop:displayGraphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Select to display the plot once the actor has generated it.</configure></property>
+<property name="prop:graphicsFormat" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The graphics output format. Certain formats may require libraries be installed on your system.</configure></property>
+<property name="prop:numXPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The width of the output graphic in pixels.</configure></property>
+<property name="prop:numYPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The height of the output graphic in pixels.</configure></property>
+<property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The expression that is evaluated to produce the output.</configure></property>
+<property name="prop:graphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to create a graphics output port. By default, the actor will create a graphics output port.</configure></property>
+<property name="prop:save_nosave" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to save the R workspace when R is closed; set to '--save' to retrieve the workspace later in a workflow in another R-actor.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:167:2">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.ecoinformatics.seek.R.RExpression">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1126:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#MathOperationActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GeneralPurpose">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[765.0, 650.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:360:2">
+        </property>
+        <port name="metadata" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="general">
+            </property>
+        </port>
+    </entity>
+    <entity name="RExpression10" class="org.ecoinformatics.seek.R.RExpression">
+        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="metadata&#10;data">
+            <display name="R function or script"/>
+            <property name="R Expression" class="ptolemy.actor.gui.style.TextStyle">
+                <property name="height" class="ptolemy.data.expr.Parameter" value="10">
+                </property>
+                <property name="width" class="ptolemy.data.expr.Parameter" value="30">
+                </property>
+            </property>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.TextEditorTableauFactory">
+            <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+            </property>
+            <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="80">
+            </property>
+            <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
+            </property>
+        </property>
+        <property name="Rcwd" class="ptolemy.data.expr.StringParameter" value="/Users/tao/.kepler/cache-2.4/modules/r">
+            <display name="R working directory"/>
+        </property>
+        <property name="save_nosave" class="ptolemy.data.expr.StringParameter" value="--no-save">
+            <display name="Save or not"/>
+        </property>
+        <property name="graphicsFormat" class="ptolemy.data.expr.StringParameter" value="png">
+            <display name="Graphics Format"/>
+        </property>
+        <property name="graphicsOutput" class="ptolemy.data.expr.Parameter" value="true">
+            <display name="Graphics Output"/>
+        </property>
+        <property name="displayGraphicsOutput" class="ptolemy.data.expr.Parameter" value="false">
+            <display name="Automatically display graphics"/>
+        </property>
+        <property name="numXPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of X pixels in image"/>
+        </property>
+        <property name="numYPixels" class="ptolemy.data.expr.StringParameter" value="480">
+            <display name="Number of Y pixels in image"/>
+        </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Dan Higgins</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The RExpression actor runs an R script or function. Input and output port are created by the user and correspond to R variables used in the specified R script. The actor outputs the result of the evaluated script.&lt;/p&gt;&#10;&#10;&lt;p&gt;The R application must be installed on the local system to use this actor. R is a language and environment for statistical computing and graphics. For more information about R, see http://www.r-project.org/.&lt;/p&gt;&#10;&#10;&lt;p&gt;Kepler contains a number of preconfigured R-actors: Barplot, Boxplot, Scatterplot, Summary, RandomNormal, RandomUniform, Correlation, LinearModel, Regression, RMean, RMedian, RQuantile, and  SummaryStatistics.&lt;/p&gt;</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts a copy of the text output that R generates. As the actor communicates with R to run the R function or script, the output port sends back the response (i.e., the values and statistical outputs).</configure></property>
+<property name="port:graphicsFileName" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the file name of the generated graph of the results.</configure></property>
+<property name="prop:Rcwd" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The 'R' working directory (the home directory by default). </configure></property>
+<property name="prop:displayGraphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Select to display the plot once the actor has generated it.</configure></property>
+<property name="prop:graphicsFormat" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The graphics output format. Certain formats may require libraries be installed on your system.</configure></property>
+<property name="prop:numXPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The width of the output graphic in pixels.</configure></property>
+<property name="prop:numYPixels" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The height of the output graphic in pixels.</configure></property>
+<property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The expression that is evaluated to produce the output.</configure></property>
+<property name="prop:save_nosave" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to save the R workspace when R is closed; set to '--save' to retrieve the workspace later in a workflow in another R-actor.</configure></property>
+<property name="prop:graphicsOutput" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether or not to create a graphics output port. By default, the actor will create a graphics output port.</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:27996:167:9">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.ecoinformatics.seek.R.RExpression">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1126:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#MathOperationActor">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GeneralPurpose">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[755.0, 260.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:360:2">
+        </property>
+        <port name="metadata" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="general">
+            </property>
+        </port>
+        <port name="data" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="general">
+            </property>
+        </port>
+    </entity>
+    <relation name="relation" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation4" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation7" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="[240.0, 245.0]">
+        </vertex>
+    </relation>
+    <relation name="relation3" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="[685.0, -165.0]">
+        </vertex>
+    </relation>
+    <relation name="relation5" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="[685.0, -25.0]">
+        </vertex>
+    </relation>
+    <relation name="relation8" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="[690.0, 135.0]">
+        </vertex>
+    </relation>
+    <relation name="relation9" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="[705.0, 280.0]">
+        </vertex>
+    </relation>
+    <relation name="relation10" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="[725.0, 615.0]">
+        </vertex>
+    </relation>
+    <relation name="relation11" class="ptolemy.actor.TypedIORelation">
+        <vertex name="vertex1" value="[710.0, 440.0]">
+        </vertex>
+    </relation>
+    <link port="MetadataParser.output" relation="relation7"/>
+    <link port="MetadataParser.metadataInputPort" relation="relation"/>
+    <link port="MetadataParser.metadataTypeInputPort" relation="relation4"/>
+    <link port="Metadata Source.dataFilenameIn" relation="relation2"/>
+    <link port="Metadata Source.metadataOut" relation="relation"/>
+    <link port="String Constant.output" relation="relation2"/>
+    <link port="String Constant2.output" relation="relation4"/>
+    <link port="Array Element.input" relation="relation7"/>
+    <link port="Array Element.output" relation="relation3"/>
+    <link port="RExpression.metadata" relation="relation3"/>
+    <link port="Array Element2.input" relation="relation7"/>
+    <link port="Array Element2.output" relation="relation5"/>
+    <link port="Array Element3.input" relation="relation7"/>
+    <link port="Array Element3.output" relation="relation8"/>
+    <link port="Array Element4.input" relation="relation7"/>
+    <link port="Array Element4.output" relation="relation9"/>
+    <link port="Array Element5.input" relation="relation7"/>
+    <link port="Array Element5.output" relation="relation11"/>
+    <link port="Array Element6.input" relation="relation7"/>
+    <link port="Array Element6.output" relation="relation10"/>
+    <link port="RExpression2.metadata" relation="relation5"/>
+    <link port="RExpression3.metadata" relation="relation8"/>
+    <link port="RExpression5.metadata" relation="relation11"/>
+    <link port="RExpression6.metadata" relation="relation10"/>
+    <link port="RExpression10.metadata" relation="relation9"/>
+</entity>
